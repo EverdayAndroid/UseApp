@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:duration="1500"
+    android:fromDegrees="0"
+    android:toDegrees="100">
+    <!-- fromDegrees旋转的起始点（旋转开始角度） toDegrees旋转的结束点-->
+    <!-- pivotX旋转点的X值(距离左侧的偏移量) pivotY旋转点的Y值(距离顶部的偏移量)-->
+
+    <shape
+        android:shape="ring"
+        android:innerRadiusRatio="3"
+        android:thicknessRatio="15"
+        android:useLevel="false">
+        <gradient
+            android:type="sweep"
+            android:useLevel="false"
+            android:startColor="#55c6c6c6"
+            android:centerColor="#c6c6c6"
+            android:centerY="0.5"
+            android:endColor="#c6c6c6"/>
+    </shape>
+</animated-rotate>

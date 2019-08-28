@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48dp"
+        android:background="#ffffffff"
+        tl:tl_indicator_color="#ff0082ff"
+        tl:tl_indicator_corner_radius="1.5dip"
+        tl:tl_indicator_height="@dimen/dimen_3dp"
+        tl:tl_indicator_width="@dimen/dimen_20dp"
+        tl:tl_indicator_width_equal_title="true"
+        tl:tl_tab_padding="@dimen/dimen_22dp"
+        tl:tl_tab_space_equal="true"
+        tl:tl_textBold="SELECT"
+        tl:tl_textSelectColor="#ff0082ff"
+        tl:tl_textUnselectColor="#ff8d8d8d"
+        tl:tl_textsize="@dimen/sp_16sp"
+        tl:tl_underline_color="#ff0082ff" />
+
+    <View style="@style/hr_gray_line" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <include layout="@layout/no_data_include" android:visibility="gone"/>
+    <include layout="@layout/no_net_include" android:visibility="gone"/>
+</LinearLayout>

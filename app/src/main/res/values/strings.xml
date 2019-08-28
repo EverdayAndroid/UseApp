@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">UseApp</string>
+    <string name="rule_text">规则说明</string>
+    <string name="require">接单要求</string>
+    <string name="my_contract">电子签约</string>
+    <string name="unauth">未实名</string>
+    <string name="login_hint">立即登录，天天都有单！</string>
+    <string name="setting">设置</string>
+</resources>

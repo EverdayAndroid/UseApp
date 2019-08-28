@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mNo_net_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/no_net" />
+
+
+    <TextView
+        android:id="@+id/mReload_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_40dp"
+        android:background="@drawable/btn_renew_loading"
+        android:gravity="center"
+        android:text="重新加载"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_15sp" />
+</LinearLayout>

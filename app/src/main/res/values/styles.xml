@@ -1,0 +1,42 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="customDialog" parent="Theme.AppCompat.Dialog">
+        <!-- 是否显示昏暗背景 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <style name="hr_gray_line">
+        <item name="android:background">@color/low_gray_one</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2.0px</item>
+    </style>
+
+    <style name="item_arrow_style">
+        <item name="android:layout_gravity">center|right</item>
+        <item name="android:background">@mipmap/icon_user_arrow</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">15.0dip</item>
+    </style>
+
+    <style name="item_text_style">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">@color/dark_black</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15.0dip</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+</resources>
