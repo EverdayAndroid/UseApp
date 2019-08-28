@@ -24,7 +24,7 @@ import okhttp3.Response;
  * description: 数据报文
  */
 public class OkhttpEnginen implements IHttpEngien {
-    private              OkHttpClient client;
+    private              OkHttpClient client = new OkHttpClient();
     private              Call         call;
     private Gson gson = new Gson();
     private static final Handler      mHandler = new Handler(Looper.myLooper());

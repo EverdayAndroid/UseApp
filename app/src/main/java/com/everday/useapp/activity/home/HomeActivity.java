@@ -31,6 +31,7 @@ import com.everday.useapp.activity.home.fragment.HomeFragment;
 import com.everday.useapp.activity.home.fragment.MineFragment;
 import com.everday.useapp.activity.home.fragment.TaskFragment;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.UpDateDialogFragment;
 import com.everday.useapp.entity.VersionInfoBean;
 import com.everday.useapp.network.HttpManager;
@@ -39,6 +40,7 @@ import com.everday.useapp.utils.AppSetting;
 import com.everday.useapp.utils.AppUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.NotificationUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.db.DownloadManager;
 import com.lzy.okgo.model.Progress;
@@ -83,12 +85,6 @@ public class HomeActivity extends BaseActivity implements CallBack {
     private DownloadTask task;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_home;
     }
@@ -97,6 +93,8 @@ public class HomeActivity extends BaseActivity implements CallBack {
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         fragmentManager = getSupportFragmentManager();
+        //记录下次启动不走启动广告页
+        PreferencesUtils.put(UserConfig.FIRST_START,false,true);
         showFragment();
 //        chekcVersion();
     }

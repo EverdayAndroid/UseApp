@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LwkBanner">
+        <!--空心圆半径-->
+        <attr name="stroke_circle_radius" format="integer"></attr>
+        <!--实心圆半径-->
+        <attr name="fill_circle_radius" format="integer"></attr>
+        <!--空心圆颜色-->
+        <attr name="stroke_circle_color" format="color"></attr>
+        <!--实心圆颜色-->
+        <attr name="fill_circle_color" format="color"></attr>
+        <!--间距-->
+        <attr name="distance" format="integer"></attr>
+    </declare-styleable>
+</resources>

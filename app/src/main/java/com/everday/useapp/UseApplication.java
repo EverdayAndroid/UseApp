@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.network.http.OkhttpEnginen;
 import com.everday.useapp.utils.NetWorkUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
@@ -22,6 +24,7 @@ public class UseApplication extends Application {
         application = this;
         NetWorkUtils.init(this);
         PreferencesUtils.initConext(this);
+        HttpManager.getInstance().init(new OkhttpEnginen());
     }
 
     /**

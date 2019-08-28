@@ -16,4 +16,6 @@ public class UserConfig {
     public static String TOKEN = "toKen";
     //用户唯一标识
     public static String UUID = "uuid";
+    //是否第一次启动first
+    public static String FIRST_START = "first_start";
 }
