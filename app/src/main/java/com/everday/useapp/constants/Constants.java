@@ -11,8 +11,8 @@ public class Constants {
     public static int READTIMEOUT = 5000; //设置读取超时
     public static int WRITETIMEOUT = 5000; //设置写入超时
     public static int SUCCESS = 200; //状态吗
-    //课程地址
-    public static String HOST = "https://www.932edu.com/courseSys_test/";
+
+    public static String HOST = "https://api.gongxj.com/projectTask/";
     //行测地址
     public static String HOSTONE = "https://www.932edu.com/xc_test/";
     //申论地址
