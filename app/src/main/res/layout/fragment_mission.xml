@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/head_include" />
+
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
@@ -30,6 +32,12 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <include layout="@layout/no_data_include" android:visibility="gone"/>
-    <include layout="@layout/no_net_include" android:visibility="gone"/>
+
+    <include
+        layout="@layout/no_data_include"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/no_net_include"
+        android:visibility="gone" />
 </LinearLayout>

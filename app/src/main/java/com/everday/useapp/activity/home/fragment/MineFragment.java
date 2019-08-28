@@ -1,7 +1,12 @@
 package com.everday.useapp.activity.home.fragment;
 
+import android.widget.TextView;
+
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseFragment;
+
+import butterknife.BindView;
+
 /**
  * @author Everday
  * @emil wangtaohandsome@gmail.com
@@ -9,6 +14,8 @@ import com.everday.useapp.base.BaseFragment;
  * description: 我的
  */
 public class MineFragment extends BaseFragment {
+    @BindView(R.id.head_tv_title)
+    TextView tvTitle;
     @Override
     public int initLayout() {
         return R.layout.fragment_mine;
@@ -17,5 +24,6 @@ public class MineFragment extends BaseFragment {
     @Override
     public void initData() {
         super.initData();
+        tvTitle.setText("我的");
     }
 }

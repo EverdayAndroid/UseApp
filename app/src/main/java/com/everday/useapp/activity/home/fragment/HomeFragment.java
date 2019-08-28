@@ -1,18 +1,13 @@
 package com.everday.useapp.activity.home.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseFragment;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author Everday
@@ -25,7 +20,8 @@ public class HomeFragment extends BaseFragment {
     ListView mlist;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    @BindView(R.id.head_tv_title)
+    TextView tvTitle;
     @Override
     public int initLayout() {
         return R.layout.fragment_main;
@@ -34,7 +30,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initData() {
         super.initData();
-
+        tvTitle.setText("接单");
     }
 
 }

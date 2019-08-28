@@ -1,12 +1,9 @@
 package com.everday.useapp.activity.home.fragment;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.activity.home.adapter.TaskFragmentAdapter;
@@ -14,8 +11,6 @@ import com.everday.useapp.base.BaseFragment;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author Everday
@@ -28,6 +23,8 @@ public class TaskFragment extends BaseFragment {
     SlidingTabLayout tab;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
+    @BindView(R.id.head_tv_title)
+    TextView tvTitle;
     private TaskFragmentAdapter mAdapter;
     private SparseArray<Fragment> fragmentSparseArray;
     @Override
@@ -38,7 +35,12 @@ public class TaskFragment extends BaseFragment {
     @Override
     public void initData() {
         super.initData();
+        tvTitle.setText("任务");
         fragmentSparseArray = new SparseArray<>();
+        ExecuteFragment executeFragment = new ExecuteFragment();
+        CompleteFragment completeFragment = new CompleteFragment();
+        fragmentSparseArray.put(0,executeFragment);
+        fragmentSparseArray.put(1,completeFragment);
         mAdapter = new TaskFragmentAdapter(getChildFragmentManager(),fragmentSparseArray);
         viewPager.setAdapter(mAdapter);
         tab.setViewPager(viewPager);

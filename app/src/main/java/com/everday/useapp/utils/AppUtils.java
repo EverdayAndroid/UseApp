@@ -15,6 +15,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 
+import com.everday.useapp.UseApplication;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.net.NetworkInterface;
@@ -32,12 +34,12 @@ public class AppUtils {
     /**
      * 获取本地软件版本号
      */
-    public int getLocalVersion(Context ctx) {
+    public static int getLocalVersion() {
         int localVersion = 0;
         try {
-            PackageInfo packageInfo = ctx.getApplicationContext()
+            PackageInfo packageInfo = UseApplication.getApplication()
                     .getPackageManager()
-                    .getPackageInfo(ctx.getPackageName(), 0);
+                    .getPackageInfo(UseApplication.getApplication().getPackageName(), 0);
             localVersion = packageInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -111,7 +113,7 @@ public class AppUtils {
      * @param mApkFile  apk地址
      * @param code 权限申请Code
      */
-    public static void installApk(WeakReference<Activity> activityWeakReference, File mApkFile, int code){
+    public static void installApk(WeakReference<Activity> activityWeakReference,Context context, File mApkFile, int code){
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Activity activity = activityWeakReference.get();

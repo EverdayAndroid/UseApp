@@ -19,6 +19,7 @@ public class UseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        application = this;
         NetWorkUtils.init(this);
         PreferencesUtils.initConext(this);
     }
