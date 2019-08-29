@@ -13,5 +13,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dimen_15dp"
+        android:visibility="gone"
+        android:id="@+id/iv_message"
         android:src="@mipmap/icon_message"/>
 </RelativeLayout>

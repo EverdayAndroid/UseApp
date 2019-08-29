@@ -1,11 +1,15 @@
 package com.everday.useapp.activity.home.fragment;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.everday.useapp.R;
+import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.base.BaseFragment;
+import com.everday.useapp.utils.ActivityUtils;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author Everday
@@ -25,5 +29,14 @@ public class MineFragment extends BaseFragment {
     public void initData() {
         super.initData();
         tvTitle.setText("我的");
+    }
+
+    @OnClick({R.id.ll_info})
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.ll_info:
+                ActivityUtils.startActivity(getActivity(), LoginActivity.class);
+                break;
+        }
     }
 }

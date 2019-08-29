@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bggray"
+    android:orientation="vertical">
+    <include layout="@layout/head_include"/>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bggray"
+        app:srlEnableLoadMore="false">
+
+        <ListView
+            android:id="@id/mlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bggray"
+            android:divider="@color/white"
+            android:dividerHeight="0.0dip"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>
