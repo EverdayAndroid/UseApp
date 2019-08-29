@@ -1,22 +1,21 @@
-package com.everday.useapp.activity.login;
+package com.everday.useapp.activity.money;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
-
 /**
- * date:2019/8/29
- * author:Everday
- * email wangtahandsome@gmail.com
- * desc: 消息
+ * @author Everday
+ * @emil wangtaohandsome@gmail.com
+ * create at 2019/8/29
+ * description: 提现
  */
-public class MessageActivity extends BaseActivity {
+public class MoneyWithdrawActivity extends BaseActivity {
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_message;
+        return R.layout.activity_money_withdraw;
     }
 
     @Override

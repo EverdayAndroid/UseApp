@@ -5,8 +5,11 @@ import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
+import com.everday.useapp.activity.login.PersonalActivity;
 import com.everday.useapp.base.BaseFragment;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,6 +23,7 @@ import butterknife.OnClick;
 public class MineFragment extends BaseFragment {
     @BindView(R.id.head_tv_title)
     TextView tvTitle;
+
     @Override
     public int initLayout() {
         return R.layout.fragment_mine;
@@ -32,10 +36,15 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.ll_info})
-    void OnClick(View view){
-        switch (view.getId()){
+    void OnClick(View view) {
+        switch (view.getId()) {
             case R.id.ll_info:
-                ActivityUtils.startActivity(getActivity(), LoginActivity.class);
+                String username = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
+                if (username.isEmpty()) {
+                    ActivityUtils.startActivity(getActivity(), LoginActivity.class);
+                } else {
+                    ActivityUtils.startActivity(getActivity(), PersonalActivity.class);
+                }
                 break;
         }
     }

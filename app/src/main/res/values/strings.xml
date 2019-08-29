@@ -1,9 +1,25 @@
 <resources>
-    <string name="app_name">UseApp</string>
+    <string name="app_name">用人宝</string>
     <string name="rule_text">规则说明</string>
     <string name="require">接单要求</string>
     <string name="my_contract">电子签约</string>
     <string name="unauth">未实名</string>
     <string name="login_hint">立即登录，天天都有单！</string>
     <string name="setting">设置</string>
+    <string name="pick_money">提现</string>
+    <string name="check_detail">查看明细 ></string>
+    <string name="mission_name">任务名称</string>
+    <string name="mission_pay">预计费用</string>
+    <string name="mission_time">任务时长</string>
+    <string name="mission_add">任务地址</string>
+    <string name="mission_des">任务描述</string>
+    <string name="company_name">任务来源</string>
+    <string name="mission_no">任务编号</string>
+    <string name="user_auth">实名认证</string>
+    <string name="user_bind_phone">绑定手机号</string>
+    <string name="user_card">我的银行卡</string>
+    <string name="user_password_change">登录密码修改</string>
+    <string name="user_photo">头像</string>
+    <string name="user_set_paypassword">支付密码设置</string>
+    <string name="nick_name">昵称</string>
 </resources>

@@ -2,10 +2,13 @@ package com.everday.useapp.activity.home.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.everday.useapp.R;
+import com.everday.useapp.activity.home.OrderDetailsActivity;
 import com.everday.useapp.activity.home.adapter.HomeFragmentAdapter;
 import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.API;
@@ -13,6 +16,7 @@ import com.everday.useapp.constants.Constants;
 import com.everday.useapp.entity.TaskInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.CallBack;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -57,6 +61,14 @@ public class HomeFragment extends BaseFragment implements CallBack {
         map.put("source",1);
         map.put("totalType",0);
         HttpManager.getInstance().get(Constants.HOST+ API.MYTASK,map,this);
+
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                //接单详情
+                ActivityUtils.startActivity(getActivity(), OrderDetailsActivity.class);
+            }
+        });
     }
 
     @Override

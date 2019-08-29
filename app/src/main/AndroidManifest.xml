@@ -13,7 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.login.MessageActivity"></activity>
+        <activity android:name=".activity.login.PersonalActivity"></activity>
+        <activity android:name=".activity.login.CheckPasswordActivity" />
+        <activity android:name=".activity.login.ForgetPasswordActivity" />
+        <activity android:name=".activity.home.OrderDetailsActivity" />
+        <activity android:name=".activity.money.MoneyListActivity" />
+        <activity android:name=".activity.money.MoneyWithdrawActivity" />
+        <activity android:name=".activity.money.MoneyActivity" />
+        <activity android:name=".activity.login.MessageActivity" />
         <activity android:name=".activity.login.RegisteredActivity" />
         <activity android:name=".activity.login.LoginActivity" />
 

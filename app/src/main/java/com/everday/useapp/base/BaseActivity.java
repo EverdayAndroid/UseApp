@@ -10,15 +10,21 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
+import com.everday.useapp.R;
+import com.everday.useapp.activity.login.MessageActivity;
 import com.everday.useapp.dialog.LoadingView;
 import com.everday.useapp.utils.ActivityManagement;
+import com.everday.useapp.utils.ActivityUtils;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -33,7 +39,8 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     //是否隐藏状态栏
     protected boolean hideStatus;
     protected LoadingView loadingView;
-
+    @BindView(R.id.iv_message)
+    ImageView ivMessage;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +86,15 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
     }
-
+    @OnClick({R.id.iv_message})
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.iv_message:
+                //消息列表
+                ActivityUtils.startActivity(this, MessageActivity.class);
+                break;
+        }
+    }
     @Override
     public void initStatus() {
         Window window = getWindow();
