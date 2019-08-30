@@ -39,8 +39,10 @@ public class TaskFragment extends BaseFragment {
         fragmentSparseArray = new SparseArray<>();
         ExecuteFragment executeFragment = new ExecuteFragment();
         CompleteFragment completeFragment = new CompleteFragment();
+        CancelFragment cancelFragment = new CancelFragment();
         fragmentSparseArray.put(0,executeFragment);
         fragmentSparseArray.put(1,completeFragment);
+        fragmentSparseArray.put(2,cancelFragment);
         mAdapter = new TaskFragmentAdapter(getChildFragmentManager(),fragmentSparseArray);
         viewPager.setAdapter(mAdapter);
         tab.setViewPager(viewPager);

@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.everday.useapp.dialog.LoadingView;
+import com.everday.useapp.network.http.CallBack;
+import com.everday.useapp.utils.EverdayLog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,7 +24,7 @@ import butterknife.Unbinder;
  * create at 2019/7/21
  * description: 基类
  */
-public class BaseFragment<P extends BasePresenter> extends RxFragment implements IFragment {
+public class BaseFragment<P extends BasePresenter> extends RxFragment implements IFragment, CallBack {
     private Unbinder unbinder;
     protected View view;
     protected P mPresent;
@@ -74,5 +76,20 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
 //        if(loadingView!=null&& loadingView.isAdded() && !loadingView.isHidden()){
 //            loadingView.dismiss();
 //        }
+    }
+
+    @Override
+    public void onSuccess(String t) {
+        if(isDetached()){return;}
+    }
+
+    @Override
+    public void onFailure(String message, int error){
+        if(isDetached()){return;}
+    }
+
+    @Override
+    public void onThrows(String message, int error) {
+        if(isDetached()){return;}
     }
 }

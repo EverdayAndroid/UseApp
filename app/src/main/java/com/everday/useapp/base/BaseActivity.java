@@ -15,8 +15,10 @@ import android.widget.ImageView;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.MessageActivity;
 import com.everday.useapp.dialog.LoadingView;
+import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.EverdayLog;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.Field;
@@ -33,13 +35,12 @@ import butterknife.Unbinder;
  * create at 2019/6/29
  * description: 基类
  */
-public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity implements IActivity {
+public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity implements IActivity,CallBack {
     protected P mPresent;
     private Unbinder mUnbinder;
     //是否隐藏状态栏
     protected boolean hideStatus;
     protected LoadingView loadingView;
-    @BindView(R.id.iv_message)
     ImageView ivMessage;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
         if (layout != 0) {
             loadingView = new LoadingView();
             setContentView(layout);
+            ivMessage = findViewById(R.id.iv_message);
             //绑定到butterknife
             mUnbinder = ButterKnife.bind(this);
         }
@@ -85,14 +87,14 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-    }
-    @OnClick({R.id.iv_message})
-    void OnClick(View view){
-        switch (view.getId()){
-            case R.id.iv_message:
-                //消息列表
-                ActivityUtils.startActivity(this, MessageActivity.class);
-                break;
+        if(ivMessage!=null){
+            ivMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //消息列表
+                    ActivityUtils.startActivity(BaseActivity.this, MessageActivity.class);
+                }
+            });
         }
     }
     @Override
@@ -163,4 +165,18 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
         vibrator.vibrate(200);
     }
 
+    @Override
+    public void onSuccess(String t) {
+        if(isFinishing()){return;}
+    }
+
+    @Override
+    public void onFailure(String message, int error){
+        if(isFinishing()){return;}
+    }
+
+    @Override
+    public void onThrows(String message, int error) {
+        if(isFinishing()){return;}
+    }
 }

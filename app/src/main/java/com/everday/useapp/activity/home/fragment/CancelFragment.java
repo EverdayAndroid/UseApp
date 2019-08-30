@@ -7,28 +7,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseFragment;
-import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.network.HttpManager;
-import com.everday.useapp.utils.EverdayLog;
+import com.everday.useapp.network.http.CallBack;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.FormBody;
 
 /**
- * date:2019/8/28
- * author:Everday
- * email wangtahandsome@gmail.com
- * desc:进行中
+ * @author Everday
+ * @emil wangtaohandsome@gmail.com
+ * create at 2019/8/30
+ * description: 取消接单
  */
-public class ExecuteFragment extends BaseFragment{
-
+public class CancelFragment extends BaseFragment implements CallBack {
     @BindView(R.id.mlist)
     RecyclerView mlist;
     @BindView(R.id.refreshLayout)
@@ -40,7 +39,7 @@ public class ExecuteFragment extends BaseFragment{
 
     @Override
     public int initLayout() {
-        return R.layout.fragment_execute;
+        return R.layout.fragment_cancel;
     }
 
     @Override
@@ -48,24 +47,27 @@ public class ExecuteFragment extends BaseFragment{
         super.initData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mlist.setLayoutManager(layoutManager);
-
-        HttpManager.getInstance().get(Constants.HOST + API.MYTASK, null, this);
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("", "");
+//        HttpManager.getInstance().post(Constants.HOST, this, builder.build());
     }
 
+
     @Override
-    public void onSuccess(String t){
+    public void onSuccess(String t) {
         super.onSuccess(t);
         if(isDetached()){return;}
         refreshLayout.setVisibility(View.VISIBLE);
         nodataView.setVisibility(View.GONE);
         mNoNetLayout.setVisibility(View.GONE);
+
     }
 
     @Override
-    public void onFailure(String message, int error){
-        super.onFailure(message, error);
+    public void onFailure(String message, int error) {
+        super.onFailure(message,error);
         if(isDetached()){return;}
-        if(error == Constants.NO_NET_WORK){
+        if (error == Constants.NO_NET_WORK) {
             refreshLayout.setVisibility(View.GONE);
             nodataView.setVisibility(View.GONE);
             mNoNetLayout.setVisibility(View.VISIBLE);
@@ -74,9 +76,9 @@ public class ExecuteFragment extends BaseFragment{
 
     @Override
     public void onThrows(String message, int error) {
-        super.onThrows(message, error);
+        super.onThrows(message,error);
         if(isDetached()){return;}
-        if(error == Constants.THROWS_CODE){
+        if (error == Constants.THROWS_CODE) {
             refreshLayout.setVisibility(View.GONE);
             nodataView.setVisibility(View.GONE);
             mNoNetLayout.setVisibility(View.VISIBLE);

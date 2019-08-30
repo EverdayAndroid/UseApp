@@ -63,7 +63,7 @@ import okhttp3.FormBody;
  * create at 2019/8/27
  * description: 首页
  */
-public class HomeActivity extends BaseActivity implements CallBack {
+public class HomeActivity extends BaseActivity  {
     private static final int INSTALL_PACKAGES_REQUESTCODE = 1000;
     //授权完成后，开始安装
     private static final int GET_UNKNOWN_APP_SOURCES = 100;
@@ -179,6 +179,7 @@ public class HomeActivity extends BaseActivity implements CallBack {
 
     @Override
     public void onSuccess(String t) {
+        super.onSuccess(t);
         VersionInfoBean versionInfoBean = GsonUtils.getInstance().parseJsonToBean(t, VersionInfoBean.class);
         if (AppUtils.getLocalVersion() < versionInfoBean.getData().getAppCode()) {
             showNewVersion(versionInfoBean.getData().getAppUpdateContent(), versionInfoBean.getData().getAppDownloadPaht(), versionInfoBean.getData().getForce());
@@ -265,9 +266,13 @@ public class HomeActivity extends BaseActivity implements CallBack {
 
     @Override
     public void onFailure(String message, int error) {
-
+        super.onFailure(message,error);
     }
 
+    @Override
+    public void onThrows(String message, int error) {
+        super.onThrows(message, error);
+    }
 
     /**
      * 初始化通知 initNotification

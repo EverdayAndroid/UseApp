@@ -24,4 +24,22 @@ public class MoneyListActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
     }
+
+    @Override
+    public void onSuccess(String t) {
+        super.onSuccess(t);
+        if(isFinishing()){return;}
+    }
+
+    @Override
+    public void onFailure(String message, int error) {
+        super.onFailure(message, error);
+        if(isFinishing()){return;}
+    }
+
+    @Override
+    public void onThrows(String message, int error) {
+        super.onThrows(message, error);
+        if(isFinishing()){return;}
+    }
 }

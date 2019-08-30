@@ -11,7 +11,7 @@
         android:visibility="gone"
         app:srlEnableLoadMore="false">
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/mlist"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

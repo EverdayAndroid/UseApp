@@ -11,6 +11,8 @@ public class Constants {
     public static int READTIMEOUT = 5000; //设置读取超时
     public static int WRITETIMEOUT = 5000; //设置写入超时
     public static int SUCCESS = 200; //状态吗
+    public static int NO_NET_WORK = 1000; //没有网络
+    public static int THROWS_CODE = 5000; //异常码
 
     public static String HOST = "https://api.gongxj.com/projectTask/";
     //行测地址

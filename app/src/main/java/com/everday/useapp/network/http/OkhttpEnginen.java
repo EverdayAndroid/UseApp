@@ -17,6 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 /**
  * @author Everday
  * @emil wangtaohandsome@gmail.com
@@ -24,10 +25,10 @@ import okhttp3.Response;
  * description: 数据报文
  */
 public class OkhttpEnginen implements IHttpEngien {
-    private              OkHttpClient client = new OkHttpClient();
-    private              Call         call;
+    private OkHttpClient client = new OkHttpClient();
+    private Call call;
     private Gson gson = new Gson();
-    private static final Handler      mHandler = new Handler(Looper.myLooper());
+    private static final Handler mHandler = new Handler(Looper.myLooper());
 
     @Override
     public void get(String url, Map<String, Object> params, final CallBack callBack) {
@@ -42,7 +43,12 @@ public class OkhttpEnginen implements IHttpEngien {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callBack.onFailure(e.getMessage(), 0);
+                        try {
+                            callBack.onFailure(e.getMessage(), 0);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                            callBack.onThrows(e1.getMessage()+"",Constants.THROWS_CODE);
+                        }
                     }
                 });
             }
@@ -53,7 +59,12 @@ public class OkhttpEnginen implements IHttpEngien {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callBack.onSuccess(result);
+                        try {
+                            callBack.onSuccess(result);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callBack.onThrows(e.getMessage()+"",Constants.THROWS_CODE);
+                        }
                     }
                 });
             }
@@ -74,12 +85,16 @@ public class OkhttpEnginen implements IHttpEngien {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (NetWorkUtils.isAvailable()) {
-                            callBack.onFailure("网络请求异常，请稍后重试", 0);
-                        } else {
-                            callBack.onFailure("你的网络不给力，请检查网络设置", 0);
+                        try {
+                            if (NetWorkUtils.isAvailable()) {
+                                callBack.onFailure("网络请求异常，请稍后重试", Constants.NO_NET_WORK);
+                            } else {
+                                callBack.onFailure("你的网络不给力，请检查网络设置", Constants.NO_NET_WORK);
+                            }
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                            callBack.onThrows(e1.getMessage()+"",Constants.THROWS_CODE);
                         }
-
                     }
                 });
             }
@@ -91,12 +106,18 @@ public class OkhttpEnginen implements IHttpEngien {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            BaseModel baseModel = gson.fromJson(result, BaseModel.class);
-                            if(baseModel.getResultCode() == Constants.SUCCESS) {
-                                callBack.onSuccess(result);
-                            }else{
-                                //TODO 其它处理
+                            try {
+                                BaseModel baseModel = gson.fromJson(result, BaseModel.class);
+                                if (baseModel.getResultCode() == Constants.SUCCESS) {
+                                    callBack.onSuccess(result);
+                                } else {
+                                    //TODO 其它处理
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                                callBack.onThrows(e.getMessage()+"",Constants.THROWS_CODE);
                             }
+
                         }
                     });
                 }

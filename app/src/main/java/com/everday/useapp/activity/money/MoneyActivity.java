@@ -36,9 +36,27 @@ public class MoneyActivity extends BaseActivity {
                 ActivityUtils.startActivity(this,MoneyListActivity.class);
                 break;
             case R.id.bt_pickMoney:
-                //体现
+                //提现
                 ActivityUtils.startActivity(this,MoneyWithdrawActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(String t) {
+        super.onSuccess(t);
+        if(isFinishing()){return;}
+    }
+
+    @Override
+    public void onFailure(String message, int error) {
+        super.onFailure(message, error);
+        if(isFinishing()){return;}
+    }
+
+    @Override
+    public void onThrows(String message, int error) {
+        super.onThrows(message, error);
+        if(isFinishing()){return;}
     }
 }

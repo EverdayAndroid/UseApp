@@ -14,7 +14,7 @@ import android.util.SparseArray;
 public class TaskFragmentAdapter extends FragmentPagerAdapter {
 
     private SparseArray<Fragment> sparseArray;
-    private String[] titles = new String[]{"进行中" , "已完成"};
+    private String[] titles = new String[]{"进行中" , "已完成","已取消"};
     public TaskFragmentAdapter(FragmentManager fm , SparseArray<Fragment> fragmentSparseArray) {
         super(fm);
         this.sparseArray = fragmentSparseArray;
