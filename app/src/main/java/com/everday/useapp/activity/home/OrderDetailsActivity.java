@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.entity.TaskBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -138,7 +139,7 @@ public class OrderDetailsActivity extends BaseActivity {
     LinearLayout rlBottom;
     @BindView(R.id.ll_main)
     RelativeLayout llMain;
-
+    private TaskBean taskBean;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_order_details;
@@ -147,6 +148,19 @@ public class OrderDetailsActivity extends BaseActivity {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        tvTitle.setText("任务详情");
+        tvName.setText(taskBean.getTaskName());
+        tvPrice.setText(taskBean.getYjfy()+"");
+        tvPositionName.setText("");
+        tvStartTime.setText(taskBean.getStartTime());
+        tvEndTime.setText(taskBean.getEndTime());
+        tvTime.setText(taskBean.getDuration()+"小时");
+        tvPickAddress.setText(taskBean.getAddress());
+        tvStartDistance.setText("里程");
+        tvJobScrip.setText(taskBean.getDes());
+        tvCompanyName.setText("来源");
+        tvNo.setText(taskBean.getTaskBh());
+
     }
 
     @Override

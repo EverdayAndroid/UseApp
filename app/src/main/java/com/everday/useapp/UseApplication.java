@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.OkhttpEnginen;
 import com.everday.useapp.utils.NetWorkUtils;

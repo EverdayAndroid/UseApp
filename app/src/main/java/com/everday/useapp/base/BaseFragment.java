@@ -7,9 +7,14 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.everday.useapp.R;
+import com.everday.useapp.activity.login.MessageActivity;
 import com.everday.useapp.dialog.LoadingView;
 import com.everday.useapp.network.http.CallBack;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
@@ -29,10 +34,15 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
     protected View view;
     protected P mPresent;
     protected LoadingView loadingView;
+    protected ImageView ivMessage,ivBack;
+    protected TextView tvTitle;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(initLayout(), container, false);
+        ivMessage = view.findViewById(R.id.iv_message);
+        ivBack = view.findViewById(R.id.iv_back);
+        tvTitle = view.findViewById(R.id.head_tv_title);
         unbinder = ButterKnife.bind(this, view);
         initData();
         //观察模式
@@ -50,6 +60,15 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
     public void initData() {
         if(loadingView == null){
             loadingView = new LoadingView();
+        }
+        if(ivMessage!=null){
+            ivMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //消息列表
+                    ActivityUtils.startActivity(getActivity(), MessageActivity.class);
+                }
+            });
         }
     }
 

@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <include layout="@layout/head_include" android:id="@+id/head_view"/>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rl_bottom"
+        android:layout_below="@id/head_view"
         android:background="#fff0f0f0"
         android:scrollbars="none">
 
@@ -299,10 +300,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_20dp"
-                    android:layout_marginTop="@dimen/dimen_20dp"
                     android:layout_toRightOf="@id/tv_hint"
                     android:text="¥"
                     android:textColor="@color/red"
+                    android:textSize="18.0sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -310,9 +311,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dimen_20dp"
+                    android:layout_marginLeft="@dimen/dimen_2dp"
                     android:layout_toRightOf="@id/tv_money"
-                    android:text="----"
+                    android:text="---"
                     android:textColor="@color/red"
                     android:textSize="18.0sp"
                     android:textStyle="bold" />
@@ -497,20 +498,19 @@
                     android:text="----" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_20dp"
+            <View
+                style="@style/hr_gray_line"
                 android:layout_marginLeft="@dimen/dimen_20dp"
-                android:layout_marginRight="@dimen/dimen_20dp">
+                android:layout_marginRight="@dimen/dimen_20dp" />
 
-                <View
-                    style="@style/hr_gray_line"
-                    android:layout_alignParentTop="true" />
+            <RelativeLayout
+                style="@style/stand_layout"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_20dp">
 
                 <TextView
                     android:id="@+id/tv_no_hint"
                     style="@style/gray_content"
-                    android:layout_centerVertical="true"
                     android:text="@string/mission_no" />
 
                 <TextView
@@ -681,18 +681,18 @@
     <LinearLayout
         android:id="@id/rl_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_20dp"
+        android:layout_height="@dimen/dimen_50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <Button
             android:id="@id/bt_take_job"
             style="?android:borderlessButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_20dp"
+            android:layout_height="@dimen/dimen_40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_20dp"
             android:layout_marginRight="@dimen/dimen_20dp"
@@ -701,12 +701,12 @@
             android:text="接单"
             android:textColor="@color/white"
             android:textSize="18.0sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/bt_ok"
             style="?android:borderlessButtonStyle"
-            android:layout_width="0.0px"
+            android:layout_width="0.0dp"
             android:layout_height="@dimen/dimen_20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_20dp"
@@ -721,7 +721,7 @@
         <Button
             android:id="@+id/bt_cancel"
             style="?android:borderlessButtonStyle"
-            android:layout_width="0.0px"
+            android:layout_width="0.0dp"
             android:layout_height="@dimen/dimen_20dp"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_20dp"

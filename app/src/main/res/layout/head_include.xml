@@ -3,10 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_50dp"
     android:background="@color/white">
+    <ImageView
+        android:layout_width="@dimen/dimen_25dp"
+        android:layout_height="@dimen/dimen_25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_15dp"
+        android:visibility="visible"
+        android:id="@+id/iv_back"
+        android:src="@mipmap/left_back"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/head_tv_title"
+        android:textSize="@dimen/sp_18sp"
         android:layout_centerInParent="true"/>
     <ImageView
         android:layout_width="wrap_content"
@@ -14,7 +24,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dimen_15dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/iv_message"
         android:src="@mipmap/icon_message"/>
 </RelativeLayout>

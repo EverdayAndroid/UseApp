@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.MessageActivity;
@@ -41,7 +42,8 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     //是否隐藏状态栏
     protected boolean hideStatus;
     protected LoadingView loadingView;
-    ImageView ivMessage;
+    protected ImageView ivMessage,ivBack;
+    protected TextView tvTitle;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,8 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
             loadingView = new LoadingView();
             setContentView(layout);
             ivMessage = findViewById(R.id.iv_message);
+            ivBack = findViewById(R.id.iv_back);
+            tvTitle = findViewById(R.id.head_tv_title);
             //绑定到butterknife
             mUnbinder = ButterKnife.bind(this);
         }
@@ -93,6 +97,14 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
                 public void onClick(View v) {
                     //消息列表
                     ActivityUtils.startActivity(BaseActivity.this, MessageActivity.class);
+                }
+            });
+        }
+        if(ivBack!=null){
+            ivBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
                 }
             });
         }

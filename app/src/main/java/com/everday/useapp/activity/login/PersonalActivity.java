@@ -11,6 +11,8 @@ import com.everday.useapp.R;
 import com.everday.useapp.activity.login.view.ImageInterFace;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.dialog.ChooseImageDialog;
+import com.everday.useapp.dialog.UseDialog;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.FileUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -61,13 +63,21 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        tvTitle.setText("个人中心");
+        ivMessage.setVisibility(View.GONE);
     }
-    @OnClick({R.id.layout_photo})
+    @OnClick({R.id.layout_photo,R.id.layout_change_password,R.id.tv_out_login})
     void OnClick(View view){
         switch (view.getId()){
             case R.id.layout_photo:
                 chooseImageDialog = new ChooseImageDialog(this,R.style.MyDialogStyle,this);
                 chooseImageDialog.show();
+                break;
+            case R.id.layout_change_password:
+                ActivityUtils.startActivity(this,ForgetPasswordActivity.class);
+                break;
+            case R.id.tv_out_login:
+                UseDialog.getInstance("是否确定要退出当前账号?","确定","取消").show(getSupportFragmentManager(),"usedialog");
                 break;
         }
     }

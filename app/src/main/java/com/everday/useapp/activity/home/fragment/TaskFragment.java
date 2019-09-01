@@ -3,6 +3,7 @@ package com.everday.useapp.activity.home.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
+import android.view.View;
 import android.widget.TextView;
 
 import com.everday.useapp.R;
@@ -36,6 +37,7 @@ public class TaskFragment extends BaseFragment {
     public void initData() {
         super.initData();
         tvTitle.setText("任务");
+        ivBack.setVisibility(View.GONE);
         fragmentSparseArray = new SparseArray<>();
         ExecuteFragment executeFragment = new ExecuteFragment();
         CompleteFragment completeFragment = new CompleteFragment();

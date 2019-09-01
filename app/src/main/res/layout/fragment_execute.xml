@@ -8,7 +8,7 @@
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:srlEnableLoadMore="false">
 
         <android.support.v7.widget.RecyclerView
@@ -21,6 +21,6 @@
             android:listSelector="@android:color/transparent"
             android:scrollbars="none" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    <include layout="@layout/no_data_include" android:visibility="visible"/>
+    <include layout="@layout/no_data_include" android:visibility="gone"/>
     <include layout="@layout/no_net_include" android:visibility="gone"/>
 </LinearLayout>

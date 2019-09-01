@@ -18,6 +18,12 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="customDialog1" parent="Theme.AppCompat.Dialog">
+        <!-- 是否显示昏暗背景 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 
     <style name="hr_gray_line">
         <item name="android:background">@color/low_gray_one</item>
@@ -55,6 +61,7 @@
     <style name="gray_content">
         <item name="android:textSize">@dimen/sp_14sp</item>
         <item name="android:textColor">@color/gray</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_20dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

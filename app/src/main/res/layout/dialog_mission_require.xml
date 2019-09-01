@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50.0dip"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginRight="15.0dip">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/diaglog_step"
+            android:textColor="#ff333333"
+            android:textSize="16.0sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_cancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_exit" />
+    </RelativeLayout>
+
+    <View style="@style/hr_gray_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="80.0dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_auth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dip"
+                android:background="@mipmap/icon_dialog_auth" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.0dip"
+                android:layout_toRightOf="@id/iv_auth"
+                android:text="@string/auth"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/auth_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_toRightOf="@id/iv_auth"
+                android:text="@string/auth_step"
+                android:textColor="#ff999999"
+                android:textSize="12.0sp" />
+
+            <Button
+                android:id="@+id/bt_auth"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginTop="20.0dip"
+                android:background="@drawable/btn_bg_fillet_activation_selector"
+                android:minWidth="80.0dip"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:text="@string/go_auth"
+                android:textColor="@color/white"
+                android:textSize="15.0sp" />
+
+            <View
+                style="@style/hr_gray_line"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="80.0dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dip"
+                android:background="@mipmap/icon_dialog_sign" />
+
+            <TextView
+                android:id="@+id/tv_contract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.0dip"
+                android:layout_toRightOf="@id/iv_sign"
+                android:text="电子签约"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/sign_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_contract"
+                android:layout_toRightOf="@id/iv_sign"
+                android:text="@string/sign_step"
+                android:textColor="#ff999999"
+                android:textSize="12.0sp" />
+
+            <Button
+                android:id="@+id/bt_sign"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginTop="20.0dip"
+                android:background="@drawable/btn_bg_fillet_activation_selector"
+                android:minWidth="80.0dip"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:text="@string/go_sign"
+                android:textColor="@color/white"
+                android:textSize="15.0sp" />
+
+            <View
+                style="@style/hr_gray_line"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="80.0dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10.0dip"
+                android:background="@mipmap/icon_dialog_pay" />
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.0dip"
+                android:layout_toRightOf="@id/iv_pay"
+                android:text="@string/pay"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/tv_pay_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_money"
+                android:layout_toRightOf="@id/iv_pay"
+                android:text="请缴纳500元押金"
+                android:textColor="#ff999999"
+                android:textSize="12.0sp" />
+
+            <Button
+                android:id="@+id/bt_pay"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginTop="20.0dip"
+                android:background="@drawable/btn_bg_fillet_activation_selector"
+                android:minWidth="80.0dip"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:text="@string/go_pay"
+                android:textColor="@color/white"
+                android:textSize="15.0sp" />
+
+            <View
+                style="@style/hr_gray_line"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_memberservice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginBottom="20.0dip"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="10.0dip"
+                android:background="@mipmap/icon_member" />
+
+            <TextView
+                android:id="@+id/tv_member_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20.0dip"
+                android:layout_toRightOf="@id/iv_member"
+                android:text="会员保障服务"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <TextView
+                android:id="@+id/insure_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_member_title"
+                android:layout_toLeftOf="@+id/bt_pay_member"
+                android:layout_toRightOf="@id/iv_member"
+                android:text="@string/sign_jd"
+                android:textColor="#ff999999"
+                android:textSize="12.0sp" />
+
+            <Button
+                android:id="@+id/bt_pay_member"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="35.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginTop="20.0dip"
+                android:background="@drawable/btn_bg_fillet_activation_selector"
+                android:minWidth="80.0dip"
+                android:paddingLeft="10.0dip"
+                android:paddingRight="10.0dip"
+                android:text="去支付"
+                android:textColor="@color/white"
+                android:textSize="15.0sp" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
+import com.everday.useapp.activity.money.MoneyActivity;
 import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.utils.ActivityUtils;
@@ -21,9 +22,6 @@ import butterknife.OnClick;
  * description: 我的
  */
 public class MineFragment extends BaseFragment {
-    @BindView(R.id.head_tv_title)
-    TextView tvTitle;
-
     @Override
     public int initLayout() {
         return R.layout.fragment_mine;
@@ -33,9 +31,12 @@ public class MineFragment extends BaseFragment {
     public void initData() {
         super.initData();
         tvTitle.setText("我的");
+        ivBack.setVisibility(View.GONE);
+        ivMessage.setVisibility(View.GONE);
+
     }
 
-    @OnClick({R.id.ll_info})
+    @OnClick({R.id.ll_info,R.id.ll_money})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.ll_info:
@@ -45,6 +46,9 @@ public class MineFragment extends BaseFragment {
                 } else {
                     ActivityUtils.startActivity(getActivity(), PersonalActivity.class);
                 }
+                break;
+            case R.id.ll_money:
+                ActivityUtils.startActivity(getActivity(), MoneyActivity.class);
                 break;
         }
     }

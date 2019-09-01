@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/dimen_200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_fillet"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_mission_gone"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/dialog_des"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="提示"
+                android:textStyle="bold"
+                android:layout_margin="@dimen/dimen_20dp"
+                android:textColor="@color/dialogtitle_color"
+                android:textSize="16.0sp" />
+
+        <Button
+            android:id="@+id/dialog_affirm_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40dp"
+            android:minWidth="@dimen/dimen_200dp"
+            android:layout_margin="@dimen/dimen_15dp"
+            android:background="@drawable/ok_mess"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="知道了 "
+            android:textColor="@color/white"
+            android:textSize="16.0sp"
+            android:visibility="visible" />
+    </LinearLayout>
+</LinearLayout>

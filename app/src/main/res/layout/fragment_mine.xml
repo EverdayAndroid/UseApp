@@ -29,6 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_15dp"
+                    android:layout_marginTop="@dimen/dimen_15dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -110,7 +111,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/ll_my_insurance"
+                        android:id="@+id/ll_money"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
                         android:orientation="horizontal">
@@ -130,7 +131,7 @@
                             android:layout_marginLeft="@dimen/dimen_11dp"
                             android:layout_weight="1.0"
                             android:gravity="left"
-                            android:text="会员保障服务"
+                            android:text="我的余额"
                             android:textColor="@color/dark_black"
                             android:textSize="16.0sp" />
 
@@ -148,6 +149,11 @@
 
                         <ImageView style="@style/item_arrow_style" />
                     </LinearLayout>
+
+                    <View
+                        style="@style/hr_gray_line"
+                        android:layout_marginLeft="@dimen/dimen_15dp"
+                        android:layout_marginRight="@dimen/dimen_15dp" />
 
                     <LinearLayout
                         android:id="@+id/ll_my_contrat"
@@ -193,7 +199,8 @@
                         android:id="@+id/ll_require"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/dimen_20dp"
@@ -223,7 +230,8 @@
                         android:id="@+id/ll_rule"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/dimen_20dp"
@@ -248,7 +256,8 @@
                     <RelativeLayout
                         android:id="@+id/ll_question"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_60dp">
+                        android:layout_height="@dimen/dimen_60dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/icon"
@@ -292,7 +301,8 @@
                         android:id="@+id/ll_submit"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/dimen_20dp"
@@ -334,7 +344,8 @@
                         android:id="@+id/ll_call"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/dimen_20dp"
@@ -373,7 +384,8 @@
                 android:padding="@dimen/dimen_10dp"
                 android:text="v1.1.3"
                 android:textColor="#ffcccccc"
-                android:textSize="@dimen/sp_14sp" />
+                android:textSize="@dimen/sp_14sp"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 
