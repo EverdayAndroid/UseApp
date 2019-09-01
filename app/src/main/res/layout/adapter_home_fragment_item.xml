@@ -150,8 +150,7 @@
             android:layout_below="@id/tv_end_time"
             android:text="---"
             android:layout_marginTop="@dimen/dimen_10dp"
-            android:paddingLeft="@dimen/dimen_5dp"
-            android:paddingRight="@dimen/dimen_5dp"
+            android:padding="@dimen/dimen_5dp"
             android:textColor="@color/blue"
             android:background="@drawable/tv_company_bg"
             android:id="@+id/tv_company_name"/>
