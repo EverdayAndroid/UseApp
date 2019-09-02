@@ -42,8 +42,11 @@ public class HomeFragmentAdapter extends BaseQuickAdapter<TaskBean, BaseViewHold
         helper.setText(R.id.tv_end_time,item.getEndTime());
         //时间
         helper.setText(R.id.tv_time,item.getDuration()+"小时");
+        String company = "华为有限公司";
+        String replaceStr = company.substring(2,4);
+        company = company.replace(replaceStr,"****");
         //公司
-        helper.setText(R.id.tv_company_name,"华为有限公司");
+        helper.setText(R.id.tv_company_name,company);
 
         helper.addOnClickListener(R.id.bt_take_job);
         if(type == 1){

@@ -15,4 +15,9 @@ public class ActivityUtils {
         Intent intent = new Intent(activity,clazz);
         activity.startActivity(intent);
     }
+
+    public static void startActivityForResult(Activity activity,Class<? extends Activity> clazz){
+        Intent intent = new Intent(activity,clazz);
+        activity.startActivityForResult(intent,1);
+    }
 }

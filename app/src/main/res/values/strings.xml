@@ -32,4 +32,6 @@
     <string name="pay">缴纳押金</string>
     <string name="sign_jd">因该任务的需求，平台将自动为您每天首单购买会员保障服务，费用将在您提现时结算</string>
     <string name="loading_txt">正在努力加载...</string>
+    <string name="nickname_info">2-20个字符，可由中英文、数字、“_”、“-”组成</string>
+    <string name="wright_nickname">请填写您的昵称</string>
 </resources>

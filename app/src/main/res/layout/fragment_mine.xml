@@ -250,6 +250,7 @@
 
                     <View
                         style="@style/hr_gray_line"
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/dimen_15dp"
                         android:layout_marginRight="@dimen/dimen_15dp" />
 

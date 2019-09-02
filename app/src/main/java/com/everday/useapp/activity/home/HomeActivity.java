@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity  {
         //记录下次启动不走启动广告页
         PreferencesUtils.put(UserConfig.FIRST_START,false,true);
         showFragment();
-//        chekcVersion();
+        chekcVersion();
     }
 
     /**
@@ -173,8 +173,9 @@ public class HomeActivity extends BaseActivity  {
     }
 
     public void chekcVersion() {
+        gotoDownloadNewVersion("http://oss.pgyer.com/8fa98b26b4911b78657c059cc9b68e2a.apk?auth_key=1567438030-db5f034c6e49c0270428c2114631c256-0-f0085d0b4e1dec950dfe7a97e1d70875&response-content-disposition=attachment%3B+filename%3Dapp-debug.apk");
         FormBody.Builder builder = new FormBody.Builder();
-        HttpManager.getInstance().post("", this, builder.build());
+//        HttpManager.getInstance().get("http://oss.pgyer.com/8fa98b26b4911b78657c059cc9b68e2a.apk?auth_key=1567438030-db5f034c6e49c0270428c2114631c256-0-f0085d0b4e1dec950dfe7a97e1d70875&response-content-disposition=attachment%3B+filename%3Dapp-debug.apk", null, this);
     }
 
     @Override

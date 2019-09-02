@@ -21,7 +21,7 @@ public class WithdrawAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_name,"");
-        helper.setText(R.id.tv_money,"");
+        helper.setText(R.id.tv_name,"华为有限公司");
+        helper.setText(R.id.tv_money,"￥100");
     }
 }

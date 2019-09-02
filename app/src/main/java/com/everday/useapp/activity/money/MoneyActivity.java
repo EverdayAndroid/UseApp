@@ -20,6 +20,7 @@ import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,6 +54,12 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
         super.initData(savedInstanceState);
         tvTitle.setText("钱袋");
         ivMessage.setVisibility(View.GONE);
+        mlist = new ArrayList(5);
+        mlist.add(null);
+        mlist.add(null);
+        mlist.add(null);
+        mlist.add(null);
+        mlist.add(null);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mAdapter = new WithdrawAdapter(R.layout.adapter_withdraw_item, mlist);
         recyclerView.setLayoutManager(layoutManager);

@@ -43,7 +43,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected boolean hideStatus;
     protected LoadingView loadingView;
     protected ImageView ivMessage,ivBack;
-    protected TextView tvTitle;
+    protected TextView tvTitle,tvRight;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +55,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
             ivMessage = findViewById(R.id.iv_message);
             ivBack = findViewById(R.id.iv_back);
             tvTitle = findViewById(R.id.head_tv_title);
+            tvRight = findViewById(R.id.tv_right);
             //绑定到butterknife
             mUnbinder = ButterKnife.bind(this);
         }

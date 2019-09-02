@@ -17,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.everday.useapp.R;
+import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
@@ -109,6 +111,9 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
         switch (view.getId()){
             case R.id.dialog_leftbtn:
                 PreferencesUtils.put(UserConfig.USERNAME,"",false);
+                BamToast.show(getActivity(),"退出成功");
+                getActivity().finish();
+                ActivityUtils.startActivity(getActivity(), LoginActivity.class);
                 dismiss();
                 break;
             case R.id.dialog_rightbtn:

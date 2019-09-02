@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/ll_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_toRightOf="@id/iv_red_point"
+        android:textColor="@color/gray"
+        android:textSize="12.0sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
+        android:layout_marginRight="@dimen/dimen_15dp"
+        android:layout_marginBottom="@dimen/dimen_10dp"
+        android:background="@drawable/circle_white">
+
+        <ImageView
+            android:id="@+id/iv_red_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15dp"
+            android:layout_marginTop="@dimen/dimen_25dp"
+            android:background="@mipmap/icon_red_point"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/dimen_15dp"
+            android:layout_toRightOf="@id/iv_red_point"
+            android:text="----"
+            android:textColor="#ff333333"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1"
+            android:layout_below="@id/tv_title"
+            android:layout_marginLeft="@dimen/dimen_15dp"
+            android:layout_marginTop="@dimen/dimen_5dp"
+            android:layout_marginRight="@dimen/dimen_15dp"
+            android:layout_marginBottom="@dimen/dimen_25dp"
+            android:text="-----"
+            android:textColor="@color/gray" />
+    </RelativeLayout>
+</LinearLayout>

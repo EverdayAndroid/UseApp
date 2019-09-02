@@ -163,7 +163,7 @@ public class LoginActivity extends BaseActivity {
                 .add("phone", phone)
                 .add("", "")
                 .build();
-        HttpManager.getInstance().post("", this, body);
+//        HttpManager.getInstance().post("", this, body);
     }
 
     @Override
