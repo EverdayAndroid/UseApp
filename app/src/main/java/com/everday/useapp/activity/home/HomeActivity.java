@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity  {
         //记录下次启动不走启动广告页
         PreferencesUtils.put(UserConfig.FIRST_START,false,true);
         showFragment();
-        chekcVersion();
+//        chekcVersion();
     }
 
     /**

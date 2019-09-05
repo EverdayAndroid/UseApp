@@ -1,6 +1,7 @@
 package com.everday.useapp.activity.login;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,10 +15,19 @@ import android.widget.EditText;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
+import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.entity.CodeInfoBean;
+import com.everday.useapp.entity.ForgetPasswordInfoBean;
+import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.GsonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 /**
  * @author Everday
@@ -39,7 +49,11 @@ public class ForgetPasswordActivity extends BaseActivity {
     CheckBox boxPassword;
     @BindView(R.id.btn_reset)
     Button btnReset;
-    private String phone,code,password;
+    private String phone,code,password,bizId;
+    //请求标识
+    private int netCode;
+    private int countTime = 60;
+    private CountDownTimer downTimer;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_forget_password;
@@ -57,9 +71,17 @@ public class ForgetPasswordActivity extends BaseActivity {
      * 重置密码
      */
     public void resetPassword(){
+        netCode = 2;
         phone = editPhone.getText().toString().trim();
         code = editCode.getText().toString().trim();
         password = editPassword.getText().toString().trim();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("tele",phone)
+                .add("password",password)
+                .add("checkCode",code)
+                .add("bizId",bizId)
+                .build();
+        HttpManager.getInstance().post(Constants.HOST+ API.FORGETPWD,this,requestBody);
     }
 
     public void initListener(){
@@ -139,22 +161,62 @@ public class ForgetPasswordActivity extends BaseActivity {
             }
         });
     }
-    @OnClick({R.id.btn_reset,R.id.box_password})
+    @OnClick({R.id.btn_reset,R.id.box_password,R.id.btn_get_code})
     void OnClick(View view){
         switch (view.getId()){
             case R.id.btn_reset:
                 resetPassword();
+                break;
+            case R.id.btn_get_code:
+                if(TextUtils.isEmpty(phone)){
+                    BamToast.show(this,editPhone.getHint());
+                    return;
+                }
+                time();
+                netCode = 1;
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("tele",phone)
+                        .build();
+                HttpManager.getInstance().post(Constants.HOST+API.SENDCODE,this,requestBody);
+                BamToast.show(this, R.string.sendCode);
                 break;
             case R.id.box_password:
                 editPassword.setTransformationMethod(boxPassword.isChecked()? HideReturnsTransformationMethod.getInstance(): PasswordTransformationMethod.getInstance());
                 break;
         }
     }
+
+    public void time() {
+        downTimer = new CountDownTimer(countTime * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countTime--;
+                btnGetCode.setEnabled(false);
+                btnGetCode.setText(countTime + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                btnGetCode.setEnabled(true);
+                btnGetCode.setText(getString(R.string.getCode));
+                countTime = 60;
+            }
+        };
+        downTimer.start();
+    }
+
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
         if (isFinishing()) {
             return;
+        }
+        if(netCode == 1){
+            CodeInfoBean codeInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CodeInfoBean.class);
+            bizId = codeInfoBean.getData().getBizId();
+        }else if(netCode == 2){
+            ForgetPasswordInfoBean forgetPasswordInfoBean = GsonUtils.getInstance().parseJsonToBean(t, ForgetPasswordInfoBean.class);
+            BamToast.show(this,forgetPasswordInfoBean.getData().getMsg());
         }
     }
 
@@ -164,6 +226,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
 
     @Override
@@ -172,6 +235,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
 
 }

@@ -16,12 +16,23 @@ import android.widget.TextView;
 import com.everday.useapp.R;
 import com.everday.useapp.UseApplication;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.entity.UserBean;
+import com.everday.useapp.entity.UserInfoBean;
+import com.everday.useapp.network.ApiService;
+import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.GsonUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 /**
  * @author Everday
@@ -74,6 +85,11 @@ public class LoginAcountActivity extends BaseActivity {
             btnLogin.setEnabled(true);
             btnLogin.setBackgroundResource(R.mipmap.login_check_bg);
         }
+        RequestBody requestBody = new FormBody.Builder()
+                .add("tele",phone)
+                .add("password",password)
+                .build();
+        HttpManager.getInstance().post(Constants.HOST+ API.LOGIN,this,requestBody);
     }
 
     public void initListener(){
@@ -147,6 +163,12 @@ public class LoginAcountActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
+        PreferencesUtils.put(UserConfig.USERNAME,phone,false);
+        PreferencesUtils.put(UserConfig.PASSWORD,password,false);
+        PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
+        BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
+        finish();
     }
 
     @Override
@@ -155,6 +177,7 @@ public class LoginAcountActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(UseApplication.getApplication(),message);
     }
 
     @Override
@@ -163,5 +186,6 @@ public class LoginAcountActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(UseApplication.getApplication(),message);
     }
 }

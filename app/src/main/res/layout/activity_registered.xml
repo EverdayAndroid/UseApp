@@ -14,7 +14,7 @@
         <EditText
             android:id="@id/edit_phone"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_30dp"
+            android:layout_height="@dimen/dimen_48dp"
             android:layout_marginLeft="@dimen/dimen_30dp"
             android:layout_marginTop="@dimen/dimen_40dp"
             android:layout_marginRight="@dimen/dimen_30dp"
@@ -24,6 +24,26 @@
             android:hint="输入11位手机号"
             android:inputType="phone"
             android:maxLength="11"
+            android:textColor="@color/dark_black"
+            android:textColorHint="#ffcccccc"
+            android:textSize="@dimen/sp_16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.0px"
+            android:layout_marginLeft="@dimen/dimen_30dp"
+            android:layout_marginRight="@dimen/dimen_30dp"
+            android:background="@color/dark_line" />
+        <TextView
+            android:id="@+id/tv_merchant"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_marginLeft="@dimen/dimen_30dp"
+            android:layout_marginTop="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/dimen_30dp"
+            android:digits="\ 0123456789"
+            android:gravity="center|left"
+            android:hint="请选择商户"
             android:textColor="@color/dark_black"
             android:textColorHint="#ffcccccc"
             android:textSize="@dimen/sp_16sp" />

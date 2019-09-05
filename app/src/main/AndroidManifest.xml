@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".UseApplication"
@@ -13,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.login.LoginAcountActivity"></activity>
+        <activity android:name=".activity.login.MerchantActivity"></activity>
+        <activity android:name=".activity.login.LoginAcountActivity" />
         <activity android:name=".activity.login.PersonalActivity" />
         <activity android:name=".activity.login.CheckPasswordActivity" />
         <activity android:name=".activity.login.ForgetPasswordActivity" />

@@ -14,7 +14,7 @@ public class Constants {
     public static int NO_NET_WORK = 1000; //没有网络
     public static int THROWS_CODE = 5000; //异常码
 
-    public static String HOST = "https://api.gongxj.com/projectTask/";
+    public static String HOST = "http://2e657g5707.zicp.vip/";
     //行测地址
     public static String HOSTONE = "https://www.932edu.com/xc_test/";
     //申论地址

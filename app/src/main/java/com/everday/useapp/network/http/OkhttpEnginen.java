@@ -4,8 +4,10 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.utils.NetWorkUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class OkhttpEnginen implements IHttpEngien {
     @Override
     public void get(String url, Map<String, Object> params, final CallBack callBack) {
         Request request = new Request.Builder()
+                .addHeader("token", PreferencesUtils.get(UserConfig.TOKEN,"").toString())
                 .url(url)
                 .get()
                 .build();
@@ -73,8 +76,8 @@ public class OkhttpEnginen implements IHttpEngien {
 
     @Override
     public void post(final String url, final CallBack callBack, RequestBody body) {
-
         final Request request = new Request.Builder()
+                .addHeader("token", PreferencesUtils.get(UserConfig.TOKEN,"").toString())
                 .url(url)
                 .post(body)
                 .build();
@@ -111,7 +114,7 @@ public class OkhttpEnginen implements IHttpEngien {
                                 if (baseModel.getResultCode() == Constants.SUCCESS) {
                                     callBack.onSuccess(result);
                                 } else {
-                                    //TODO 其它处理
+                                    callBack.onFailure(baseModel.getMessage(),baseModel.getResultCode());
                                 }
                             }catch (Exception e){
                                 e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.everday.useapp.activity.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -8,20 +9,28 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.text.method.TransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
+import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.entity.BaseModel;
+import com.everday.useapp.entity.CodeInfoBean;
+import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.GsonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 
 /**
  * date:2019/8/29
@@ -45,10 +54,19 @@ public class RegisteredActivity extends BaseActivity {
     Button btnRegister;
     @BindView(R.id.text_agreement)
     TextView textAgreement;
+    @BindView(R.id.tv_merchant)
+    TextView tvMerchant;
     private int countTime = 60;
     private CountDownTimer downTimer;
     private String phone, code, password;
-
+    //请求标识
+    private int netCode;
+    //商户id
+    private int shId;
+    //商户名称
+    private String shmc;
+    //验证码业务标识
+    private String bizId;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_registered;
@@ -159,19 +177,65 @@ public class RegisteredActivity extends BaseActivity {
         downTimer.start();
     }
 
-    @OnClick({R.id.btn_get_code, R.id.btn_register, R.id.box_password})
+    @OnClick({R.id.btn_get_code, R.id.btn_register, R.id.box_password, R.id.tv_merchant})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_get_code:
+                if (TextUtils.isEmpty(phone)) {
+                    BamToast.show(this, "请输入手机号");
+                    return;
+                }
                 time();
+                netCode = 1;
+                RequestBody requestBody = new FormBody.Builder()
+                        .add("tele", phone)
+                        .build();
+                HttpManager.getInstance().post(Constants.HOST + API.SENDCODE, this, requestBody);
                 break;
             case R.id.btn_register:
+                if(shmc == null){
+                    BamToast.show(this,tvMerchant.getHint());
+                    return;
+                }
+                register();
                 break;
             case R.id.box_password:
                 editPassword.setTransformationMethod(boxPassword.isChecked() ? HideReturnsTransformationMethod.getInstance() : PasswordTransformationMethod.getInstance());
                 break;
+            case R.id.tv_merchant:
+                ActivityUtils.startActivityForResult(this, MerchantActivity.class);
+                break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(data !=null) {
+                shId = data.getIntExtra("shId", 0);
+                shmc = data.getStringExtra("shmc");
+                tvMerchant.setText(shmc);
+            }
+        }
+    }
+
+    /**
+     * 注册
+     */
+    public void register() {
+        netCode = 2;
+        RequestBody requestBody = new FormBody.Builder()
+                .add("tele", phone)
+                .add("password", password)
+                .add("shId", shId+"")
+                .add("shmc", shmc)
+                .add("checkCode", code)
+                .add("bizId", bizId)
+                .build();
+        HttpManager.getInstance().post(Constants.HOST + API.REGISTER, this, requestBody);
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -187,6 +251,14 @@ public class RegisteredActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        if (netCode == 1) {
+            CodeInfoBean codeInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CodeInfoBean.class);
+            bizId = codeInfoBean.getData().getBizId();
+//            code = codeInfoBean.getData().getCode();
+        } else if (netCode == 2) {
+            BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
+            BamToast.show(this,baseModel.getMessage());
+        }
     }
 
     @Override
@@ -195,6 +267,7 @@ public class RegisteredActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
 
     @Override
@@ -203,5 +276,7 @@ public class RegisteredActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
+
 }

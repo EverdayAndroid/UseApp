@@ -20,6 +20,7 @@ import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.EverdayLog;
+import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.Field;
@@ -44,6 +45,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected LoadingView loadingView;
     protected ImageView ivMessage,ivBack;
     protected TextView tvTitle,tvRight;
+    protected Gson gson;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,9 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
         ActivityManagement.getInstance().addActivity(this);
         initStatus();
         initData(savedInstanceState);
+        if(gson == null){
+            gson = new Gson();
+        }
     }
 
 
