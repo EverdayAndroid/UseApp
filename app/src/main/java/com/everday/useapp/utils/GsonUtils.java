@@ -34,4 +34,9 @@ public class GsonUtils {
         }
         return t;
     }
+
+    public String toObjectGson(Object object){
+        if(object == null){ return "";}
+       return gson.toJson(object);
+    }
 }

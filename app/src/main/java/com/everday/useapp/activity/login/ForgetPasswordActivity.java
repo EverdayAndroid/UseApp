@@ -19,14 +19,14 @@ import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.entity.CodeInfoBean;
+import com.everday.useapp.entity.ForgetPasswordBean;
 import com.everday.useapp.entity.ForgetPasswordInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.GsonUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -75,12 +75,13 @@ public class ForgetPasswordActivity extends BaseActivity {
         phone = editPhone.getText().toString().trim();
         code = editCode.getText().toString().trim();
         password = editPassword.getText().toString().trim();
-        RequestBody requestBody = new FormBody.Builder()
-                .add("tele",phone)
-                .add("password",password)
-                .add("checkCode",code)
-                .add("bizId",bizId)
-                .build();
+        ForgetPasswordBean forgetPasswordBean = new ForgetPasswordBean();
+        forgetPasswordBean.setTele(phone);
+        forgetPasswordBean.setPassword(password);
+        forgetPasswordBean.setCheckCode(code);
+        forgetPasswordBean.setBizId(bizId);
+        String gosn = GsonUtils.getInstance().toObjectGson(forgetPasswordBean);
+        RequestBody requestBody =  RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gosn);
         HttpManager.getInstance().post(Constants.HOST+ API.FORGETPWD,this,requestBody);
     }
 
@@ -174,9 +175,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 }
                 time();
                 netCode = 1;
-                RequestBody requestBody = new FormBody.Builder()
-                        .add("tele",phone)
-                        .build();
+                RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),phone);
                 HttpManager.getInstance().post(Constants.HOST+API.SENDCODE,this,requestBody);
                 BamToast.show(this, R.string.sendCode);
                 break;

@@ -22,16 +22,14 @@ import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.entity.UserBean;
 import com.everday.useapp.entity.UserInfoBean;
-import com.everday.useapp.network.ApiService;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -85,10 +83,11 @@ public class LoginAcountActivity extends BaseActivity {
             btnLogin.setEnabled(true);
             btnLogin.setBackgroundResource(R.mipmap.login_check_bg);
         }
-        RequestBody requestBody = new FormBody.Builder()
-                .add("tele",phone)
-                .add("password",password)
-                .build();
+        UserBean userBean = new UserBean();
+        userBean.setTele(phone);
+        userBean.setPassword(password);
+        String gson = GsonUtils.getInstance().toObjectGson(userBean);
+        RequestBody requestBody =  RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST+ API.LOGIN,this,requestBody);
     }
 

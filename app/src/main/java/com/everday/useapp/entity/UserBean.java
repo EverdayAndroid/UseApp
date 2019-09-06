@@ -18,6 +18,7 @@ public class UserBean {
     private String tele;
     private String shmc;
     private int status;
+    private String password;
 
     public String getBankNumber() {
         return bankNumber == null ? "" : bankNumber;
@@ -85,5 +86,17 @@ public class UserBean {
 
     public int getStatus() {
         return status;
+    }
+
+    public void setTele(String tele) {
+        this.tele = tele;
+    }
+
+    public String getPassword() {
+        return password == null ? "" : password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
