@@ -18,6 +18,7 @@ import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.entity.Code;
 import com.everday.useapp.entity.CodeInfoBean;
 import com.everday.useapp.entity.ForgetPasswordBean;
 import com.everday.useapp.entity.ForgetPasswordInfoBean;
@@ -175,7 +176,10 @@ public class ForgetPasswordActivity extends BaseActivity {
                 }
                 time();
                 netCode = 1;
-                RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),phone);
+                Code bean = new Code();
+                bean.setTele(phone);
+                String gson = GsonUtils.getInstance().toObjectGson(bean);
+                RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
                 HttpManager.getInstance().post(Constants.HOST+API.SENDCODE,this,requestBody);
                 BamToast.show(this, R.string.sendCode);
                 break;

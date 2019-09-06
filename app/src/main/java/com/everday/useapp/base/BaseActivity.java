@@ -186,15 +186,27 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     @Override
     public void onSuccess(String t) {
         if(isFinishing()){return;}
+        if(loadingView!=null){
+            loadingView.dismiss();
+
+        }
     }
 
     @Override
     public void onFailure(String message, int error){
         if(isFinishing()){return;}
+        if(loadingView!=null){
+            loadingView.dismiss();
+
+        }
     }
 
     @Override
     public void onThrows(String message, int error) {
         if(isFinishing()){return;}
+        if(loadingView!=null){
+            loadingView.dismiss();
+
+        }
     }
 }

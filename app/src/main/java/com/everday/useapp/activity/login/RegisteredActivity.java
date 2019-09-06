@@ -21,7 +21,10 @@ import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.entity.BaseModel;
+import com.everday.useapp.entity.Code;
 import com.everday.useapp.entity.CodeInfoBean;
+import com.everday.useapp.entity.ForgetPasswordBean;
+import com.everday.useapp.entity.ForgetPasswordInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
@@ -30,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -187,9 +191,10 @@ public class RegisteredActivity extends BaseActivity {
                 }
                 time();
                 netCode = 1;
-                RequestBody requestBody = new FormBody.Builder()
-                        .add("tele", phone)
-                        .build();
+                Code bean = new Code();
+                bean.setTele(phone);
+                RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),
+                        GsonUtils.getInstance().toObjectGson(bean));
                 HttpManager.getInstance().post(Constants.HOST + API.SENDCODE, this, requestBody);
                 break;
             case R.id.btn_register:
@@ -225,14 +230,15 @@ public class RegisteredActivity extends BaseActivity {
      */
     public void register() {
         netCode = 2;
-        RequestBody requestBody = new FormBody.Builder()
-                .add("tele", phone)
-                .add("password", password)
-                .add("shId", shId+"")
-                .add("shmc", shmc)
-                .add("checkCode", code)
-                .add("bizId", bizId)
-                .build();
+        ForgetPasswordBean forgetPasswordBean = new ForgetPasswordBean();
+        forgetPasswordBean.setBizId(bizId);
+        forgetPasswordBean.setPassword(password);
+        forgetPasswordBean.setCheckCode(code);
+        forgetPasswordBean.setTele(phone);
+        forgetPasswordBean.setShId(shId);
+        forgetPasswordBean.setShmc(shmc);
+        String gson = GsonUtils.getInstance().toObjectGson(forgetPasswordBean);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST + API.REGISTER, this, requestBody);
     }
 

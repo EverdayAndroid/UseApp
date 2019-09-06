@@ -12,6 +12,9 @@ public class ForgetPasswordBean {
     private String password;
     private String checkCode;
     private String bizId;
+    private String code;
+    private String shmc;
+    private Integer shId;
     public String getMsg() {
         return msg == null ? "" : msg;
     }
@@ -50,5 +53,29 @@ public class ForgetPasswordBean {
 
     public void setBizId(String bizId) {
         this.bizId = bizId;
+    }
+
+    public String getCode() {
+        return code == null ? "" : code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getShmc() {
+        return shmc == null ? "" : shmc;
+    }
+
+    public void setShmc(String shmc) {
+        this.shmc = shmc;
+    }
+
+    public Integer getShId() {
+        return shId;
+    }
+
+    public void setShId(Integer shId) {
+        this.shId = shId;
     }
 }

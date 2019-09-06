@@ -18,6 +18,7 @@ import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.entity.CheckPassword;
 import com.everday.useapp.entity.ForgetPasswordInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.GsonUtils;
@@ -27,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -146,12 +148,13 @@ public class CheckPasswordActivity extends BaseActivity {
         password = editPassword.getText().toString().trim();
         oldPassword = editOldPassword.getText().toString().trim();
         passwordAgain = editPasswordAgain.getText().toString().trim();
-        RequestBody requestBody = new FormBody.Builder()
-                .add("tele", PreferencesUtils.get(UserConfig.USERNAME,"").toString())
-                .add("oldpassword",oldPassword)
-                .add("newpassword1",password)
-                .add("newpassword2",passwordAgain)
-                .build();
+        CheckPassword checkPassword = new CheckPassword();
+        checkPassword.setTele(PreferencesUtils.get(UserConfig.TELE,"").toString());
+        checkPassword.setOldpassword(oldPassword);
+        checkPassword.setNewpassword1(password);
+        checkPassword.setNewpassword2(passwordAgain);
+        String gson = GsonUtils.getInstance().toObjectGson(checkPassword);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST+ API.UPDATEPASSWORD,this,requestBody);
     }
     @OnClick({R.id.bt_change,R.id.box_password,R.id.box_old_password,R.id.box_password_again})

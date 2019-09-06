@@ -83,6 +83,7 @@ public class LoginAcountActivity extends BaseActivity {
             btnLogin.setEnabled(true);
             btnLogin.setBackgroundResource(R.mipmap.login_check_bg);
         }
+        loadingView.show(getSupportFragmentManager(),"login");
         UserBean userBean = new UserBean();
         userBean.setTele(phone);
         userBean.setPassword(password);
@@ -163,9 +164,11 @@ public class LoginAcountActivity extends BaseActivity {
             return;
         }
         UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
-        PreferencesUtils.put(UserConfig.USERNAME,phone,false);
+        PreferencesUtils.put(UserConfig.USERNAME,userInfoBean.getData().getAppAccount().getNickName(),false);
         PreferencesUtils.put(UserConfig.PASSWORD,password,false);
         PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
+        PreferencesUtils.put(UserConfig.AVATAR,userInfoBean.getData().getAppAccount().getAvatar(),false);
+        PreferencesUtils.put(UserConfig.TELE,phone,false);
         BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
         finish();
     }
