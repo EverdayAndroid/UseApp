@@ -6,16 +6,22 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.everday.useapp.R;
 import com.everday.useapp.UseApplication;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.entity.UserBean;
+import com.everday.useapp.entity.UserInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
@@ -24,7 +30,7 @@ import com.everday.useapp.utils.PreferencesUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
@@ -43,9 +49,14 @@ public class LoginActivity extends BaseActivity {
     EditText editCode;
     @BindView(R.id.btn_get_code)
     Button btnGetCode;
+    @BindView(R.id.box_password)
+    CheckBox boxPassword;
+    @BindView(R.id.edit_password)
+    EditText editPassword;
     private int countTime = 60;
     private CountDownTimer downTimer;
-    private String phone,code;
+    private String phone, code,password;
+
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_login;
@@ -54,7 +65,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        tvTitle.setText("账号登录");
+//        tvTitle.setText("账号登录");
         initListener();
     }
 
@@ -80,6 +91,7 @@ public class LoginActivity extends BaseActivity {
     public void initListener() {
         phone = editPhone.getText().toString().trim();
         code = editCode.getText().toString().trim();
+        password = editPassword.getText().toString().trim();
         editPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -89,31 +101,6 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 phone = s.toString();
-                if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(code) ) {
-                    btnLogin.setEnabled(false);
-                    btnLogin.setClickable(false);
-                    btnLogin.setBackgroundResource(R.mipmap.login_uncheck_bg);
-                } else {
-                    btnLogin.setEnabled(true);
-                    btnLogin.setClickable(true);
-                    btnLogin.setBackgroundResource(R.mipmap.login_check_bg);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        editCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                code = s.toString();
                 if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(code)) {
                     btnLogin.setEnabled(false);
                     btnLogin.setClickable(false);
@@ -127,12 +114,60 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
+//        editCode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                code = s.toString();
+//                if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(code)) {
+//                    btnLogin.setEnabled(false);
+//                    btnLogin.setClickable(false);
+//                    btnLogin.setBackgroundResource(R.mipmap.login_uncheck_bg);
+//                } else {
+//                    btnLogin.setEnabled(true);
+//                    btnLogin.setClickable(true);
+//                    btnLogin.setBackgroundResource(R.mipmap.login_check_bg);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                password = s.toString();
+                if (TextUtils.isEmpty(phone) || TextUtils.isEmpty(password)) {
+                    btnLogin.setEnabled(false);
+                    btnLogin.setClickable(false);
+                    btnLogin.setBackgroundResource(R.mipmap.login_uncheck_bg);
+                } else {
+                    btnLogin.setEnabled(true);
+                    btnLogin.setClickable(true);
+                    btnLogin.setBackgroundResource(R.mipmap.login_check_bg);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
-    
-    @OnClick({R.id.text_register, R.id.layout_login_pwd,R.id.btn_get_code,R.id.btn_login})
+
+    @OnClick({R.id.text_register, R.id.layout_login_pwd, R.id.btn_get_code, R.id.btn_login,R.id.img_close,R.id.text_forget,R.id.box_password})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.text_register:
@@ -145,25 +180,29 @@ public class LoginActivity extends BaseActivity {
                 //账户登陆
                 ActivityUtils.startActivity(this, LoginAcountActivity.class);
                 break;
+            case R.id.box_password:
+                editPassword.setTransformationMethod(boxPassword.isChecked() ? HideReturnsTransformationMethod.getInstance() : PasswordTransformationMethod.getInstance());
+                break;
             case R.id.btn_get_code:
                 time();
+                break;
+            case R.id.img_close:
+                finish();
+                break;
+            case R.id.text_forget:
+                ActivityUtils.startActivity(this,ForgetPasswordActivity.class);
                 break;
         }
     }
 
     public void login() {
-        PreferencesUtils.put(UserConfig.USERNAME, "wt", false);
-        BamToast.show(UseApplication.getApplication(),"登录成功");
-        finish();
-        String phone = editPhone.getText().toString();
-        if (TextUtils.isEmpty(phone)) {
-            return;
-        }
-        RequestBody body = new FormBody.Builder()
-                .add("phone", phone)
-                .add("", "")
-                .build();
-//        HttpManager.getInstance().post("", this, body);
+        loadingView.show(getSupportFragmentManager(), "login");
+        UserBean userBean = new UserBean();
+        userBean.setTele(phone);
+        userBean.setPassword(password);
+        String gson = GsonUtils.getInstance().toObjectGson(userBean);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
+        HttpManager.getInstance().post(Constants.HOST + API.LOGIN, this, requestBody);
     }
 
     @Override
@@ -172,7 +211,25 @@ public class LoginActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        GsonUtils.getInstance().parseJsonToBean(t, UserBean.class);
+        UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
+        PreferencesUtils.put(UserConfig.USERNAME,userInfoBean.getData().getAppAccount().getNickName(),false);
+        PreferencesUtils.put(UserConfig.PASSWORD,password,false);
+        PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
+        PreferencesUtils.put(UserConfig.AVATAR,userInfoBean.getData().getAppAccount().getAvatar(),false);
+        PreferencesUtils.put(UserConfig.TELE,phone,false);
+        if(userInfoBean.getData().getAppAccount().getStatus() == 1){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 2){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 3){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 4){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 5){
+
+        }
+        BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
+        finish();
     }
 
     @Override
@@ -181,6 +238,7 @@ public class LoginActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
 
     @Override
@@ -189,12 +247,15 @@ public class LoginActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+    protected void onDestroy() {
+        super.onDestroy();
+        if (downTimer != null) {
+            downTimer.cancel();
+            downTimer = null;
+        }
     }
 }

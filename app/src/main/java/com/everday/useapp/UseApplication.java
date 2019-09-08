@@ -9,6 +9,7 @@ import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.OkhttpEnginen;
 import com.everday.useapp.utils.NetWorkUtils;
 import com.everday.useapp.utils.PreferencesUtils;
+import com.lzy.okgo.OkGo;
 
 public class UseApplication extends Application {
     private static Application application;
@@ -26,6 +27,7 @@ public class UseApplication extends Application {
         NetWorkUtils.init(this);
         PreferencesUtils.initConext(this);
         HttpManager.getInstance().init(new OkhttpEnginen());
+        OkGo.getInstance().init(this);
     }
 
     /**

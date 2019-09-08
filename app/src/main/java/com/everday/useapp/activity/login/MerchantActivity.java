@@ -15,7 +15,7 @@ import com.everday.useapp.activity.login.adapter.MerchantAdapter;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
-import com.everday.useapp.entity.MerchantBean;
+import com.everday.useapp.entity.Merchant;
 import com.everday.useapp.entity.MerchantInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.CallBack;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Everday
@@ -47,8 +47,8 @@ public class MerchantActivity extends BaseActivity implements CallBack, OnRefres
     @BindView(R.id.mNo_net_layout)
     LinearLayout mNoNetLayout;
     private MerchantAdapter mAdapter;
-    private List<MerchantBean> mlist;
-    private int resultCode;
+    private List<Merchant> mlist;
+    private int pageNumber = 1;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_merchant;
@@ -63,10 +63,11 @@ public class MerchantActivity extends BaseActivity implements CallBack, OnRefres
         mAdapter = new MerchantAdapter(R.layout.adapter_merchant_item,mlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
+        refreshLayout.setOnRefreshLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                MerchantBean merchantBean = mlist.get(position);
+                Merchant merchantBean = mlist.get(position);
                 Intent intent = new Intent();
                 intent.putExtra("shId",merchantBean.getShId());
                 intent.putExtra("shmc",merchantBean.getShmc());
@@ -74,11 +75,17 @@ public class MerchantActivity extends BaseActivity implements CallBack, OnRefres
                 finish();
             }
         });
-        merchant();
+        merchant(true);
     }
 
-    public void merchant() {
-        loadingView.show(getSupportFragmentManager(), "");
+    /**
+     * 加载数据
+     * @param isLoading
+     */
+    public void merchant(boolean isLoading) {
+        if(isLoading) {
+            loadingView.show(getSupportFragmentManager(), "loading");
+        }
         HttpManager.getInstance().get(Constants.HOST + API.MERCHANT, null, this);
     }
 
@@ -90,12 +97,18 @@ public class MerchantActivity extends BaseActivity implements CallBack, OnRefres
         }
         loadingView.dismiss();
         MerchantInfoBean merchantInfoBean = GsonUtils.getInstance().parseJsonToBean(t, MerchantInfoBean.class);
-        mlist.addAll(merchantInfoBean.getData());
+        mlist.addAll(merchantInfoBean.getData().getList());
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);
             nodataView.setVisibility(View.VISIBLE);
             mNoNetLayout.setVisibility(View.GONE);
         }else {
+            refreshLayout.setVisibility(View.VISIBLE);
+            nodataView.setVisibility(View.GONE);
+            mNoNetLayout.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+            nodataView.setVisibility(View.GONE);
+            mNoNetLayout.setVisibility(View.GONE);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -127,11 +140,22 @@ public class MerchantActivity extends BaseActivity implements CallBack, OnRefres
     }
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+        pageNumber += 1;
+        refreshLayout.finishLoadMore();
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        pageNumber = 1;
+        refreshLayout.finishRefresh();
+    }
 
+    @OnClick({R.id.mReload_btn})
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.mReload_btn:
+                merchant(true);
+                break;
+        }
     }
 }

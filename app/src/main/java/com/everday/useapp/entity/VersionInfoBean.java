@@ -7,19 +7,19 @@ package com.everday.useapp.entity;
  */
 public class VersionInfoBean {
     private VersionBean data;
-    private String message;
-    private int resultCode;
+    private String msg;
+    private int code;
 
     public VersionBean getData() {
         return data;
     }
 
     public String getMessage() {
-        return message == null ? "" : message;
+        return msg == null ? "" : msg;
     }
 
     public int getResultCode() {
-        return resultCode;
+        return code;
     }
 
 }

@@ -11,11 +11,16 @@ import com.bumptech.glide.Glide;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.view.ImageInterFace;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.ChooseImageDialog;
 import com.everday.useapp.dialog.UseDialog;
+import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.FileUtils;
 import com.everday.useapp.utils.GlideCircleTransform;
+import com.everday.useapp.utils.PreferencesUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
@@ -34,6 +39,10 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * @author Everday
@@ -75,6 +84,8 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         super.initData(savedInstanceState);
         tvTitle.setText("个人中心");
         ivMessage.setVisibility(View.GONE);
+        String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
+        textNickName.setText(userName);
     }
 
     @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login,R.id.layout_nickName})
@@ -85,7 +96,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 chooseImageDialog.show();
                 break;
             case R.id.layout_change_password:
-                ActivityUtils.startActivity(this, ForgetPasswordActivity.class);
+                ActivityUtils.startActivity(this, CheckPasswordActivity.class);
                 break;
             case R.id.tv_out_login:
                 UseDialog.getInstance("是否确定要退出当前账号?", "确定", "取消").show(getSupportFragmentManager(), "usedialog");
@@ -103,6 +114,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 1:
+                if(data == null){return;}
                 String name = data.getStringExtra("name");
                 textNickName.setText(name);
                 break;
@@ -113,6 +125,15 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     public void takeSuccess(TResult result) {
         compressPath = result.getImage().getCompressPath();
         Glide.with(this).load(compressPath).bitmapTransform(new GlideCircleTransform(this)).into(imagePhoto);
+
+        loadingView.show(getSupportFragmentManager(),"loading");
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("avatar",
+                        "avatar.png",
+                        RequestBody.create(MultipartBody.FORM, new File(compressPath)))
+                .build();
+        HttpManager.getInstance().post(Constants.HOST+ API.UPLOADAVATAR,this,requestBody);
     }
 
     @Override

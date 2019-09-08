@@ -111,6 +111,10 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
         switch (view.getId()){
             case R.id.dialog_leftbtn:
                 PreferencesUtils.put(UserConfig.USERNAME,"",false);
+                PreferencesUtils.put(UserConfig.PASSWORD,"",false);
+                PreferencesUtils.put(UserConfig.TOKEN,"",false);
+                PreferencesUtils.put(UserConfig.AVATAR,"",false);
+                PreferencesUtils.put(UserConfig.TELE,"",false);
                 BamToast.show(getActivity(),"退出成功");
                 getActivity().finish();
                 ActivityUtils.startActivity(getActivity(), LoginActivity.class);

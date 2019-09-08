@@ -3,13 +3,18 @@ package com.everday.useapp.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskInfoBean {
-
+/**
+ * @author Everday
+ * @emil wangtaohandsome@gmail.com
+ * create at 2019/9/8
+ * description: 消息
+ */
+public class MessageInfoBean {
 
     /**
      * msg : OK
      * code : 200
-     * data : {"state":"ok","page":{"totalRow":0,"pageNumber":1,"lastPage":true,"firstPage":true,"totalPage":0,"pageSize":20,"list":[]}}
+     * data : {"state":"ok","page":{"totalRow":1,"pageNumber":1,"lastPage":true,"firstPage":true,"totalPage":1,"pageSize":10,"list":[{"id":1,"title":"通知公告","typeName":"发布测试","pubDate":"2019-08-26 00:00:00","content":"12321"}]}}
      */
 
     private String msg;
@@ -43,7 +48,7 @@ public class TaskInfoBean {
     public static class DataBean {
         /**
          * state : ok
-         * page : {"totalRow":0,"pageNumber":1,"lastPage":true,"firstPage":true,"totalPage":0,"pageSize":20,"list":[]}
+         * page : {"totalRow":1,"pageNumber":1,"lastPage":true,"firstPage":true,"totalPage":1,"pageSize":10,"list":[{"id":1,"title":"通知公告","typeName":"发布测试","pubDate":"2019-08-26 00:00:00","content":"12321"}]}
          */
 
         private String state;
@@ -67,13 +72,13 @@ public class TaskInfoBean {
 
         public static class PageBean {
             /**
-             * totalRow : 0
+             * totalRow : 1
              * pageNumber : 1
              * lastPage : true
              * firstPage : true
-             * totalPage : 0
-             * pageSize : 20
-             * list : []
+             * totalPage : 1
+             * pageSize : 10
+             * list : [{"id":1,"title":"通知公告","typeName":"发布测试","pubDate":"2019-08-26 00:00:00","content":"12321"}]
              */
 
             private int totalRow;
@@ -82,7 +87,7 @@ public class TaskInfoBean {
             private boolean firstPage;
             private int totalPage;
             private int pageSize;
-            private List<TaskBean> list;
+            private List<MessageBean> list;
 
             public int getTotalRow() {
                 return totalRow;
@@ -132,7 +137,7 @@ public class TaskInfoBean {
                 this.pageSize = pageSize;
             }
 
-            public List<TaskBean> getList() {
+            public List<MessageBean> getList() {
                 if (list == null) {
                     return new ArrayList<>();
                 }

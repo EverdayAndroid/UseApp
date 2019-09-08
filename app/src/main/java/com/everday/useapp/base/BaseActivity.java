@@ -96,6 +96,11 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     }
 
     @Override
+    public int initStatusColor() {
+        return 0;
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if(ivMessage!=null){
             ivMessage.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +141,11 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
             //设置为true就不会出现头部view和状态栏重叠
 //            window.getDecorView().setFitsSystemWindows(false);
             //设置状态栏颜色
-            window.setStatusBarColor(Color.TRANSPARENT);
-
+            if(initStatusColor() != 0){
+                window.setStatusBarColor(Color.parseColor("#ff3ea6fe"));
+            }else {
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }
             //设置底部虚拟导航栏颜色
             window.setNavigationBarColor(Color.BLACK);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.0系统

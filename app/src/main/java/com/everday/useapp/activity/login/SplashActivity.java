@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.everday.useapp.R;
 import com.everday.useapp.activity.home.HomeActivity;
@@ -48,8 +49,11 @@ public class SplashActivity extends BaseActivity {
             switch (msg.what){
                 case 1:
                     boolean firstStart = (boolean) PreferencesUtils.get(UserConfig.FIRST_START, true);
+                    String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
                     if(firstStart){
                         ActivityUtils.startActivity(SplashActivity.this,AppGuideActivity.class);
+                    }else if(TextUtils.isEmpty(tele)){
+                        ActivityUtils.startActivity(SplashActivity.this,LoginActivity.class);
                     }else{
                         ActivityUtils.startActivity(SplashActivity.this, HomeActivity.class);
                     }

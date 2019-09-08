@@ -1,5 +1,8 @@
 package com.everday.useapp.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Everday
  * @emil wangtaohandsome@gmail.com
@@ -7,14 +10,17 @@ package com.everday.useapp.entity;
  * description: 商户信息
  */
 public class MerchantBean {
-    private int shId;
-    private String shmc;
+    private String state;
+    private List<Merchant> list;
 
-    public int getShId() {
-        return shId;
+    public String getState() {
+        return state == null ? "" : state;
     }
 
-    public String getShmc() {
-        return shmc == null ? "" : shmc;
+    public List<Merchant> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
+        return list;
     }
 }

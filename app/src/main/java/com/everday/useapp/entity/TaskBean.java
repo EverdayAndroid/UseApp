@@ -1,16 +1,19 @@
 package com.everday.useapp.entity;
+
+import java.io.Serializable;
+
 /**
  * @author Everday
  * @emil wangtaohandsome@gmail.com
  * create at 2019/8/31
  * description: 待接单
  */
-public class TaskBean {
+public class TaskBean implements Serializable {
     private Integer id;
     //派单商户标识
     private Integer shld;
     //派单商户名称
-    private Integer shmc;
+    private String shmc;
     //任务编号
     private String taskBh;
     //	任务名称
@@ -48,11 +51,8 @@ public class TaskBean {
         return shld;
     }
 
-    public Integer getShmc() {
-        if(shmc ==null){
-            shmc = 0;
-        }
-        return shmc;
+    public String getShmc() {
+        return shmc == null ? "":shmc;
     }
 
     public String getTaskBh() {
@@ -116,7 +116,7 @@ public class TaskBean {
         this.shld = shld;
     }
 
-    public void setShmc(Integer shmc) {
+    public void setShmc(String shmc) {
         this.shmc = shmc;
     }
 

@@ -169,6 +169,17 @@ public class LoginAcountActivity extends BaseActivity {
         PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
         PreferencesUtils.put(UserConfig.AVATAR,userInfoBean.getData().getAppAccount().getAvatar(),false);
         PreferencesUtils.put(UserConfig.TELE,phone,false);
+        if(userInfoBean.getData().getAppAccount().getStatus() == 1){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 2){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 3){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 4){
+
+        }else if(userInfoBean.getData().getAppAccount().getStatus() == 5){
+
+        }
         BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
         finish();
     }

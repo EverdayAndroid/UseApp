@@ -21,4 +21,21 @@ public class API {
     public static String USERDETAIL = "appuserApi/userDetail";
     //商户列表
     public static String MERCHANT = "shglApi/shlb";
+
+    //查询个人头像
+    public static String GETAVATAR = "app/setting/getAvatar";
+    //修改个人头像
+    public static String UPLOADAVATAR = "app/setting/uploadAvatar";
+    //修改个人昵称
+    public static String UPDATENICKNAME = "appuserApi/updateNickName";
+    //待接单分页查询
+    public static String GETTASKDJD = "taskApi/getTaskdjd";
+    //接单按钮接口
+    public static String TAKETASK = "taskApi/takeTask";
+    //我的任务列表
+    public static String GETMYTASK = "taskApi/getMyTask";
+    //app版本升级
+    public static String UPDATEBYVERSION = "appupdate/updateByVersion";
+    //我的消息
+    public static String NOTICE = "noticeApi/notice";
 }

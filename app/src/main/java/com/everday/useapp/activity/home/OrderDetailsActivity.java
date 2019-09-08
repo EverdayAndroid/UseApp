@@ -3,6 +3,8 @@ package com.everday.useapp.activity.home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,10 +14,22 @@ import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
+import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.dialog.OrderDialog;
+import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.entity.TaskBean;
+import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.GsonUtils;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @author Everday
@@ -149,6 +163,8 @@ public class OrderDetailsActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         tvTitle.setText("任务详情");
+        Bundle extras = getIntent().getExtras();
+        taskBean = (TaskBean) extras.getSerializable("bean");
         tvName.setText(taskBean.getTaskName());
         tvPrice.setText(taskBean.getYjfy()+"");
         tvPositionName.setText("");
@@ -157,22 +173,48 @@ public class OrderDetailsActivity extends BaseActivity {
         tvTime.setText(taskBean.getDuration()+"小时");
         tvPickAddress.setText(taskBean.getAddress());
         tvStartDistance.setText("里程");
-        tvJobScrip.setText(taskBean.getDes());
+        Spanned spanned = Html.fromHtml(taskBean.getDes());
+        tvJobScrip.setText(spanned.toString());
         tvCompanyName.setText("来源");
         tvNo.setText(taskBean.getTaskBh());
 
+    }
+
+
+    @OnClick({R.id.bt_take_job})
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.bt_take_job:
+                job();
+                break;
+        }
+    }
+
+    /**
+     * 接单
+     */
+    public void job(){
+        loadingView.show(getSupportFragmentManager(),"loading");
+        String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        HttpManager.getInstance().post(Constants.HOST+ API.TAKETASK,this,requestBody);
     }
 
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
         if(isFinishing()){return;}
+        BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
+        BamToast.show(this,baseModel.getMessage());
     }
 
     @Override
     public void onFailure(String message, int error) {
         super.onFailure(message, error);
         if(isFinishing()){return;}
+        if (error == Constants.BUSINESS_ERROR) {
+            OrderDialog.getInstance(message).show(getSupportFragmentManager(), "orderDialog");
+        }
     }
 
     @Override

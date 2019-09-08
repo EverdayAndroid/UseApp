@@ -6,12 +6,12 @@ package com.everday.useapp.entity;
  * description: 验证码
  */
 public class CodeBean {
-    private String code;
+    private String checkCode;
     private String bizId;
     private String state;
 
     public String getCode() {
-        return code == null ? "" : code;
+        return checkCode == null ? "" : checkCode;
     }
 
     public String getBizId() {

@@ -2,7 +2,7 @@ package com.everday.useapp.entity;
 
 public class BaseModel {
     private Object data;
-    private String message;
+    private String msg;
     private int code;
 
     public Object getData() {
@@ -10,7 +10,7 @@ public class BaseModel {
     }
 
     public String getMessage() {
-        return message == null ? "" : message;
+        return msg == null ? "" : msg;
     }
 
     public int getResultCode() {

@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.RadioButton;
@@ -31,6 +34,8 @@ import com.everday.useapp.activity.home.fragment.HomeFragment;
 import com.everday.useapp.activity.home.fragment.MineFragment;
 import com.everday.useapp.activity.home.fragment.TaskFragment;
 import com.everday.useapp.base.BaseActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.UpDateDialogFragment;
 import com.everday.useapp.entity.VersionInfoBean;
@@ -56,6 +61,8 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @author Everday
@@ -65,6 +72,7 @@ import okhttp3.FormBody;
  */
 public class HomeActivity extends BaseActivity  {
     private static final int INSTALL_PACKAGES_REQUESTCODE = 1000;
+    private static final int WRITE_EXTERNAL_STORAGE = 1001;
     //授权完成后，开始安装
     private static final int GET_UNKNOWN_APP_SOURCES = 100;
     @BindView(R.id.radio_home)
@@ -96,7 +104,13 @@ public class HomeActivity extends BaseActivity  {
         //记录下次启动不走启动广告页
         PreferencesUtils.put(UserConfig.FIRST_START,false,true);
         showFragment();
-//        chekcVersion();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkCallingPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
+            }
+        } else {
+            chekcVersion();
+        }
     }
 
     /**
@@ -172,18 +186,21 @@ public class HomeActivity extends BaseActivity  {
         showFragment();
     }
 
+    /**
+     * 版本更新
+     */
     public void chekcVersion() {
-        gotoDownloadNewVersion("http://oss.pgyer.com/8fa98b26b4911b78657c059cc9b68e2a.apk?auth_key=1567438030-db5f034c6e49c0270428c2114631c256-0-f0085d0b4e1dec950dfe7a97e1d70875&response-content-disposition=attachment%3B+filename%3Dapp-debug.apk");
-        FormBody.Builder builder = new FormBody.Builder();
-//        HttpManager.getInstance().get("http://oss.pgyer.com/8fa98b26b4911b78657c059cc9b68e2a.apk?auth_key=1567438030-db5f034c6e49c0270428c2114631c256-0-f0085d0b4e1dec950dfe7a97e1d70875&response-content-disposition=attachment%3B+filename%3Dapp-debug.apk", null, this);
+        String gson = "{\"version\":"+AppUtils.getLocalVersion()+"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        HttpManager.getInstance().post(Constants.HOST+ API.UPDATEBYVERSION, this, requestBody);
     }
 
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
         VersionInfoBean versionInfoBean = GsonUtils.getInstance().parseJsonToBean(t, VersionInfoBean.class);
-        if (AppUtils.getLocalVersion() < versionInfoBean.getData().getAppCode()) {
-            showNewVersion(versionInfoBean.getData().getAppUpdateContent(), versionInfoBean.getData().getAppDownloadPaht(), versionInfoBean.getData().getForce());
+        if (versionInfoBean.getData().getIsUpdate() == 1) {
+            showNewVersion(versionInfoBean.getData().getNote(), versionInfoBean.getData().getAndroid(), versionInfoBean.getData().getForce());
         }
     }
 
@@ -293,7 +310,8 @@ public class HomeActivity extends BaseActivity  {
 
         builder = new NotificationCompat.Builder(HomeActivity.this, channelId);
         builder.setContentTitle("老吴公考更新Apk") //设置通知标题
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.ic_launcher_round)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
                 .setDefaults(Notification.DEFAULT_LIGHTS) //设置通知的提醒方式： 呼吸灯
                 .setPriority(NotificationCompat.PRIORITY_MAX) //设置通知的优先级：最大
                 .setAutoCancel(true)  //
@@ -369,7 +387,7 @@ public class HomeActivity extends BaseActivity  {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //判断是否是Android 7.0以及更高的版本
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Uri contentUri = FileProvider.getUriForFile(HomeActivity.this, "com.lwgk.fileprovider", mApkFile);
+            Uri contentUri = FileProvider.getUriForFile(HomeActivity.this, getPackageName()+".fileprovider", mApkFile);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
@@ -421,6 +439,11 @@ public class HomeActivity extends BaseActivity  {
                     Uri packageURI = Uri.parse("package:" + getPackageName());
                     Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
                     startActivityForResult(intent, GET_UNKNOWN_APP_SOURCES);
+                }
+                break;
+            case WRITE_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    chekcVersion();
                 }
                 break;
         }

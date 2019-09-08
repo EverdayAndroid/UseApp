@@ -2,6 +2,7 @@ package com.everday.useapp.base;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 
 public interface IActivity {
@@ -30,4 +31,9 @@ public interface IActivity {
      */
     void initStatus();
 
+    /**
+     * 状态栏背景
+     * @return
+     */
+    int initStatusColor();
 }

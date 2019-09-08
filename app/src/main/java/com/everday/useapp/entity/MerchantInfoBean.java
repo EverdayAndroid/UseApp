@@ -18,7 +18,7 @@ public class MerchantInfoBean {
 
     private String msg;
     private String code;
-    private List<MerchantBean> data;
+    private MerchantBean data;
 
     public String getMsg() {
         return msg == null ? "" : msg;
@@ -28,10 +28,7 @@ public class MerchantInfoBean {
         return code == null ? "" : code;
     }
 
-    public List<MerchantBean> getData() {
-        if (data == null) {
-            return new ArrayList<>();
-        }
+    public MerchantBean getData() {
         return data;
     }
 }

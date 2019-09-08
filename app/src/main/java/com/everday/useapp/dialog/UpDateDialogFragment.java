@@ -21,20 +21,21 @@ import java.util.ArrayList;
  * create Date:2018/7/10 18:16
  */
 public class UpDateDialogFragment extends DialogFragment {
-
+    String versionno,title;
+    int isForbbiden;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // 注意，这里不再需要 getActivity().getLayoutInflater(), 因为 BaseDialogFragment 已经返回了正确的 inflater
         View view = inflater.inflate(R.layout.popupwindow_new_version, container, false);
         Bundle bundle = getArguments();
-        String versionno;
-        int isForbbiden;
         ArrayList<String> updateInfo;
         if (bundle != null) {
             versionno = bundle.getString("versionno");
+            title = bundle.getString("title");
             isForbbiden = bundle.getInt("isForbbiden");//默认0
             updateInfo = (ArrayList<String>) bundle.getSerializable("updateinfo");
+            TextView tvTitle = view.findViewById(R.id.tv_title);
             TextView tvNewVersionInfo = view.findViewById(R.id.tv_new_version_info);
             LinearLayout llNotForbbiden = view.findViewById(R.id.ll_not_forbbiden);
             Button btnImmediateExp = view.findViewById(R.id.btn_immediate_experience);//立即更新
@@ -43,6 +44,7 @@ public class UpDateDialogFragment extends DialogFragment {
             } else {//强制更新
                 btnImmediateExp.setVisibility(View.VISIBLE);
             }
+            tvTitle.setText("是否升级到"+title+"版本？");
             tvNewVersionInfo.setText(new StringBuilder().append("发现新版本").append(versionno).toString());
 
             btnImmediateExp.setOnClickListener(new View.OnClickListener() {

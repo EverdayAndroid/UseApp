@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <application
         android:name=".UseApplication"
         android:allowBackup="true"
@@ -14,20 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.login.MerchantActivity"></activity>
-        <activity android:name=".activity.login.LoginAcountActivity" />
-        <activity android:name=".activity.login.PersonalActivity" />
-        <activity android:name=".activity.login.CheckPasswordActivity" />
-        <activity android:name=".activity.login.ForgetPasswordActivity" />
-        <activity android:name=".activity.home.OrderDetailsActivity" />
-        <activity android:name=".activity.money.MoneyListActivity" />
-        <activity android:name=".activity.money.MoneyWithdrawActivity" />
-        <activity android:name=".activity.money.MoneyActivity" />
-        <activity android:name=".activity.login.MessageActivity" />
-        <activity android:name=".activity.login.RegisteredActivity" />
-        <activity android:name=".activity.login.LoginActivity" />
-        <activity android:name=".activity.login.UserNameActivity" />
-
         <meta-data
             android:name="design_width_in_dp"
             android:value="360" />
@@ -42,8 +30,51 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.login.AppGuideActivity" />
-        <activity android:name=".activity.home.HomeActivity" />
+        <activity
+            android:name=".activity.login.AppGuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.MerchantActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.LoginAcountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.PersonalActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.CheckPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.home.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.money.MoneyListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.money.MoneyWithdrawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.money.MoneyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.RegisteredActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.UserNameActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

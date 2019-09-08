@@ -472,7 +472,7 @@
                     android:id="@+id/tv_job_scrip"
                     style="@style/black_content"
                     android:layout_marginLeft="@dimen/dimen_20dp"
-                    android:lineSpacingExtra="@dimen/dimen_20dp"
+                    android:lineSpacingExtra="0.1dp"
                     android:text="----" />
             </LinearLayout>
 

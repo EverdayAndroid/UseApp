@@ -102,9 +102,9 @@ public class RegisteredActivity extends BaseActivity {
                     btnRegister.setClickable(false);
                     btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
                 } else {
-                    btnRegister.setEnabled(false);
-                    btnRegister.setClickable(false);
-                    btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
+                    btnRegister.setEnabled(true);
+                    btnRegister.setClickable(true);
+                    btnRegister.setBackgroundResource(R.mipmap.login_check_bg);
                 }
             }
 
@@ -127,9 +127,9 @@ public class RegisteredActivity extends BaseActivity {
                     btnRegister.setClickable(false);
                     btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
                 } else {
-                    btnRegister.setEnabled(false);
-                    btnRegister.setClickable(false);
-                    btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
+                    btnRegister.setEnabled(true);
+                    btnRegister.setClickable(true);
+                    btnRegister.setBackgroundResource(R.mipmap.login_check_bg);
                 }
             }
 
@@ -150,8 +150,8 @@ public class RegisteredActivity extends BaseActivity {
                     btnRegister.setClickable(false);
                     btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
                 } else {
-                    btnRegister.setEnabled(false);
-                    btnRegister.setClickable(false);
+                    btnRegister.setEnabled(true);
+                    btnRegister.setClickable(true);
                     btnRegister.setBackgroundResource(R.mipmap.login_check_bg);
                 }
             }
@@ -264,6 +264,7 @@ public class RegisteredActivity extends BaseActivity {
         } else if (netCode == 2) {
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
             BamToast.show(this,baseModel.getMessage());
+            finish();
         }
     }
 

@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.everday.useapp.R;
@@ -40,6 +41,8 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
     RecyclerView recyclerView;
     @BindView(R.id.tv_date)
     TextView tvDate;
+    @BindView(R.id.rl)
+    RelativeLayout rl;
     private WithdrawAdapter mAdapter;
     private List mlist;
     private TimePickerDialog mDialogHourMinute;
@@ -50,9 +53,15 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
     }
 
     @Override
+    public int initStatusColor() {
+        return R.color.blue;
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         tvTitle.setText("钱袋");
+        rl.setBackgroundDrawable(getResources().getDrawable(R.drawable.head_blue));
         ivMessage.setVisibility(View.GONE);
         mlist = new ArrayList(5);
         mlist.add(null);

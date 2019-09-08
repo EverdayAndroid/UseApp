@@ -1,205 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:scrollbars="none">
-
-    <LinearLayout
+    android:orientation="vertical">
+    <include layout="@layout/head_include" />
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <include layout="@layout/head_include" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_15dp"
-            android:layout_marginTop="@dimen/dimen_15dp"
-            android:text="基本信息"
-            android:textColor="@color/dark_black"
-            android:textStyle="bold" />
-
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical">
         <LinearLayout
-            android:id="@id/layout_photo"
-            style="@style/item_layout_style"
-            android:layout_marginTop="@dimen/dimen_10dp">
-
-            <TextView
-                style="@style/item_text_style"
-                android:text="@string/user_photo" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/image_photo"
-                android:layout_width="@dimen/dimen_30dp"
-                android:layout_height="@dimen/dimen_30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_10dp"
-                android:background="@mipmap/default_photo"
-                android:scaleType="centerCrop" />
-
-            <ImageView style="@style/item_arrow_style" />
-        </LinearLayout>
-
-        <View style="@style/hr_gray_line_margin" />
-
-        <LinearLayout
-            android:id="@+id/layout_nickName"
-            style="@style/item_layout_style">
-
-            <TextView
-                style="@style/item_text_style"
-                android:text="@string/nick_name" />
-
-            <TextView
-                android:id="@+id/text_nickName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_10dp"
-                android:maxLines="20"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@color/dark_black"
-                android:textSize="14.0sp" />
-
-            <ImageView style="@style/item_arrow_style" />
-        </LinearLayout>
-
-        <View style="@style/hr_gray_line_margin" />
-
-        <LinearLayout
-            android:id="@+id/layout_auth"
-            style="@style/item_layout_style">
-
-            <TextView
-                style="@style/item_text_style"
-                android:text="@string/user_auth" />
-
-            <TextView
-                android:id="@+id/tv_auth_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_10dp"
-                android:text="去认证"
-                android:textColor="@color/dark_gray"
-                android:textSize="14.0sp" />
-
-            <ImageView style="@style/item_arrow_style" />
-        </LinearLayout>
-
-        <View style="@style/hr_gray_line_margin" />
-
-        <LinearLayout
-            android:id="@+id/layout_card"
-            style="@style/item_layout_style">
-
-            <TextView
-                style="@style/item_text_style"
-                android:text="@string/user_card" />
-
-            <TextView
-                android:id="@+id/tv_card_no"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_10dp"
-                android:text="3"
-                android:textColor="@color/dark_black"
-                android:textSize="14.0sp" />
-
-            <ImageView
-                android:id="@+id/image_birthday"
-                style="@style/item_arrow_style" />
-        </LinearLayout>
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_10dp"
-            android:background="@color/low_gray_two" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_15dp"
-            android:layout_marginTop="@dimen/dimen_15dp"
-            android:text="账户安全"
-            android:textColor="@color/dark_black"
-            android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/layout_change_password"
-            style="@style/item_layout_style"
-            android:layout_marginTop="@dimen/dimen_10dp">
 
             <TextView
-                style="@style/item_text_style"
-                android:text="@string/user_password_change" />
-
-            <ImageView style="@style/item_arrow_style" />
-        </LinearLayout>
-
-        <View style="@style/hr_gray_line_margin" />
-
-        <LinearLayout
-            android:id="@+id/layout_set_paypassword"
-            style="@style/item_layout_style">
-
-            <TextView
-                style="@style/item_text_style"
-                android:text="@string/user_set_paypassword" />
-
-            <TextView
-                android:id="@+id/tv_set"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_10dp"
-                android:text="已设置"
+                android:layout_marginLeft="@dimen/dimen_15dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:text="基本信息"
                 android:textColor="@color/dark_black"
-                android:textSize="14.0sp" />
+                android:textStyle="bold" />
 
-            <ImageView style="@style/item_arrow_style" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@id/layout_photo"
+                style="@style/item_layout_style"
+                android:layout_marginTop="@dimen/dimen_10dp">
 
-        <View style="@style/hr_gray_line_margin" />
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/user_photo" />
 
-        <LinearLayout
-            android:id="@+id/layout_bind"
-            style="@style/item_layout_style">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/image_photo"
+                    android:layout_width="@dimen/dimen_30dp"
+                    android:layout_height="@dimen/dimen_30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:background="@mipmap/default_photo"
+                    android:scaleType="centerCrop" />
+
+                <ImageView style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <View style="@style/hr_gray_line_margin" />
+
+            <LinearLayout
+                android:id="@+id/layout_nickName"
+                style="@style/item_layout_style">
+
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/nick_name" />
+
+                <TextView
+                    android:id="@+id/text_nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:maxLines="20"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/dark_black"
+                    android:textSize="14.0sp" />
+
+                <ImageView style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <View style="@style/hr_gray_line_margin" />
+
+            <LinearLayout
+                android:id="@+id/layout_auth"
+                style="@style/item_layout_style">
+
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/user_auth" />
+
+                <TextView
+                    android:id="@+id/tv_auth_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:text="去认证"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="14.0sp" />
+
+                <ImageView style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <View style="@style/hr_gray_line_margin" />
+
+            <LinearLayout
+                android:id="@+id/layout_card"
+                style="@style/item_layout_style">
+
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/user_card" />
+
+                <TextView
+                    android:id="@+id/tv_card_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:text="3"
+                    android:textColor="@color/dark_black"
+                    android:textSize="14.0sp" />
+
+                <ImageView
+                    android:id="@+id/image_birthday"
+                    style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10dp"
+                android:background="@color/low_gray_two" />
 
             <TextView
-                style="@style/item_text_style"
-                android:text="@string/user_bind_phone" />
-
-            <TextView
-                android:id="@+id/tv_bind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_10dp"
-                android:text="已绑定"
+                android:layout_marginLeft="@dimen/dimen_15dp"
+                android:layout_marginTop="@dimen/dimen_15dp"
+                android:text="账户安全"
                 android:textColor="@color/dark_black"
-                android:textSize="14.0sp" />
+                android:textStyle="bold" />
 
-            <ImageView style="@style/item_arrow_style" />
+            <LinearLayout
+                android:id="@+id/layout_change_password"
+                style="@style/item_layout_style"
+                android:layout_marginTop="@dimen/dimen_10dp">
+
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/user_password_change" />
+
+                <ImageView style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <View style="@style/hr_gray_line_margin" />
+
+            <LinearLayout
+                android:id="@+id/layout_set_paypassword"
+                style="@style/item_layout_style">
+
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/user_set_paypassword" />
+
+                <TextView
+                    android:id="@+id/tv_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:text="已设置"
+                    android:textColor="@color/dark_black"
+                    android:textSize="14.0sp" />
+
+                <ImageView style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <View style="@style/hr_gray_line_margin" />
+
+            <LinearLayout
+                android:id="@+id/layout_bind"
+                style="@style/item_layout_style">
+
+                <TextView
+                    style="@style/item_text_style"
+                    android:text="@string/user_bind_phone" />
+
+                <TextView
+                    android:id="@+id/tv_bind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_10dp"
+                    android:text="已绑定"
+                    android:textColor="@color/dark_black"
+                    android:textSize="14.0sp" />
+
+                <ImageView style="@style/item_arrow_style" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_out_login"
+                android:layout_width="@dimen/dimen_200dp"
+                android:layout_height="@dimen/dimen_40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_30dp"
+                android:layout_marginBottom="@dimen/dimen_30dp"
+                android:background="@mipmap/icon_view_click"
+                android:gravity="center"
+                android:text="退出登录"
+                android:textColor="@color/white"
+                android:textSize="16.0sp"
+                android:visibility="visible" />
+
         </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/tv_out_login"
-            android:layout_width="@dimen/dimen_200dp"
-            android:layout_height="@dimen/dimen_50dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dimen_30dp"
-            android:background="@mipmap/icon_view_click"
-            android:gravity="center"
-            android:text="退出登录"
-            android:textColor="@color/white"
-            android:textSize="16.0sp"
-            android:visibility="visible" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

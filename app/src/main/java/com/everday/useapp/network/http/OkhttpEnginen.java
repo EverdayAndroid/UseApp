@@ -1,8 +1,11 @@
 package com.everday.useapp.network.http;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.everday.useapp.UseApplication;
+import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.BaseModel;
@@ -113,7 +116,16 @@ public class OkhttpEnginen implements IHttpEngien {
                                 BaseModel baseModel = gson.fromJson(result, BaseModel.class);
                                 if (baseModel.getResultCode() == Constants.SUCCESS) {
                                     callBack.onSuccess(result);
-                                } else {
+                                } else if(baseModel.getResultCode() == Constants.TOKEN_ERROR){
+                                    //Token失效
+                                    Intent intent = new Intent();
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.setClass(UseApplication.getApplication(), LoginActivity.class);
+                                    UseApplication.getApplication().startActivity(intent);
+                                }else if(baseModel.getResultCode() == Constants.BUSINESS_ERROR){
+                                    //业务失败状态码
+                                    callBack.onFailure(baseModel.getMessage(),baseModel.getResultCode());
+                                }else {
                                     callBack.onFailure(baseModel.getMessage(),baseModel.getResultCode());
                                 }
                             }catch (Exception e){

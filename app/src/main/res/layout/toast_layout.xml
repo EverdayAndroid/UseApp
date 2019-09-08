@@ -7,6 +7,9 @@
         android:id="@+id/toast_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="@dimen/dimen_250dp"
+        android:minHeight="@dimen/dimen_50dp"
+        android:gravity="center"
         android:layout_margin="50dp"
         android:padding="10dp"
         android:background="#272F1633"
@@ -17,9 +20,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:padding="@dimen/dimen_5dp"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="@dimen/sp_14sp" />
 
     </RelativeLayout>
 </RelativeLayout>

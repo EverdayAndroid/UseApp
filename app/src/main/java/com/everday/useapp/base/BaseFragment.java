@@ -100,15 +100,24 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
     @Override
     public void onSuccess(String t) {
         if(isDetached()){return;}
+        if(loadingView!=null) {
+            loadingView.dismiss();
+        }
     }
 
     @Override
     public void onFailure(String message, int error){
         if(isDetached()){return;}
+        if(loadingView!=null) {
+            loadingView.dismiss();
+        }
     }
 
     @Override
     public void onThrows(String message, int error) {
         if(isDetached()){return;}
+        if(loadingView!=null) {
+            loadingView.dismiss();
+        }
     }
 }

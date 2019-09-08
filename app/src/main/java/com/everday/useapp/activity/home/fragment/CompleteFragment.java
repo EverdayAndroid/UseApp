@@ -14,8 +14,12 @@ import com.everday.useapp.activity.home.adapter.HomeFragmentAdapter;
 import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.TaskBean;
+import com.everday.useapp.entity.TaskInfoBean;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.GsonUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -25,7 +29,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * date:2019/8/28
@@ -56,38 +63,54 @@ public class CompleteFragment extends BaseFragment implements OnRefreshLoadMoreL
     public void initData() {
         super.initData();
         mlist = new ArrayList();
-        loadData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mAdapter = new HomeFragmentAdapter(R.layout.adapter_home_fragment_item, mlist,2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-//        HttpManager.getInstance().get(Constants.HOST + API.MYTASK, null, this);
+        refreshLayout.setOnRefreshLoadMoreListener(this);
+        loadingView.show(getChildFragmentManager(),"loading");
+        loadData(true);
     }
-    public void loadData(){
-        TaskBean taskBean = new TaskBean();
-        taskBean.setStartTime("2019-09-02");
-        taskBean.setEndTime("2019-09-02");
-        taskBean.setYjfy(190.0);
-        taskBean.setTaskName("企业市场推广");
-        taskBean.setDuration(2);
-        taskBean.setAddress("太原市小店区");
-        mlist.add(taskBean);
-        mlist.add(taskBean);
-        mlist.add(taskBean);
-        mlist.add(taskBean);
-        mlist.add(taskBean);
-        mlist.add(taskBean);
-        mlist.add(taskBean);
+
+    /**
+     * 请求数据
+     * @param isLoading
+     */
+    public void loadData(boolean isLoading){
+        if(isLoading) {
+            loadingView.show(getChildFragmentManager(), "loading");
+        }
+        String gson = "{\n" +
+                " \"page\":"+pageNumber+",\n" +
+                " \"tele\":\""+ PreferencesUtils.get(UserConfig.TELE,"").toString() +"\",\n" +
+                " \"state\":\"2\"\n" +
+                "}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        HttpManager.getInstance().post(Constants.HOST + API.GETMYTASK, this,requestBody);
     }
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
         if(isDetached()){return;}
-        refreshLayout.setVisibility(View.VISIBLE);
-        nodataView.setVisibility(View.GONE);
-        mNoNetLayout.setVisibility(View.GONE);
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh();
+        TaskInfoBean taskInfoBean = GsonUtils.getInstance().parseJsonToBean(t, TaskInfoBean.class);
+        mlist.addAll(taskInfoBean.getData().getPage().getList());
+        if(mlist.size() == 0){
+            refreshLayout.setVisibility(View.GONE);
+            nodataView.setVisibility(View.VISIBLE);
+            mNoNetLayout.setVisibility(View.GONE);
+        }else{
+            refreshLayout.setVisibility(View.VISIBLE);
+            nodataView.setVisibility(View.GONE);
+            mNoNetLayout.setVisibility(View.GONE);
+            mAdapter.notifyDataSetChanged();
+            refreshLayout.finishRefresh();
+            refreshLayout.finishLoadMore();
+        }
     }
 
     @Override
@@ -119,10 +142,22 @@ public class CompleteFragment extends BaseFragment implements OnRefreshLoadMoreL
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
         pageNumber += 1;
+        loadData(false);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         pageNumber = 1;
+        mlist.clear();
+        loadData(false);
+    }
+
+    @OnClick({R.id.mReload_btn})
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.mReload_btn:
+                loadData(true);
+                break;
+        }
     }
 }

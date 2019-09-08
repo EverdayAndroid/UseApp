@@ -220,6 +220,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         }else if(netCode == 2){
             ForgetPasswordInfoBean forgetPasswordInfoBean = GsonUtils.getInstance().parseJsonToBean(t, ForgetPasswordInfoBean.class);
             BamToast.show(this,forgetPasswordInfoBean.getData().getMsg());
+            finish();
         }
     }
 
@@ -241,4 +242,12 @@ public class ForgetPasswordActivity extends BaseActivity {
         BamToast.show(this,message);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(downTimer!=null) {
+            downTimer.cancel();
+            downTimer = null;
+        }
+    }
 }

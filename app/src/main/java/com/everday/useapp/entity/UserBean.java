@@ -17,6 +17,7 @@ public class UserBean {
     private int id;
     private String tele;
     private String shmc;
+    //1注册、待审核2正常、已激活3审核不通过4锁定账号，无法做任何事情5 已删除用户，只有状态为2的用户才能登陆进主界面
     private int status;
     private String password;
 
@@ -98,5 +99,9 @@ public class UserBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }
