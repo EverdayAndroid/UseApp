@@ -27,7 +27,7 @@
                 android:layout_marginTop="@dimen/dimen_20dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                >
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -328,6 +328,7 @@
                     android:gravity="center_horizontal"
                     android:padding="@dimen/dimen_3dp"
                     android:text="---"
+                    android:visibility="gone"
                     android:textColor="@color/white" />
             </RelativeLayout>
 
@@ -436,7 +437,6 @@
                     android:layout_marginLeft="@dimen/dimen_20dp"
                     android:layout_marginRight="@dimen/dimen_20dp"
                     android:layout_toRightOf="@id/iv_start_address"
-                    android:drawableRight="@mipmap/gps"
                     android:drawablePadding="@dimen/dimen_20dp"
                     android:text="----"
                     android:textColor="@color/dark_black"/>
@@ -447,6 +447,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:text="----"
+                    android:visibility="gone"
                     android:textColor="@color/blue"
                     android:textStyle="bold" />
             </RelativeLayout>

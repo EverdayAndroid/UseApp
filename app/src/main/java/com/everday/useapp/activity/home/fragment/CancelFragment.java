@@ -22,6 +22,7 @@ import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -70,6 +71,7 @@ public class CancelFragment extends BaseFragment implements CallBack, OnRefreshL
         mAdapter = new HomeFragmentAdapter(R.layout.adapter_home_fragment_item, mlist,2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+        refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         refreshLayout.setOnRefreshLoadMoreListener(this);
         loadData(true);
     }
@@ -79,7 +81,7 @@ public class CancelFragment extends BaseFragment implements CallBack, OnRefreshL
             loadingView.show(getChildFragmentManager(), "loading");
         }
         String gson = "{\n" +
-                " \"page\":"+pageNumber+",\n" +
+                " \"page\":\""+pageNumber+"\",\n" +
                 " \"tele\":\""+ PreferencesUtils.get(UserConfig.TELE,"").toString() +"\",\n" +
                 " \"state\":\"3\"\n" +
                 "}";
@@ -92,6 +94,9 @@ public class CancelFragment extends BaseFragment implements CallBack, OnRefreshL
         if(isDetached()){return;}
         TaskInfoBean taskInfoBean = GsonUtils.getInstance().parseJsonToBean(t, TaskInfoBean.class);
         mlist.addAll(taskInfoBean.getData().getPage().getList());
+        if(taskInfoBean.getData().getPage().isLastPage() == false){
+            refreshLayout.setEnableLoadMore(true);
+        }
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);
             nodataView.setVisibility(View.VISIBLE);

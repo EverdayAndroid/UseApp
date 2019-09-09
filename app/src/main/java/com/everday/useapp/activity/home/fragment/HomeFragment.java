@@ -24,6 +24,17 @@ import com.everday.useapp.entity.TaskInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
+import com.scwang.smartrefresh.header.DeliveryHeader;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.header.FlyRefreshHeader;
+import com.scwang.smartrefresh.header.FunGameBattleCityHeader;
+import com.scwang.smartrefresh.header.FunGameHitBlockHeader;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.header.PhoenixHeader;
+import com.scwang.smartrefresh.header.StoreHouseHeader;
+import com.scwang.smartrefresh.header.TaurusHeader;
+import com.scwang.smartrefresh.header.WaterDropHeader;
+import com.scwang.smartrefresh.header.WaveSwipeHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -62,7 +73,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
     private int pageNumber = 1;
     //访问类型
     private int netCode;
-
+    private int index;
     @Override
     public int initLayout() {
         return R.layout.fragment_main;
@@ -79,6 +90,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
         recyclerView.setAdapter(mAdapter);
         refreshLayout.setOnRefreshLoadMoreListener(this);
         refreshLayout.setEnableRefresh(true);
+        refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -94,6 +106,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.bt_take_job:
+                        index = position;
                         TaskBean taskBean = mList.get(position);
                         orders(taskBean.getId());
                         //接单
@@ -116,7 +129,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
         if (isLoading) {
 //            loadingView.show(getChildFragmentManager(), "loading");
         }
-        String gson = "{\"page\":" + pageNumber + "}";
+        String gson = "{\"page\":\"" + pageNumber + "\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.GETTASKDJD, this, requestBody);
     }
@@ -142,12 +155,13 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
 
     @Override
     public void onSuccess(String t) {
-        if (isDetached()) {
-            return;
-        }
+        super.onSuccess(t);
         if (netCode == 0) {
             TaskInfoBean taskInfoBean = GsonUtils.getInstance().parseJsonToBean(t, TaskInfoBean.class);
             mList.addAll(taskInfoBean.getData().getPage().getList());
+            if(taskInfoBean.getData().getPage().isLastPage() == false){
+                refreshLayout.setEnableLoadMore(true);
+            }
             if (mList.size() == 0) {
                 refreshLayout.setVisibility(View.GONE);
                 nodataView.setVisibility(View.VISIBLE);
@@ -161,6 +175,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
         } else if (netCode == 1) {
+            mAdapter.notifyItemRemoved(index);
             //接单提示
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
             BamToast.show(getContext(), baseModel.getMessage());
@@ -169,9 +184,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
 
     @Override
     public void onFailure(String message, int error) {
-        if (isDetached()) {
-            return;
-        }
+        super.onFailure(message,error);
         if (netCode == 0) {
             if (error == Constants.NO_NET_WORK) {
                 refreshLayout.setVisibility(View.GONE);
@@ -189,9 +202,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
 
     @Override
     public void onThrows(String message, int error) {
-        if (isDetached()) {
-            return;
-        }
+        super.onThrows(message,error);
         if (error == Constants.THROWS_CODE) {
             if (netCode == 0) {
                 refreshLayout.setVisibility(View.GONE);
@@ -208,12 +219,14 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        netCode = 0;
         pageNumber += 1;
         loadData(false);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        netCode = 0;
         pageNumber = 1;
         mList.clear();
         loadData(false);

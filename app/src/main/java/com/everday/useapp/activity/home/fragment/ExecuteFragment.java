@@ -94,7 +94,7 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
             loadingView.show(getChildFragmentManager(), "loading");
         }
         String gson = "{\n" +
-                " \"page\":"+pageNumber+",\n" +
+                " \"page\":\""+pageNumber+"\",\n" +
                 " \"tele\":\""+ PreferencesUtils.get(UserConfig.TELE,"").toString() +"\",\n" +
                 " \"state\":\"1\"\n" +
                 "}";
@@ -105,11 +105,11 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
-        if (isDetached()) {
-            return;
-        }
         TaskInfoBean taskInfoBean = GsonUtils.getInstance().parseJsonToBean(t, TaskInfoBean.class);
         mlist.addAll(taskInfoBean.getData().getPage().getList());
+        if(taskInfoBean.getData().getPage().isLastPage() == false){
+            refreshLayout.setEnableLoadMore(true);
+        }
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);
             nodataView.setVisibility(View.VISIBLE);

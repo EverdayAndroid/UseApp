@@ -98,6 +98,7 @@
             <View style="@style/hr_gray_line_margin" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layout_card"
                 style="@style/item_layout_style">
 
@@ -119,10 +120,11 @@
                     android:id="@+id/image_birthday"
                     style="@style/item_arrow_style" />
             </LinearLayout>
-
+            <View style="@style/hr_gray_line_margin"  android:visibility="gone"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_10dp"
+                android:visibility="gone"
                 android:background="@color/low_gray_two" />
 
             <TextView
@@ -131,6 +133,7 @@
                 android:layout_marginLeft="@dimen/dimen_15dp"
                 android:layout_marginTop="@dimen/dimen_15dp"
                 android:text="账户安全"
+                android:visibility="gone"
                 android:textColor="@color/dark_black"
                 android:textStyle="bold" />
 
@@ -150,6 +153,7 @@
 
             <LinearLayout
                 android:id="@+id/layout_set_paypassword"
+                android:visibility="gone"
                 style="@style/item_layout_style">
 
                 <TextView
@@ -169,10 +173,11 @@
                 <ImageView style="@style/item_arrow_style" />
             </LinearLayout>
 
-            <View style="@style/hr_gray_line_margin" />
+            <View style="@style/hr_gray_line_margin" android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/layout_bind"
+                android:visibility="gone"
                 style="@style/item_layout_style">
 
                 <TextView

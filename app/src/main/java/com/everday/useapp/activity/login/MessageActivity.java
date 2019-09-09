@@ -66,7 +66,7 @@ public class MessageActivity extends BaseActivity implements OnRefreshLoadMoreLi
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
-        refreshLayout.setRefreshHeader(new PhoenixHeader(this));
+        refreshLayout.setRefreshHeader(new MaterialHeader(this));
         refreshLayout.setOnRefreshLoadMoreListener(this);
         refreshLayout.setEnableLoadMore(true);
         refreshLayout.setEnableRefresh(true);
@@ -78,18 +78,18 @@ public class MessageActivity extends BaseActivity implements OnRefreshLoadMoreLi
         if(isLoading){
             loadingView.show(getSupportFragmentManager(),"loading");
         }
-        String gson = "{\"page\": "+pageNumber+"}";
+        String gson = "{\"page\": \""+pageNumber+"\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST+ API.NOTICE,this,requestBody);
     }
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
-        if (isFinishing()) {
-            return;
-        }
         MessageInfoBean messageInfoBean = GsonUtils.getInstance().parseJsonToBean(t, MessageInfoBean.class);
         mlist.addAll(messageInfoBean.getData().getPage().getList());
+        if(messageInfoBean.getData().getPage().isLastPage() == false){
+            refreshLayout.setEnableLoadMore(true);
+        }
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);
             mNoNetLayout.setVisibility(View.GONE);

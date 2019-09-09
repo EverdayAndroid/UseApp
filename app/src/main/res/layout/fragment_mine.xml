@@ -121,7 +121,7 @@
                             android:layout_height="@dimen/dimen_19dp"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_20dp"
-                            android:background="@mipmap/icon_insur"
+                            android:background="@mipmap/icon_money"
                             android:scaleType="fitXY" />
 
                         <TextView
@@ -200,7 +200,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_60dp"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <ImageView
                             android:layout_width="@dimen/dimen_20dp"
