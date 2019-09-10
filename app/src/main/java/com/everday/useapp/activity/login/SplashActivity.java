@@ -53,7 +53,8 @@ public class SplashActivity extends BaseActivity {
                     if(firstStart){
                         ActivityUtils.startActivity(SplashActivity.this,AppGuideActivity.class);
                     }else if(TextUtils.isEmpty(tele)){
-                        ActivityUtils.startActivity(SplashActivity.this,LoginActivity.class);
+                        ActivityUtils.startActivity(SplashActivity.this, HomeActivity.class);
+//                        ActivityUtils.startActivity(SplashActivity.this,LoginActivity.class);
                     }else{
                         ActivityUtils.startActivity(SplashActivity.this, HomeActivity.class);
                     }

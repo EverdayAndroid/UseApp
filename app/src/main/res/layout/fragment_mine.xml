@@ -38,7 +38,7 @@
                         android:layout_height="@dimen/dimen_60dp"
                         android:layout_gravity="center_vertical"
                         android:adjustViewBounds="true"
-                        android:background="@mipmap/default_photo"
+                        android:src="@mipmap/default_photo"
                         android:scaleType="centerCrop" />
 
                     <RelativeLayout
@@ -250,7 +250,7 @@
 
                     <View
                         style="@style/hr_gray_line"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_marginLeft="@dimen/dimen_15dp"
                         android:layout_marginRight="@dimen/dimen_15dp" />
 

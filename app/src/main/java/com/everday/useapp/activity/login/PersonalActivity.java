@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.everday.useapp.GlideApp;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.view.ImageInterFace;
 import com.everday.useapp.base.BaseActivity;
@@ -19,7 +20,6 @@ import com.everday.useapp.dialog.UseDialog;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.FileUtils;
-import com.everday.useapp.utils.GlideCircleTransform;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -39,8 +39,6 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -85,7 +83,9 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         tvTitle.setText("个人中心");
         ivMessage.setVisibility(View.GONE);
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
+        String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
         textNickName.setText(userName);
+        GlideApp.with(this).load(Constants.AVATAR+tele).apply(requestOptions).into(imagePhoto);
     }
 
     @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login,R.id.layout_nickName})
@@ -124,7 +124,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     @Override
     public void takeSuccess(TResult result) {
         compressPath = result.getImage().getCompressPath();
-        Glide.with(this).load(compressPath).bitmapTransform(new GlideCircleTransform(this)).into(imagePhoto);
+        GlideApp.with(this).load(compressPath).apply(requestOptions).into(imagePhoto);
 
         loadingView.show(getSupportFragmentManager(),"loading");
         RequestBody requestBody = new MultipartBody.Builder()

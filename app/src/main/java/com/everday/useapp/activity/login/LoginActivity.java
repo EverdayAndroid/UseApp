@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.everday.useapp.R;
 import com.everday.useapp.UseApplication;
+import com.everday.useapp.activity.home.HomeActivity;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
@@ -215,7 +216,7 @@ public class LoginActivity extends BaseActivity {
         PreferencesUtils.put(UserConfig.USERNAME,userInfoBean.getData().getAppAccount().getNickName(),false);
         PreferencesUtils.put(UserConfig.PASSWORD,password,false);
         PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
-        PreferencesUtils.put(UserConfig.AVATAR,userInfoBean.getData().getAppAccount().getAvatar(),false);
+//        PreferencesUtils.put(UserConfig.AVATAR,userInfoBean.getData().getAppAccount().getAvatar(),false);
         PreferencesUtils.put(UserConfig.TELE,phone,false);
         if(userInfoBean.getData().getAppAccount().getStatus() == 1){
 
@@ -229,6 +230,7 @@ public class LoginActivity extends BaseActivity {
 
         }
         BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
+        ActivityUtils.startActivity(this,HomeActivity.class);
         finish();
     }
 

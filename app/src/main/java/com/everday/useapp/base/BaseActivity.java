@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.MessageActivity;
 import com.everday.useapp.dialog.LoadingView;
@@ -46,11 +47,13 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected ImageView ivMessage,ivBack;
     protected TextView tvTitle,tvRight;
     protected Gson gson;
+    protected RequestOptions requestOptions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setTheme(R.style.problem_AppTheme);
         int layout = initView(savedInstanceState);
+        requestOptions = RequestOptions.circleCropTransform();
         if (layout != 0) {
             loadingView = new LoadingView();
             setContentView(layout);

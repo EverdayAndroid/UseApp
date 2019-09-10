@@ -1,13 +1,20 @@
 package com.everday.useapp.activity.home.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
+import com.everday.useapp.GlideApp;
+import com.everday.useapp.MyGlideModule;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
@@ -25,10 +32,7 @@ import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -59,7 +63,7 @@ public class MineFragment extends BaseFragment {
         tvTitle.setText("我的");
         ivBack.setVisibility(View.GONE);
         ivMessage.setVisibility(View.GONE);
-        String gson = "{\"tele\":\""+PreferencesUtils.get(UserConfig.TELE, "").toString()+"\"}";
+        String gson = "{\"tele\":\"" + PreferencesUtils.get(UserConfig.TELE, "").toString() + "\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.USERDETAIL, this, requestBody);
         HttpManager.getInstance().post(Constants.HOST + API.GETAVATAR, new CallBack() {
@@ -77,7 +81,7 @@ public class MineFragment extends BaseFragment {
             public void onThrows(String message, int error) {
 
             }
-        }, RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson));
+        }, RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson));
     }
 
     @OnClick({R.id.ll_info, R.id.ll_money})
@@ -103,16 +107,15 @@ public class MineFragment extends BaseFragment {
         UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
         PreferencesUtils.put(UserConfig.USERNAME, userInfoBean.getData().getAppAccount().getNickName(), false);
         PreferencesUtils.put(UserConfig.TOKEN, userInfoBean.getData().getAccessToken(), false);
-        PreferencesUtils.put(UserConfig.AVATAR, userInfoBean.getData().getAppAccount().getAvatar(), false);
+//        PreferencesUtils.put(UserConfig.AVATAR, userInfoBean.getData().getAppAccount().getAvatar(), false);
         PreferencesUtils.put(UserConfig.TELE, userInfoBean.getData().getAppAccount().getTele(), false);
-        Glide.with(this).load(Constants.AVATAR+userInfoBean.getData().getAppAccount().getTele()).into(ivPhoto);
         if (isVisible()) {
             String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
             String avatar = (String) PreferencesUtils.get(UserConfig.AVATAR, "");
             Glide.with(this).load(avatar).into(ivPhoto);
             tvName.setText(userName);
-            String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3,5);
-            String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr,"****");
+            String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3, 5);
+            String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr, "****");
             tvPhone.setText(phone);
         }
     }
@@ -128,15 +131,48 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
+//        CircleCrop circleCrop = new CircleCrop();
+//        RequestOptions requestOptions = RequestOptions.bitmapTransform(circleCrop);
+//        Glide.with(getActivity()).load(Constants.AVATAR+tele).into(ivPhoto);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
-        String avatar = (String) PreferencesUtils.get(UserConfig.AVATAR, "");
-        String tele = (String) PreferencesUtils.get(UserConfig.TELE,"");
-        Glide.with(this).load(avatar).into(ivPhoto);
+        String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.mipmap.default_photo);
+        requestOptions.error(R.mipmap.default_photo);
+        requestOptions.optionalCircleCrop();
+        String avatar = Constants.AVATAR + tele;
+        EverdayLog.error(avatar);
+        GlideApp.with(this)
+                .load(avatar)
+                .dontAnimate()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        EverdayLog.error(e.getMessage());
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        EverdayLog.error("11111111111");
+                        return false;
+                    }
+                })
+                .apply(requestOptions).into(ivPhoto);
         tvName.setText(userName);
-        String replaceStr = tele.substring(3,8);
-        String phone = tele.replace(replaceStr,"****");
-        tvPhone.setText(phone);
+        if (tele.length() >= 11) {
+            String replaceStr = tele.substring(3, 8);
+            String phone = tele.replace(replaceStr, "****");
+            tvPhone.setText(phone);
+        }
+
     }
 }
