@@ -1,6 +1,7 @@
 package com.everday.useapp.activity.home.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,12 +10,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.everday.useapp.GlideApp;
-import com.everday.useapp.MyGlideModule;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
@@ -115,8 +115,6 @@ public class MineFragment extends BaseFragment {
         PreferencesUtils.put(UserConfig.TELE, userInfoBean.getData().getAppAccount().getTele(), false);
         if (isVisible()) {
             String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
-            String avatar = (String) PreferencesUtils.get(UserConfig.AVATAR, "");
-            Glide.with(this).load(avatar).into(ivPhoto);
             tvName.setText(userName);
             String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3, 5);
             String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr, "****");
@@ -152,19 +150,19 @@ public class MineFragment extends BaseFragment {
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
         GlideApp.with(this)
-                .load(avatar)
+                .load("http://lhyg.natapp1.cc/app/setting/getAvatar/13753837811")
                 .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         EverdayLog.error(e.getMessage());
-                        return true;
+                        return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         EverdayLog.error("111");
-                        return true;
+                        return false;
                     }
                 })
                 .into(ivPhoto);
