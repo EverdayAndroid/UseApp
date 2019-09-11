@@ -97,6 +97,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 TaskBean taskBean = mList.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean",taskBean);
+                bundle.putInt("type",1);
                 //接单详情
                 ActivityUtils.startActivity(getActivity(), OrderDetailsActivity.class,bundle);
             }
@@ -114,8 +115,8 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 }
             }
         });
-        certificationDialog = new CertificationDialog();
-        certificationDialog.show(getChildFragmentManager(), "certificationDialog");
+//        certificationDialog = new CertificationDialog();
+//        certificationDialog.show(getChildFragmentManager(), "certificationDialog");
         loadData(true);
     }
 

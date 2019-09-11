@@ -40,6 +40,11 @@ public class AppGuideActivity extends BaseActivity implements ViewPager.OnPageCh
     }
 
     @Override
+    public boolean hideStatus() {
+        return true;
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mAdapter = new AppGuideAdapter(this,imageId);

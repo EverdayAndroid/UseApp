@@ -14,8 +14,9 @@ public class MyGlideModule extends AppGlideModule {
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
         super.applyOptions(context, builder);
+        int memoryCacheSizeBytes = 1024 * 1024 * 20; // 20mb
         MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context)
-                .setMemoryCacheScreens(2)
+                .setMemoryCacheScreens(memoryCacheSizeBytes)
                 .build();
         builder.setMemoryCache(new LruResourceCache(calculator.getMemoryCacheSize()));
     }

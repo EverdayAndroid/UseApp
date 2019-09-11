@@ -42,6 +42,16 @@ public class ActivityManagement {
     }
 
     /**
+     * 关闭所有Activity
+     */
+    public void finishAll(){
+        for (Activity activity:activityStack){
+            activityStack.remove(activity);
+            activity.finish();
+        }
+    }
+
+    /**
      * 指定关闭当前类
      * @param clzz
      */

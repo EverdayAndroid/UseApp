@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.everday.useapp.R;
 import com.everday.useapp.UseApplication;
+import com.everday.useapp.activity.home.OrderDetailsActivity;
 import com.everday.useapp.activity.home.adapter.HomeFragmentAdapter;
 import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.API;
@@ -20,6 +22,7 @@ import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.TaskBean;
 import com.everday.useapp.entity.TaskInfoBean;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
@@ -54,7 +57,7 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
     @BindView(R.id.mNo_net_layout)
     LinearLayout mNoNetLayout;
     private HomeFragmentAdapter mAdapter;
-    private List mlist;
+    private List<TaskBean> mlist;
     //页码
     private int pageNumber = 1;
 
@@ -73,23 +76,19 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
         recyclerView.setAdapter(mAdapter);
         refreshLayout.setOnRefreshLoadMoreListener(this);
         loadData(true);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TaskBean taskBean = mlist.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bean",taskBean);
+                //接单详情
+                ActivityUtils.startActivity(getActivity(), OrderDetailsActivity.class,bundle);
+            }
+        });
 
     }
     public void loadData(boolean isLoading){
-//        TaskBean taskBean = new TaskBean();
-//        taskBean.setStartTime("2019-09-02");
-//        taskBean.setEndTime("2019-09-02");
-//        taskBean.setYjfy(190.0);
-//        taskBean.setTaskName("企业市场推广");
-//        taskBean.setDuration(2);
-//        taskBean.setAddress("太原市小店区");
-//        mlist.add(taskBean);
-//        mlist.add(taskBean);
-//        mlist.add(taskBean);
-//        mlist.add(taskBean);
-//        mlist.add(taskBean);
-//        mlist.add(taskBean);
-//        mlist.add(taskBean);
         if(isLoading) {
             loadingView.show(getChildFragmentManager(), "loading");
         }

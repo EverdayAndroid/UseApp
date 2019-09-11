@@ -169,12 +169,8 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
      *
      * @return
      */
-    private boolean hideStatus() {
+    public boolean hideStatus() {
         return hideStatus;
-    }
-
-    public void setHideStatus(boolean hideStatus) {
-        this.hideStatus = hideStatus;
     }
 
 

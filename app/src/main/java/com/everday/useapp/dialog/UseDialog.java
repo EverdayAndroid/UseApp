@@ -18,8 +18,15 @@ import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
+import com.everday.useapp.constants.API;
+import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.entity.BaseModel;
+import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.network.http.CallBack;
+import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
@@ -110,20 +117,43 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
     void OnClick(View view){
         switch (view.getId()){
             case R.id.dialog_leftbtn:
-                PreferencesUtils.put(UserConfig.USERNAME,"",false);
-                PreferencesUtils.put(UserConfig.PASSWORD,"",false);
-                PreferencesUtils.put(UserConfig.TOKEN,"",false);
-                PreferencesUtils.put(UserConfig.AVATAR,"",false);
-                PreferencesUtils.put(UserConfig.TELE,"",false);
-                BamToast.show(getActivity(),"退出成功");
-                getActivity().finish();
-                ActivityUtils.startActivity(getActivity(), LoginActivity.class);
-                dismiss();
+                logout();
                 break;
             case R.id.dialog_rightbtn:
                 dismiss();
                 break;
         }
+    }
+
+    /**
+     * 退出
+     */
+    public void logout(){
+        HttpManager.getInstance().get(Constants.HOST + API.OUTLOGIN, null, new CallBack() {
+            @Override
+            public void onSuccess(String t) throws Exception {
+                BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
+                PreferencesUtils.put(UserConfig.USERNAME,"",false);
+                PreferencesUtils.put(UserConfig.PASSWORD,"",false);
+                PreferencesUtils.put(UserConfig.TOKEN,"",false);
+                PreferencesUtils.put(UserConfig.AVATAR,"",false);
+                PreferencesUtils.put(UserConfig.TELE,"",false);
+                BamToast.show(getActivity(),baseModel.getMessage());
+                ActivityManagement.getInstance().finishAll();
+                ActivityUtils.startActivity(getActivity(), LoginActivity.class);
+                dismiss();
+            }
+
+            @Override
+            public void onFailure(String message, int error) throws Exception {
+                BamToast.show(getContext(),message);
+            }
+
+            @Override
+            public void onThrows(String message, int error) {
+                BamToast.show(getContext(),message);
+            }
+        });
     }
 
 

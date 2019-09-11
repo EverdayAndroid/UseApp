@@ -95,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="----"
+            android:visibility="gone"
             android:textColor="@color/blue"
             android:textStyle="bold" />
     </RelativeLayout>

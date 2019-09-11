@@ -177,7 +177,10 @@ public class OrderDetailsActivity extends BaseActivity {
         tvJobScrip.setText(spanned.toString());
         tvCompanyName.setText("来源");
         tvNo.setText(taskBean.getTaskBh());
-
+        int type = extras.getInt("type");
+        if(type!= 1){
+            rlBottom.setVisibility(View.GONE);
+        }
     }
 
 

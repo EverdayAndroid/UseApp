@@ -38,4 +38,6 @@ public class API {
     public static String UPDATEBYVERSION = "appupdate/updateByVersion";
     //我的消息
     public static String NOTICE = "noticeApi/notice";
+    //退出
+    public static String OUTLOGIN = "app/logout";
 }

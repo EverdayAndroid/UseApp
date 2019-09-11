@@ -18,6 +18,7 @@ import com.everday.useapp.MyGlideModule;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
+import com.everday.useapp.activity.login.SettingActivity;
 import com.everday.useapp.activity.money.MoneyActivity;
 import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.API;
@@ -84,7 +85,7 @@ public class MineFragment extends BaseFragment {
         }, RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson));
     }
 
-    @OnClick({R.id.ll_info, R.id.ll_money})
+    @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.ll_info:
@@ -97,6 +98,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.ll_money:
                 ActivityUtils.startActivity(getActivity(), MoneyActivity.class);
+                break;
+            case R.id.ll_setting:
+                ActivityUtils.startActivity(getActivity(), SettingActivity.class);
                 break;
         }
     }
@@ -144,29 +148,26 @@ public class MineFragment extends BaseFragment {
         super.onStart();
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.placeholder(R.mipmap.default_photo);
-        requestOptions.error(R.mipmap.default_photo);
-        requestOptions.optionalCircleCrop();
+
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
         GlideApp.with(this)
                 .load(avatar)
-                .dontAnimate()
+                .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         EverdayLog.error(e.getMessage());
-                        return false;
+                        return true;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        EverdayLog.error("11111111111");
-                        return false;
+                        EverdayLog.error("111");
+                        return true;
                     }
                 })
-                .apply(requestOptions).into(ivPhoto);
+                .into(ivPhoto);
         tvName.setText(userName);
         if (tele.length() >= 11) {
             String replaceStr = tele.substring(3, 8);
