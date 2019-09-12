@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.everday.useapp.R;
+import com.everday.useapp.UseApplication;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.dialog.UseDialog;
 import com.everday.useapp.utils.AppUtils;
@@ -32,7 +33,9 @@ public class SettingActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         tvTitle.setText("设置");
-        tvVersion.setText(AppUtils.getLocalVersion());
+        ivMessage.setVisibility(View.GONE);
+        String localVersionName = AppUtils.getLocalVersionName(UseApplication.getApplication());
+        tvVersion.setText(localVersionName);
     }
 
     @Override

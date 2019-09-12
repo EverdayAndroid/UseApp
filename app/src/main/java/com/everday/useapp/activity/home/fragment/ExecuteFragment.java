@@ -26,6 +26,7 @@ import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
+import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -74,6 +75,7 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
         mAdapter = new HomeFragmentAdapter(R.layout.adapter_home_fragment_item, mlist,2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+        refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         refreshLayout.setOnRefreshLoadMoreListener(this);
         loadData(true);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

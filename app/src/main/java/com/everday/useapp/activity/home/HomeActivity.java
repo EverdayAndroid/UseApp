@@ -37,6 +37,7 @@ import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.UpDateDialogFragment;
 import com.everday.useapp.entity.VersionInfoBean;
 import com.everday.useapp.network.HttpManager;
@@ -91,7 +92,7 @@ public class HomeActivity extends BaseActivity  {
     private NotificationCompat.Builder builder;
     private File mApkFile;
     private DownloadTask task;
-
+    private long mPreTime;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_home;
@@ -184,6 +185,17 @@ public class HomeActivity extends BaseActivity  {
                 break;
         }
         showFragment();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (System.currentTimeMillis() - mPreTime > 2000) {// 两次点击间隔大于2秒
+            BamToast.show(this, "再按一次退出应用");
+            mPreTime = System.currentTimeMillis();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**

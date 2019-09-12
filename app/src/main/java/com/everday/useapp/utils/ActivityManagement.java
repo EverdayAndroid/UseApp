@@ -46,9 +46,9 @@ public class ActivityManagement {
      */
     public void finishAll(){
         for (Activity activity:activityStack){
-            activityStack.remove(activity);
             activity.finish();
         }
+        activityStack.clone();
     }
 
     /**

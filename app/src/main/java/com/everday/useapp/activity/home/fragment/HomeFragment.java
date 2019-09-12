@@ -195,6 +195,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 refreshLayout.finishRefresh();
             }
         } else if (netCode == 1) {
+            mAdapter.notifyItemRemoved(index);
             if (error == Constants.BUSINESS_ERROR) {
                 OrderDialog.getInstance(message).show(getChildFragmentManager(), "orderDialog");
             }

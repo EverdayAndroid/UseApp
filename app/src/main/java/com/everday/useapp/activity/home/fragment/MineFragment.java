@@ -150,7 +150,7 @@ public class MineFragment extends BaseFragment {
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
         GlideApp.with(this)
-                .load("http://lhyg.natapp1.cc/app/setting/getAvatar/13753837811")
+                .load(avatar)
                 .apply(requestOptions)
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -168,7 +168,7 @@ public class MineFragment extends BaseFragment {
                 .into(ivPhoto);
         tvName.setText(userName);
         if (tele.length() >= 11) {
-            String replaceStr = tele.substring(3, 8);
+            String replaceStr = tele.substring(3, 9);
             String phone = tele.replace(replaceStr, "****");
             tvPhone.setText(phone);
         }

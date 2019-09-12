@@ -163,6 +163,7 @@ public class OrderDetailsActivity extends BaseActivity {
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         tvTitle.setText("任务详情");
+        ivMessage.setVisibility(View.GONE);
         Bundle extras = getIntent().getExtras();
         taskBean = (TaskBean) extras.getSerializable("bean");
         tvName.setText(taskBean.getTaskName());
@@ -175,7 +176,7 @@ public class OrderDetailsActivity extends BaseActivity {
         tvStartDistance.setText("里程");
         Spanned spanned = Html.fromHtml(taskBean.getDes());
         tvJobScrip.setText(spanned.toString());
-        tvCompanyName.setText("来源");
+        tvCompanyName.setText(taskBean.getShmc());
         tvNo.setText(taskBean.getTaskBh());
         int type = extras.getInt("type");
         if(type!= 1){

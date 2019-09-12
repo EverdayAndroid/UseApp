@@ -50,7 +50,7 @@ public class AppUtils {
     /**
      * 获取本地软件版本号名称
      */
-    public String getLocalVersionName(Context ctx) {
+    public static String getLocalVersionName(Context ctx) {
         String localVersion = "";
         try {
             PackageInfo packageInfo = ctx.getApplicationContext()
