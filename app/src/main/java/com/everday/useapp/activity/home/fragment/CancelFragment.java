@@ -158,6 +158,7 @@ public class CancelFragment extends BaseFragment implements CallBack, OnRefreshL
         if(isDetached()){return;}
         pageNumber = 1;
         mlist.clear();
+        mAdapter.notifyDataSetChanged();
         loadData(false);
     }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.everday.useapp.GlideApp;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.view.ImageInterFace;
@@ -85,7 +86,12 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
         textNickName.setText(userName);
-        GlideApp.with(this).load(Constants.AVATAR+tele).apply(requestOptions).into(imagePhoto);
+        GlideApp.with(this)
+                .load(Constants.AVATAR+tele)
+                .apply(requestOptions)
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(imagePhoto);
     }
 
     @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login,R.id.layout_nickName})

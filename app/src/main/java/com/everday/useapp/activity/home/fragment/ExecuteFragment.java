@@ -165,6 +165,7 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         pageNumber = 1;
         mlist.clear();
+        mAdapter.notifyDataSetChanged();
         loadData(false);
     }
 

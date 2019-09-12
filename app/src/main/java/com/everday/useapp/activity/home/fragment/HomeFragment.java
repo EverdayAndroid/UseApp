@@ -231,6 +231,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
         netCode = 0;
         pageNumber = 1;
         mList.clear();
+        mAdapter.notifyDataSetChanged();
         loadData(false);
     }
 

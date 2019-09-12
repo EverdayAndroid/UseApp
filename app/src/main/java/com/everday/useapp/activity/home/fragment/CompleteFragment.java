@@ -166,6 +166,7 @@ public class CompleteFragment extends BaseFragment implements OnRefreshLoadMoreL
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         pageNumber = 1;
         mlist.clear();
+        mAdapter.notifyDataSetChanged();
         loadData(false);
     }
 
