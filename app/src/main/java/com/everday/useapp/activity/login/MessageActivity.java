@@ -89,6 +89,8 @@ public class MessageActivity extends BaseActivity implements OnRefreshLoadMoreLi
         mlist.addAll(messageInfoBean.getData().getPage().getList());
         if(messageInfoBean.getData().getPage().isLastPage() == false){
             refreshLayout.setEnableLoadMore(true);
+        }else {
+            refreshLayout.setEnableLoadMore(false);
         }
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);

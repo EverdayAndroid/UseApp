@@ -25,4 +25,13 @@ public class ActivityUtils {
         Intent intent = new Intent(activity,clazz);
         activity.startActivityForResult(intent,1);
     }
+    public static void startActivityForResult(Activity activity,Class<? extends Activity> clazz,Bundle bundle,int requestCode){
+        Intent intent = new Intent(activity,clazz);
+        intent.putExtras(bundle);
+        activity.startActivityForResult(intent,requestCode);
+    }
+    public static void startActivityForResult(Activity activity,Class<? extends Activity> clazz,int requestCode){
+        Intent intent = new Intent(activity,clazz);
+        activity.startActivityForResult(intent,requestCode);
+    }
 }

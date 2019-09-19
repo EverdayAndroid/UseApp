@@ -67,7 +67,7 @@ public class CheckPasswordActivity extends BaseActivity {
         tvTitle.setText("修改密码");
         ivMessage.setVisibility(View.GONE);
         String tele = (String) PreferencesUtils.get(UserConfig.TELE,"");
-        String replaceStr = tele.substring(3,8);
+        String replaceStr = tele.substring(3,7);
         String phone = tele.replace(replaceStr,"****");
         textInfo.setText("您正在为"+phone+" 修改密码");
         initListener();

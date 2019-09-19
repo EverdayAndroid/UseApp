@@ -3,6 +3,7 @@ package com.everday.useapp.activity.money;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
@@ -23,6 +24,8 @@ public class MoneyListActivity extends BaseActivity {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        tvTitle.setText("查看明细");
+        ivMessage.setVisibility(View.GONE);
     }
 
     @Override

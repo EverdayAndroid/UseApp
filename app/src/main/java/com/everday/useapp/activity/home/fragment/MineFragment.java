@@ -1,21 +1,13 @@
 package com.everday.useapp.activity.home.fragment;
 
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
-import com.everday.useapp.GlideApp;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
@@ -30,6 +22,7 @@ import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.EverdayLog;
+import com.everday.useapp.utils.GlideCircleTransform;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
@@ -117,7 +110,7 @@ public class MineFragment extends BaseFragment {
         if (isVisible()) {
             String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
             tvName.setText(userName);
-            String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3, 5);
+            String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3, 7);
             String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr, "****");
             tvPhone.setText(phone);
         }
@@ -142,26 +135,38 @@ public class MineFragment extends BaseFragment {
 //        Glide.with(getActivity()).load(Constants.AVATAR+tele).into(ivPhoto);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onStart() {
         super.onStart();
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
+        Boolean certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
 
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
-        GlideApp.with(this)
+//        GlideApp.with(this)
+//                .load(avatar)
+//                .apply(requestOptions)
+//                .skipMemoryCache(false)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .into(ivPhoto);
+        Glide.with(this)
                 .load(avatar)
-                .apply(requestOptions)
+                .transform(new GlideCircleTransform(getContext()))
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(ivPhoto);
         tvName.setText(userName);
         if (tele.length() >= 11) {
-            String replaceStr = tele.substring(3, 9);
+            String replaceStr = tele.substring(3, 7);
             String phone = tele.replace(replaceStr, "****");
             tvPhone.setText(phone);
         }
+        tvAuthor.setText(certification == true?"已认证":"未认证");
+        tvAuthor.setBackground(certification == true?getResources().getDrawable(R.drawable.shape_vetify_greenname)
+                :getResources().getDrawable(R.drawable.shape_vetify_name));
+
 
     }
 }

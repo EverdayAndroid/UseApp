@@ -98,6 +98,11 @@ public class MerchantActivity extends BaseActivity implements CallBack, OnRefres
         loadingView.dismiss();
         MerchantInfoBean merchantInfoBean = GsonUtils.getInstance().parseJsonToBean(t, MerchantInfoBean.class);
         mlist.addAll(merchantInfoBean.getData().getList());
+//        if(merchantInfoBean.getData() == false){
+//            refreshLayout.setEnableLoadMore(true);
+//        }else {
+//            refreshLayout.setEnableLoadMore(false);
+//        }
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);
             nodataView.setVisibility(View.VISIBLE);

@@ -162,6 +162,8 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
             mList.addAll(taskInfoBean.getData().getPage().getList());
             if(taskInfoBean.getData().getPage().isLastPage() == false){
                 refreshLayout.setEnableLoadMore(true);
+            }else {
+                refreshLayout.setEnableLoadMore(false);
             }
             if (mList.size() == 0) {
                 refreshLayout.setVisibility(View.GONE);
@@ -239,6 +241,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.mReload_btn:
+                loadingView.show(getChildFragmentManager(),"loading");
                 loadData(true);
                 break;
         }

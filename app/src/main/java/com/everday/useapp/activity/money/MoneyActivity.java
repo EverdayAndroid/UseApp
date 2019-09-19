@@ -20,6 +20,8 @@ import com.everday.useapp.utils.EverdayLog;
 import com.jzxiang.pickerview.TimePickerDialog;
 import com.jzxiang.pickerview.data.Type;
 import com.jzxiang.pickerview.listener.OnDateSetListener;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,8 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
     TextView tvDate;
     @BindView(R.id.rl)
     RelativeLayout rl;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     private WithdrawAdapter mAdapter;
     private List mlist;
     private TimePickerDialog mDialogHourMinute;
@@ -73,10 +77,11 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
         mAdapter = new WithdrawAdapter(R.layout.adapter_withdraw_item, mlist);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+        refreshLayout.setRefreshHeader(new MaterialHeader(this));
         initTime();
     }
 
-    @OnClick({R.id.tv_checkDetail, R.id.bt_pickMoney,R.id.tv_date})
+    @OnClick({R.id.tv_checkDetail, R.id.bt_pickMoney, R.id.tv_date})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.tv_checkDetail:
@@ -89,7 +94,7 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
 //                ActivityUtils.startActivity(this, MoneyWithdrawActivity.class);
                 break;
             case R.id.tv_date:
-                if(!mDialogHourMinute.isVisible()) {
+                if (!mDialogHourMinute.isVisible()) {
                     mDialogHourMinute.show(getSupportFragmentManager(), "timeDialog");
                 }
                 break;
@@ -104,8 +109,8 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
         if (money > -1 && money > 0) {
             //TODO  提现
             HttpManager.getInstance().post("", this, null);
-        }else{
-            BamToast.show(UseApplication.getApplication(),"余额必须大于0");
+        } else {
+            BamToast.show(UseApplication.getApplication(), "余额必须大于0");
         }
     }
 
@@ -150,12 +155,13 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
 
     @Override
     public void onDateSet(TimePickerDialog timePickerView, long millseconds) {
-        EverdayLog.error(millseconds+"    "+DateUtils.getCurrentDate());
-        if(millseconds == DateUtils.getCurrentDate()){
+        EverdayLog.error(millseconds + "    " + DateUtils.getCurrentDate());
+        if (millseconds == DateUtils.getCurrentDate()) {
             tvDate.setText("本月");
-        }else {
+        } else {
             String time = DateUtils.getLongToString(millseconds);
             tvDate.setText(time);
         }
     }
+
 }

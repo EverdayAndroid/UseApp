@@ -1,7 +1,6 @@
 package com.everday.useapp.base;
 
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,23 +12,16 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.MessageActivity;
 import com.everday.useapp.dialog.LoadingView;
 import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
-import com.everday.useapp.utils.EverdayLog;
 import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -47,13 +39,13 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected ImageView ivMessage,ivBack;
     protected TextView tvTitle,tvRight;
     protected Gson gson;
-    protected RequestOptions requestOptions;
+//    protected RequestOptions requestOptions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setTheme(R.style.problem_AppTheme);
         int layout = initView(savedInstanceState);
-        requestOptions = RequestOptions.circleCropTransform();
+//        requestOptions = RequestOptions.circleCropTransform();
         if (layout != 0) {
             loadingView = new LoadingView();
             setContentView(layout);

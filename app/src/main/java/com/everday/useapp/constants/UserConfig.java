@@ -18,8 +18,17 @@ public class UserConfig {
     public static String AVATAR = "avatar";
     //用户token
     public static String TOKEN = "toKen";
+    //用户id
+    public static String ID = "id";
     //用户唯一标识
     public static String UUID = "uuid";
     //是否第一次启动first
     public static String FIRST_START = "first_start";
+    //认证
+    public static String CERTIFICATION = "certification";
+    //身份证名称
+    public static String CERTIFICATION_NAME = "certification_name";
+    //身份证号码
+    public static String CERTIFICATION_CODE = "certification_code";
+
 }

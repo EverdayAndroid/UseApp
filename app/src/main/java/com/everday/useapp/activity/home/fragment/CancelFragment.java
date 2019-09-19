@@ -109,6 +109,8 @@ public class CancelFragment extends BaseFragment implements CallBack, OnRefreshL
         mlist.addAll(taskInfoBean.getData().getPage().getList());
         if(taskInfoBean.getData().getPage().isLastPage() == false){
             refreshLayout.setEnableLoadMore(true);
+        }else {
+            refreshLayout.setEnableLoadMore(false);
         }
         if(mlist.size() == 0){
             refreshLayout.setVisibility(View.GONE);

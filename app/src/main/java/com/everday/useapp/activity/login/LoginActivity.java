@@ -216,8 +216,11 @@ public class LoginActivity extends BaseActivity {
         PreferencesUtils.put(UserConfig.USERNAME,userInfoBean.getData().getAppAccount().getNickName(),false);
         PreferencesUtils.put(UserConfig.PASSWORD,password,false);
         PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
+        PreferencesUtils.put(UserConfig.ID,userInfoBean.getData().getAppAccount().getId(),false);
 //        PreferencesUtils.put(UserConfig.AVATAR,userInfoBean.getData().getAppAccount().getAvatar(),false);
         PreferencesUtils.put(UserConfig.TELE,phone,false);
+        PreferencesUtils.put(UserConfig.CERTIFICATION_NAME,userInfoBean.getData().getAppAccount().getNickName(),false);
+        PreferencesUtils.put(UserConfig.CERTIFICATION_CODE,userInfoBean.getData().getAppAccount().getIdCard(),false);
         if(userInfoBean.getData().getAppAccount().getStatus() == 1){
 
         }else if(userInfoBean.getData().getAppAccount().getStatus() == 2){

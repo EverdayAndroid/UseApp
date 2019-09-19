@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.request.RequestOptions;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.MessageActivity;
 import com.everday.useapp.dialog.LoadingView;
 import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.ActivityUtils;
-import com.everday.useapp.utils.EverdayLog;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,12 +35,12 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
     protected LoadingView loadingView;
     protected ImageView ivMessage,ivBack;
     protected TextView tvTitle;
-    protected RequestOptions requestOptions;
+//    protected RequestOptions requestOptions;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(initLayout(), container, false);
-        requestOptions = RequestOptions.circleCropTransform();
+//        requestOptions = RequestOptions.circleCropTransform();
         ivMessage = view.findViewById(R.id.iv_message);
         ivBack = view.findViewById(R.id.iv_back);
         tvTitle = view.findViewById(R.id.head_tv_title);

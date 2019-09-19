@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.everday.useapp.GlideApp;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.view.ImageInterFace;
 import com.everday.useapp.base.BaseActivity;
@@ -21,6 +20,7 @@ import com.everday.useapp.dialog.UseDialog;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.FileUtils;
+import com.everday.useapp.utils.GlideCircleTransform;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -86,15 +86,21 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
         textNickName.setText(userName);
-        GlideApp.with(this)
+//        GlideApp.with(this)
+//                .load(Constants.AVATAR+tele)
+//                .apply(requestOptions)
+//                .skipMemoryCache(false)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .into(imagePhoto);
+        Glide.with(this)
                 .load(Constants.AVATAR+tele)
-                .apply(requestOptions)
+                .bitmapTransform(new GlideCircleTransform(this))
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imagePhoto);
     }
 
-    @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login,R.id.layout_nickName})
+    @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login,R.id.layout_nickName,R.id.layout_auth})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.layout_photo:
@@ -109,6 +115,9 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 break;
             case R.id.layout_nickName:
                 ActivityUtils.startActivityForResult(this, UserNameActivity.class);
+                break;
+            case R.id.layout_auth:
+                ActivityUtils.startActivity(this, LdentityActivity.class);
                 break;
         }
     }
@@ -130,7 +139,8 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     @Override
     public void takeSuccess(TResult result) {
         compressPath = result.getImage().getCompressPath();
-        GlideApp.with(this).load(compressPath).apply(requestOptions).into(imagePhoto);
+//        GlideApp.with(this).load(compressPath).apply(requestOptions).into(imagePhoto);
+        Glide.with(this).load(compressPath).transform(new GlideCircleTransform(this)).into(imagePhoto);
 
         loadingView.show(getSupportFragmentManager(),"loading");
         RequestBody requestBody = new MultipartBody.Builder()

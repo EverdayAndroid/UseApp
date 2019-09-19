@@ -28,7 +28,7 @@
     <style name="hr_gray_line">
         <item name="android:background">@color/low_gray_one</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">2.0px</item>
+        <item name="android:layout_height">2dp</item>
     </style>
 
     <style name="item_arrow_style">

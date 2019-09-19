@@ -40,4 +40,6 @@ public class API {
     public static String NOTICE = "noticeApi/notice";
     //退出
     public static String OUTLOGIN = "app/logout";
+    //实名
+    public static String CERTIFICATION = "app/setting/certification";
 }

@@ -9,6 +9,7 @@ import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.BaseModel;
+import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.NetWorkUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.google.gson.Gson;
@@ -113,6 +114,7 @@ public class OkhttpEnginen implements IHttpEngien {
                         @Override
                         public void run() {
                             try {
+                                EverdayLog.error(result);
                                 BaseModel baseModel = gson.fromJson(result, BaseModel.class);
                                 if (baseModel.getResultCode() == Constants.SUCCESS) {
                                     callBack.onSuccess(result);
