@@ -84,6 +84,7 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
                 TaskBean taskBean = mlist.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean",taskBean);
+                bundle.putInt("type",2);
                 //接单详情
                 ActivityUtils.startActivity(getActivity(), OrderDetailsActivity.class,bundle);
             }

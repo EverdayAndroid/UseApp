@@ -154,6 +154,8 @@ public class OrderDetailsActivity extends BaseActivity {
     @BindView(R.id.ll_main)
     RelativeLayout llMain;
     private TaskBean taskBean;
+    //1接单，2确认完成，3取消
+    private int network ;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_order_details;
@@ -181,15 +183,27 @@ public class OrderDetailsActivity extends BaseActivity {
         int type = extras.getInt("type");
         if(type!= 1){
             rlBottom.setVisibility(View.GONE);
+        }else if(type == 2){
+            btTakeJob.setVisibility(View.GONE);
+            btOk.setVisibility(View.VISIBLE);
+            btCancel.setVisibility(View.VISIBLE);
         }
     }
 
 
-    @OnClick({R.id.bt_take_job})
+    @OnClick({R.id.bt_take_job,R.id.bt_ok,R.id.btn_cancel})
     void OnClick(View view){
         switch (view.getId()){
             case R.id.bt_take_job:
                 job();
+                break;
+            case R.id.bt_ok:
+                //TODO  确认完成
+                jobComplete();
+                break;
+            case R.id.btn_cancel:
+                //TODO  取消
+                jobCancel();
                 break;
         }
     }
@@ -198,10 +212,33 @@ public class OrderDetailsActivity extends BaseActivity {
      * 接单
      */
     public void job(){
+        network = 0;
         loadingView.show(getSupportFragmentManager(),"loading");
         String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST+ API.TAKETASK,this,requestBody);
+    }
+
+    /**
+     * 确认完成
+     */
+    public void jobComplete(){
+        network = 1;
+        loadingView.show(getSupportFragmentManager(),"loading");
+        String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        HttpManager.getInstance().post(Constants.HOST+ API.COMPLETE_TAKETASK,this,requestBody);
+    }
+
+    /**
+     * 取消
+     */
+    public void jobCancel(){
+        network = 2;
+        loadingView.show(getSupportFragmentManager(),"loading");
+        String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        HttpManager.getInstance().post(Constants.HOST+ API.CANCEL_TAKETASK,this,requestBody);
     }
 
     @Override

@@ -32,6 +32,10 @@ public class API {
     public static String GETTASKDJD = "taskApi/getTaskdjd";
     //接单按钮接口
     public static String TAKETASK = "taskApi/takeTask";
+    //确认完成
+    public static String COMPLETE_TAKETASK = "taskApi/takeTask";
+    //取消任务
+    public static String CANCEL_TAKETASK = "taskApi/takeTask";
     //我的任务列表
     public static String GETMYTASK = "taskApi/getMyTask";
     //app版本升级

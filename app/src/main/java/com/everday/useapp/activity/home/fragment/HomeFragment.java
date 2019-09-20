@@ -128,7 +128,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
     public void loadData(boolean isLoading) {
         netCode = 0;
         if (isLoading) {
-//            loadingView.show(getChildFragmentManager(), "loading");
+            loadingView.show(getChildFragmentManager(), "loading");
         }
         String gson = "{\"page\":\"" + pageNumber + "\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
