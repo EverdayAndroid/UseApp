@@ -2,6 +2,7 @@ package com.everday.useapp.activity.home.fragment;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.everday.useapp.R;
+import com.everday.useapp.activity.login.ElectronicActivity;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
 import com.everday.useapp.activity.login.SettingActivity;
@@ -79,7 +81,7 @@ public class MineFragment extends BaseFragment {
         }, RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson));
     }
 
-    @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting})
+    @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting,R.id.ll_my_contrat})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.ll_info:
@@ -95,6 +97,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.ll_setting:
                 ActivityUtils.startActivity(getActivity(), SettingActivity.class);
+                break;
+            case R.id.ll_my_contrat:
+                ActivityUtils.startActivity(getActivity(), ElectronicActivity.class);
                 break;
         }
     }
@@ -142,7 +147,6 @@ public class MineFragment extends BaseFragment {
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
         Boolean certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
-
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
 //        GlideApp.with(this)
@@ -163,10 +167,11 @@ public class MineFragment extends BaseFragment {
             String phone = tele.replace(replaceStr, "****");
             tvPhone.setText(phone);
         }
-        tvAuthor.setText(certification == true?"已认证":"未认证");
-        tvAuthor.setBackground(certification == true?getResources().getDrawable(R.drawable.shape_vetify_greenname)
-                :getResources().getDrawable(R.drawable.shape_vetify_name));
-
+        if(certification) {
+            tvAuthor.setText(certification == true ? "已认证" : "未认证");
+            tvAuthor.setBackground(certification == true ? getResources().getDrawable(R.drawable.shape_vetify_greenname)
+                    : getResources().getDrawable(R.drawable.shape_vetify_name));
+        }
 
     }
 }

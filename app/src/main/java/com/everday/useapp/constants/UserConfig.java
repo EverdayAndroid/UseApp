@@ -30,5 +30,14 @@ public class UserConfig {
     public static String CERTIFICATION_NAME = "certification_name";
     //身份证号码
     public static String CERTIFICATION_CODE = "certification_code";
-
+    //自动抢单
+    public static String AUTOMATIC = "automatic";
+    //银行卡
+    public static String BANKCARD = "bankcard";
+    //银行卡类型
+    public static String BANKCARDTYPE = "bankcardtype";
+    //银行卡手机号
+    public static String BANKCARDPHONE = "bankcardphone";
+    //1未签约，2已签约
+    public static String SIGN = "sign";
 }

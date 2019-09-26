@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.login.LdentityCodeActivity"></activity>
+        <activity android:name=".activity.login.ElectronicActivity"></activity>
+        <activity android:name=".activity.login.BankCardActivity" />
+        <activity android:name=".activity.login.LdentityCodeActivity" />
         <activity android:name=".activity.login.LdentityNameActivity" />
         <activity android:name=".activity.login.LdentityActivity" />
         <activity android:name=".activity.login.SettingActivity" />

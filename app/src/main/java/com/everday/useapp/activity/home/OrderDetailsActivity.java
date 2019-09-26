@@ -181,28 +181,29 @@ public class OrderDetailsActivity extends BaseActivity {
         tvCompanyName.setText(taskBean.getShmc());
         tvNo.setText(taskBean.getTaskBh());
         int type = extras.getInt("type");
-        if(type!= 1){
-            rlBottom.setVisibility(View.GONE);
+        if(type == 1){
+            rlBottom.setVisibility(View.VISIBLE);
         }else if(type == 2){
+            rlBottom.setVisibility(View.VISIBLE);
             btTakeJob.setVisibility(View.GONE);
             btOk.setVisibility(View.VISIBLE);
             btCancel.setVisibility(View.VISIBLE);
+        }else{
+            rlBottom.setVisibility(View.GONE);
         }
     }
 
 
-    @OnClick({R.id.bt_take_job,R.id.bt_ok,R.id.btn_cancel})
+    @OnClick({R.id.bt_take_job,R.id.bt_ok,R.id.bt_cancel})
     void OnClick(View view){
         switch (view.getId()){
             case R.id.bt_take_job:
                 job();
                 break;
             case R.id.bt_ok:
-                //TODO  确认完成
                 jobComplete();
                 break;
-            case R.id.btn_cancel:
-                //TODO  取消
+            case R.id.bt_cancel:
                 jobCancel();
                 break;
         }
@@ -225,7 +226,7 @@ public class OrderDetailsActivity extends BaseActivity {
     public void jobComplete(){
         network = 1;
         loadingView.show(getSupportFragmentManager(),"loading");
-        String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";
+        String gson = "{ \"taskId\":\""+taskBean.getId()+"\",\"tele\":\""+telePhone+"\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST+ API.COMPLETE_TAKETASK,this,requestBody);
     }
@@ -236,7 +237,7 @@ public class OrderDetailsActivity extends BaseActivity {
     public void jobCancel(){
         network = 2;
         loadingView.show(getSupportFragmentManager(),"loading");
-        String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";
+        String gson = "{ \"taskId\":\""+taskBean.getId()+"\",\"tele\":\""+telePhone+"\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
         HttpManager.getInstance().post(Constants.HOST+ API.CANCEL_TAKETASK,this,requestBody);
     }
@@ -247,6 +248,7 @@ public class OrderDetailsActivity extends BaseActivity {
         if(isFinishing()){return;}
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
         BamToast.show(this,baseModel.getMessage());
+        finish();
     }
 
     @Override

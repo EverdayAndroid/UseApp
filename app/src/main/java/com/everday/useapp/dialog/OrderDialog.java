@@ -15,6 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.everday.useapp.R;
+import com.everday.useapp.constants.EventConfig;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +93,7 @@ public class OrderDialog extends DialogFragment implements DialogInterface.OnKey
         switch (view.getId()) {
             case R.id.dialog_affirm_btn:
                 dismiss();
+                EventBus.getDefault().post(EventConfig.HOMEFRAGMENT);
                 break;
         }
     }

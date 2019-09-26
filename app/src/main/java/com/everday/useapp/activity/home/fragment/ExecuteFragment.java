@@ -77,7 +77,6 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
         recyclerView.setAdapter(mAdapter);
         refreshLayout.setRefreshHeader(new MaterialHeader(getContext()));
         refreshLayout.setOnRefreshLoadMoreListener(this);
-        loadData(true);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -91,6 +90,16 @@ public class ExecuteFragment extends BaseFragment implements OnRefreshLoadMoreLi
         });
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mlist.clear();
+        mAdapter.notifyDataSetChanged();
+        pageNumber = 1;
+        loadData(false);
+    }
+
     public void loadData(boolean isLoading){
         if(isLoading) {
             loadingView.show(getChildFragmentManager(), "loading");

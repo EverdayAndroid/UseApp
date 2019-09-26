@@ -27,6 +27,7 @@ public class SplashActivity extends BaseActivity {
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_splash;
     }
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
@@ -39,22 +40,23 @@ public class SplashActivity extends BaseActivity {
                 mHandler.sendMessage(message);
             }
         };
-        mHandler.postDelayed(runnable,3000);
+        mHandler.postDelayed(runnable, 3000);
     }
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     boolean firstStart = (boolean) PreferencesUtils.get(UserConfig.FIRST_START, true);
                     String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
-                    if(firstStart){
-                        ActivityUtils.startActivity(SplashActivity.this,AppGuideActivity.class);
-                    }else if(TextUtils.isEmpty(tele)){
-                        ActivityUtils.startActivity(SplashActivity.this,LoginActivity.class);
-                    }else{
+//                    if(firstStart){
+//                        ActivityUtils.startActivity(SplashActivity.this,AppGuideActivity.class);
+//                    }else
+                    if (TextUtils.isEmpty(tele)) {
+                        ActivityUtils.startActivity(SplashActivity.this, LoginActivity.class);
+                    } else {
                         ActivityUtils.startActivity(SplashActivity.this, HomeActivity.class);
                     }
                     finish();

@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.MessageActivity;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.LoadingView;
 import com.everday.useapp.network.http.CallBack;
 import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -39,6 +41,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected ImageView ivMessage,ivBack;
     protected TextView tvTitle,tvRight;
     protected Gson gson;
+    protected String telePhone;
 //    protected RequestOptions requestOptions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
         if(gson == null){
             gson = new Gson();
         }
+        telePhone = (String) PreferencesUtils.get(UserConfig.TELE,"");
     }
 
 

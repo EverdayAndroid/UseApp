@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,6 +48,10 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
     RelativeLayout rl;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.nodata_view)
+    LinearLayout nodataView;
+    @BindView(R.id.mNo_net_layout)
+    LinearLayout mNoNetLayout;
     private WithdrawAdapter mAdapter;
     private List mlist;
     private TimePickerDialog mDialogHourMinute;
@@ -67,21 +72,21 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
         tvTitle.setText("钱袋");
         rl.setBackgroundDrawable(getResources().getDrawable(R.drawable.head_blue));
         ivMessage.setVisibility(View.GONE);
-        mlist = new ArrayList(5);
-        mlist.add(null);
-        mlist.add(null);
-        mlist.add(null);
-        mlist.add(null);
-        mlist.add(null);
+        mlist = new ArrayList();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mAdapter = new WithdrawAdapter(R.layout.adapter_withdraw_item, mlist);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
         refreshLayout.setRefreshHeader(new MaterialHeader(this));
         initTime();
+        if (mlist.size() == 0) {
+            refreshLayout.setVisibility(View.GONE);
+            nodataView.setVisibility(View.VISIBLE);
+            mNoNetLayout.setVisibility(View.GONE);
+        }
     }
 
-    @OnClick({R.id.tv_checkDetail, R.id.bt_pickMoney, R.id.tv_date})
+    @OnClick({R.id.tv_checkDetail, R.id.bt_pickMoney, R.id.tv_date,R.id.mReload_btn})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.tv_checkDetail:
@@ -97,6 +102,11 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
                 if (!mDialogHourMinute.isVisible()) {
                     mDialogHourMinute.show(getSupportFragmentManager(), "timeDialog");
                 }
+                break;
+            case R.id.mReload_btn:
+                //TODO 重新加载数据
+                loadingView.show(getSupportFragmentManager(),"loading");
+                loadingView.dismiss();
                 break;
         }
     }
@@ -131,25 +141,27 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
-        if (isFinishing()) {
-            return;
+        if (mlist.size() == 0) {
+            refreshLayout.setVisibility(View.GONE);
+            nodataView.setVisibility(View.VISIBLE);
+            mNoNetLayout.setVisibility(View.GONE);
+        } else {
+            refreshLayout.setVisibility(View.VISIBLE);
+            nodataView.setVisibility(View.GONE);
+            mNoNetLayout.setVisibility(View.GONE);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void onFailure(String message, int error) {
         super.onFailure(message, error);
-        if (isFinishing()) {
-            return;
-        }
+
     }
 
     @Override
     public void onThrows(String message, int error) {
         super.onThrows(message, error);
-        if (isFinishing()) {
-            return;
-        }
     }
 
 

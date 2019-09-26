@@ -98,7 +98,7 @@
             <View style="@style/hr_gray_line_margin" />
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/layout_card"
                 style="@style/item_layout_style">
 
@@ -120,7 +120,7 @@
                     android:id="@+id/image_birthday"
                     style="@style/item_arrow_style" />
             </LinearLayout>
-            <View style="@style/hr_gray_line_margin"  android:visibility="gone"/>
+            <View style="@style/hr_gray_line_margin" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_10dp"

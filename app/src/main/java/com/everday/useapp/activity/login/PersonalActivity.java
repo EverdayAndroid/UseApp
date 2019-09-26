@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,6 +55,8 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     RoundedImageView imagePhoto;
     @BindView(R.id.text_nickName)
     TextView textNickName;
+    @BindView(R.id.tv_auth_state)
+    TextView tvAuthState;
     private InvokeParam invokeParam;
     private TakePhoto takePhoto;
     private File fileName;
@@ -85,6 +88,9 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         ivMessage.setVisibility(View.GONE);
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
+        //是否认证
+        Boolean certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
+        tvAuthState.setText(certification == true?"已认证":"未认证");
         textNickName.setText(userName);
 //        GlideApp.with(this)
 //                .load(Constants.AVATAR+tele)
@@ -93,14 +99,14 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
 //                .into(imagePhoto);
         Glide.with(this)
-                .load(Constants.AVATAR+tele)
+                .load(Constants.AVATAR + tele)
                 .bitmapTransform(new GlideCircleTransform(this))
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imagePhoto);
     }
 
-    @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login,R.id.layout_nickName,R.id.layout_auth})
+    @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login, R.id.layout_nickName, R.id.layout_auth, R.id.layout_card})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.layout_photo:
@@ -119,6 +125,15 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
             case R.id.layout_auth:
                 ActivityUtils.startActivity(this, LdentityActivity.class);
                 break;
+            case R.id.layout_card:
+                String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD, "");
+                //判断是否绑定过银行卡
+                if (TextUtils.isEmpty(bankcard)) {
+                    ActivityUtils.startActivity(this, BankCardActivity.class);
+                } else {
+                    ActivityUtils.startActivity(this, BankCardDetailsActivity.class);
+                }
+                break;
         }
     }
 
@@ -129,7 +144,9 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case 1:
-                if(data == null){return;}
+                if (data == null) {
+                    return;
+                }
                 String name = data.getStringExtra("name");
                 textNickName.setText(name);
                 break;
@@ -142,14 +159,14 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
 //        GlideApp.with(this).load(compressPath).apply(requestOptions).into(imagePhoto);
         Glide.with(this).load(compressPath).transform(new GlideCircleTransform(this)).into(imagePhoto);
 
-        loadingView.show(getSupportFragmentManager(),"loading");
+        loadingView.show(getSupportFragmentManager(), "loading");
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("avatar",
                         "avatar.png",
                         RequestBody.create(MultipartBody.FORM, new File(compressPath)))
                 .build();
-        HttpManager.getInstance().post(Constants.HOST+ API.UPLOADAVATAR,this,requestBody);
+        HttpManager.getInstance().post(Constants.HOST + API.UPLOADAVATAR, this, requestBody);
     }
 
     @Override

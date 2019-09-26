@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import com.everday.useapp.activity.home.adapter.HomeFragmentAdapter;
 import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.EventConfig;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.CertificationDialog;
 import com.everday.useapp.dialog.OrderDialog;
@@ -24,6 +27,7 @@ import com.everday.useapp.entity.TaskInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 import com.scwang.smartrefresh.header.DeliveryHeader;
 import com.scwang.smartrefresh.header.DropBoxHeader;
 import com.scwang.smartrefresh.header.FlyRefreshHeader;
@@ -38,6 +42,9 @@ import com.scwang.smartrefresh.header.WaveSwipeHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,6 +114,12 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
                     case R.id.bt_take_job:
+                        //判断是否实名认证
+                        String certification_name = (String)PreferencesUtils.get(UserConfig.CERTIFICATION_NAME,"");
+                        if(TextUtils.isEmpty(certification_name)){
+                            certificationDialog.show(getChildFragmentManager(), "certificationDialog");
+                            return;
+                        }
                         index = position;
                         TaskBean taskBean = mList.get(position);
                         orders(taskBean.getId());
@@ -115,9 +128,28 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 }
             }
         });
-//        certificationDialog = new CertificationDialog();
-//        certificationDialog.show(getChildFragmentManager(), "certificationDialog");
-        loadData(true);
+        certificationDialog = new CertificationDialog();
+    }
+
+    @Override
+    public boolean eventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void removed(String tag){
+        if(tag == EventConfig.HOMEFRAGMENT){
+            mAdapter.notifyItemRemoved(index);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mList.clear();
+        mAdapter.notifyDataSetChanged();
+        pageNumber = 1;
+        loadData(false);
     }
 
     /**
@@ -197,7 +229,6 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 refreshLayout.finishRefresh();
             }
         } else if (netCode == 1) {
-            mAdapter.notifyItemRemoved(index);
             if (error == Constants.BUSINESS_ERROR) {
                 OrderDialog.getInstance(message).show(getChildFragmentManager(), "orderDialog");
             }

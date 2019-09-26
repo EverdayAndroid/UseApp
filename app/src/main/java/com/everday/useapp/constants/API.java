@@ -33,9 +33,9 @@ public class API {
     //接单按钮接口
     public static String TAKETASK = "taskApi/takeTask";
     //确认完成
-    public static String COMPLETE_TAKETASK = "taskApi/takeTask";
+    public static String COMPLETE_TAKETASK = "taskApi/taskFinish";
     //取消任务
-    public static String CANCEL_TAKETASK = "taskApi/takeTask";
+    public static String CANCEL_TAKETASK = "taskApi/taskCancel";
     //我的任务列表
     public static String GETMYTASK = "taskApi/getMyTask";
     //app版本升级
@@ -46,4 +46,12 @@ public class API {
     public static String OUTLOGIN = "app/logout";
     //实名
     public static String CERTIFICATION = "app/setting/certification";
+    //抢单
+    public static String AUTOMATIC = "app/setting/grab";
+    //查询银行卡类型
+    public static String BANKCARDTYPE = "app/setting/serachBankName";
+    //绑定银行卡
+    public static String BINDBANKCARD = "app/setting/bindCard";
+    //电子签约
+    public static String ELECTRONIC = "app/sign/createAccount";
 }
