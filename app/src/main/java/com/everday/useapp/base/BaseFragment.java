@@ -35,6 +35,8 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
     protected LoadingView loadingView;
     protected ImageView ivMessage,ivBack;
     protected TextView tvTitle;
+    //是否可以操作view控件,防止view已经销毁异步操作
+    protected boolean operatingView;
 //    protected RequestOptions requestOptions;
     @Nullable
     @Override
@@ -93,6 +95,7 @@ public class BaseFragment<P extends BasePresenter> extends RxFragment implements
         if(eventBus()){
             EventBus.getDefault().unregister(this);
         }
+        operatingView = true;
 //        if(loadingView!=null&& loadingView.isAdded() && !loadingView.isHidden()){
 //            loadingView.dismiss();
 //        }

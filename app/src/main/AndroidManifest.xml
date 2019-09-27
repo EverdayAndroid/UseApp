@@ -18,12 +18,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.login.ElectronicActivity"></activity>
-        <activity android:name=".activity.login.BankCardActivity" />
-        <activity android:name=".activity.login.LdentityCodeActivity" />
-        <activity android:name=".activity.login.LdentityNameActivity" />
-        <activity android:name=".activity.login.LdentityActivity" />
-        <activity android:name=".activity.login.SettingActivity" />
+        <activity
+            android:name=".activity.login.ElectronicActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.login.BankCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.BankCardDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.LdentityCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.LdentityNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.LdentityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.login.SettingActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="design_width_in_dp"

@@ -21,7 +21,6 @@
         android:layout_marginLeft="@dimen/dimen_15dp"
         android:layout_toRightOf="@id/tv_hint"
         android:background="@null"
-        android:maxLength="5"
         android:gravity="center_vertical"
         android:layout_alignTop="@id/tv_hint"
         android:hint="@string/wright_nickname"

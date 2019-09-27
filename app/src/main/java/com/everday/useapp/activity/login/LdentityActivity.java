@@ -45,6 +45,8 @@ public class LdentityActivity extends BaseActivity {
     @BindView(R.id.btn_submit)
     Button btnSubmit;
     private String name,code;
+    //是否认证
+    private Boolean certification;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         super.initView(savedInstanceState);
@@ -110,6 +112,13 @@ public class LdentityActivity extends BaseActivity {
         String code = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE,"");
         tvName.setText(name);
         tvCode.setText(code);
+
+        certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
+        if(certification){
+            tvName.setEnabled(true);
+            tvCode.setEnabled(true);
+            btnSubmit.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.btn_submit,R.id.etName,R.id.etCode})
@@ -127,11 +136,13 @@ public class LdentityActivity extends BaseActivity {
                 HttpManager.getInstance().post(Constants.HOST+ API.CERTIFICATION,this,requestBody);
                 break;
             case R.id.etName:
+                if(certification){return;}
                 Bundle bundle = new Bundle();
                 bundle.putString("name",tvName.getText().toString());
                 ActivityUtils.startActivityForResult(this,LdentityNameActivity.class,bundle,1);
                 break;
             case R.id.etCode:
+                if(certification){return;}
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("code",tvCode.getText().toString());
                 ActivityUtils.startActivityForResult(this,LdentityCodeActivity.class,bundle1,2);

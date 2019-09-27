@@ -20,7 +20,8 @@ public class UserBean {
     //1注册、待审核2正常、已激活3审核不通过4锁定账号，无法做任何事情5 已删除用户，只有状态为2的用户才能登陆进主界面
     private int status;
     private String password;
-
+    //名字
+    private String name;
     public String getBankNumber() {
         return bankNumber == null ? "" : bankNumber;
     }
@@ -103,5 +104,9 @@ public class UserBean {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getName() {
+        return name == null ? "" : name;
     }
 }

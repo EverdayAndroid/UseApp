@@ -104,14 +104,31 @@ public class MineFragment extends BaseFragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onSuccess(String t) {
         super.onSuccess(t);
         UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
         PreferencesUtils.put(UserConfig.USERNAME, userInfoBean.getData().getAppAccount().getNickName(), false);
         PreferencesUtils.put(UserConfig.TOKEN, userInfoBean.getData().getAccessToken(), false);
-//        PreferencesUtils.put(UserConfig.AVATAR, userInfoBean.getData().getAppAccount().getAvatar(), false);
-        PreferencesUtils.put(UserConfig.TELE, userInfoBean.getData().getAppAccount().getTele(), false);
+        //身份证名字
+        PreferencesUtils.put(UserConfig.CERTIFICATION_NAME,userInfoBean.getData().getAppAccount().getName(),false);
+        //身份证号码
+        PreferencesUtils.put(UserConfig.CERTIFICATION_CODE,userInfoBean.getData().getAppAccount().getIdCard(),false);
+        //记录银行卡信息
+        PreferencesUtils.put(UserConfig.BANKCARD,userInfoBean.getData().getAppAccount().getBankNumber(),false);
+        PreferencesUtils.put(UserConfig.BANKCARDTYPE,userInfoBean.getData().getAppAccount().getBankType(),false);
+        PreferencesUtils.put(UserConfig.BANKCARDPHONE,userInfoBean.getData().getAppAccount().getTele(),false);
+        //1未签约，2已签约
+        PreferencesUtils.put(UserConfig.SIGN,userInfoBean.getData().getAppAccount().getSign(),false);
+
+        if(userInfoBean.getData().getAppAccount().getIdCard().isEmpty()){
+            PreferencesUtils.put(UserConfig.CERTIFICATION,false,false);
+        }else{
+            PreferencesUtils.put(UserConfig.CERTIFICATION,true,false);
+        }
+
+        if(operatingView){return;}
         if (isVisible()) {
             String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
             tvName.setText(userName);
@@ -119,6 +136,9 @@ public class MineFragment extends BaseFragment {
             String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr, "****");
             tvPhone.setText(phone);
         }
+        tvAuthor.setText(userInfoBean.getData().getAppAccount().getIdCard().isEmpty() ? "未认证" : "已认证");
+        tvAuthor.setBackground(userInfoBean.getData().getAppAccount().getIdCard().isEmpty()  ? getResources().getDrawable(R.drawable.shape_vetify_name)
+                : getResources().getDrawable(R.drawable.shape_vetify_greenname));
     }
 
     @Override
@@ -146,7 +166,6 @@ public class MineFragment extends BaseFragment {
         super.onStart();
         String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
-        Boolean certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
 //        GlideApp.with(this)
@@ -166,11 +185,6 @@ public class MineFragment extends BaseFragment {
             String replaceStr = tele.substring(3, 7);
             String phone = tele.replace(replaceStr, "****");
             tvPhone.setText(phone);
-        }
-        if(certification) {
-            tvAuthor.setText(certification == true ? "已认证" : "未认证");
-            tvAuthor.setBackground(certification == true ? getResources().getDrawable(R.drawable.shape_vetify_greenname)
-                    : getResources().getDrawable(R.drawable.shape_vetify_name));
         }
 
     }

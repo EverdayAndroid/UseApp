@@ -26,7 +26,6 @@ import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -357,6 +356,7 @@ public class BankCardActivity extends BaseActivity {
             PreferencesUtils.put(UserConfig.BANKCARDPHONE, phone, true);
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
             BamToast.show(this, baseModel.getMessage());
+            finish();
         }
     }
 

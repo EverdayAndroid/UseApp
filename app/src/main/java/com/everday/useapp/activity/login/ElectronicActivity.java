@@ -31,7 +31,7 @@ public class ElectronicActivity extends BaseActivity {
 
     @BindView(R.id.webview)
     WebView webview;
-    private String thirdPartyUserId;
+    private Integer thirdPartyUserId;
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class ElectronicActivity extends BaseActivity {
         ivMessage.setVisibility(View.GONE);
         String name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME, "");
         String code = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE, "");
-
+        thirdPartyUserId = (Integer) PreferencesUtils.get(UserConfig.ID,1);
         String gson = "{\n" +
                 "  \"thirdPartyUserId\":\"" + thirdPartyUserId + "\",\n" +
                 " \"idCard\":\"" + code + "\",\n" +

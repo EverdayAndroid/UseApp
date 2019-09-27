@@ -24,7 +24,7 @@ public class UserConfig {
     public static String UUID = "uuid";
     //是否第一次启动first
     public static String FIRST_START = "first_start";
-    //认证
+    //true认证 false未认证
     public static String CERTIFICATION = "certification";
     //身份证名称
     public static String CERTIFICATION_NAME = "certification_name";
