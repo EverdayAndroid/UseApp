@@ -3,7 +3,9 @@ package com.everday.useapp.activity.login;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
@@ -43,6 +45,23 @@ public class ElectronicActivity extends BaseActivity {
         super.initData(savedInstanceState);
         tvTitle.setText("电子签约");
         ivMessage.setVisibility(View.GONE);
+        webview.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                webview.loadUrl(url);
+                return false;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                super.onLoadResource(view, url);
+            }
+        });
         String name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME, "");
         String code = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE, "");
         thirdPartyUserId = (Integer) PreferencesUtils.get(UserConfig.ID,1);
@@ -62,6 +81,8 @@ public class ElectronicActivity extends BaseActivity {
         if(publicInfoBean.getData()!=null) {
             PublicBean data = publicInfoBean.getData();
             webview.loadUrl(data.getUrl());
+            webview.getSettings().setJavaScriptEnabled(true);
+            webview.getSettings().setDomStorageEnabled(true);
         }
     }
 
