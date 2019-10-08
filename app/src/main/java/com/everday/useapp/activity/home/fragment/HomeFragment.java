@@ -91,6 +91,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
         super.initData();
         tvTitle.setText("接单");
         ivBack.setVisibility(View.GONE);
+        ivMessage.setVisibility(View.GONE);
         mList = new ArrayList<>();
         mAdapter = new HomeFragmentAdapter(R.layout.adapter_home_fragment_item, mList, 1);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -120,10 +121,16 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                             certificationDialog.show(getChildFragmentManager(), "certificationDialog");
                             return;
                         }
+                        //判断是否电子签约
+                        Integer sign = (Integer) PreferencesUtils.get(UserConfig.SIGN, 1);
+                        if(sign == 1){
+                            certificationDialog.show(getChildFragmentManager(), "certificationDialog");
+                            return;
+                        }
                         index = position;
                         TaskBean taskBean = mList.get(position);
-                        orders(taskBean.getId());
                         //接单
+                        orders(taskBean.getId());
                         break;
                 }
             }

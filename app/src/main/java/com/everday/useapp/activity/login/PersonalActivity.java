@@ -57,6 +57,8 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     TextView textNickName;
     @BindView(R.id.tv_auth_state)
     TextView tvAuthState;
+    @BindView(R.id.tv_card_no)
+    TextView tvCardNo;
     private InvokeParam invokeParam;
     private TakePhoto takePhoto;
     private File fileName;
@@ -90,8 +92,14 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
         //是否认证
         Boolean certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
-        tvAuthState.setText(certification == true?"已认证":"未认证");
+        tvAuthState.setText(certification == true ? "已认证" : "未认证");
         textNickName.setText(userName);
+        String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD,"");
+        if(TextUtils.isEmpty(bankcard)) {
+            tvCardNo.setText("未绑卡");
+        }else{
+            tvCardNo.setText("已绑卡");
+        }
 //        GlideApp.with(this)
 //                .load(Constants.AVATAR+tele)
 //                .apply(requestOptions)
@@ -104,6 +112,8 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imagePhoto);
+
+
     }
 
     @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login, R.id.layout_nickName, R.id.layout_auth, R.id.layout_card})

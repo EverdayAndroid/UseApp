@@ -36,4 +36,5 @@
     <string name="wright_nickname">请填写您的昵称</string>
     <string name="sendCode">短信已发送</string>
     <string name="getCode">获取验证码</string>
+    <string name="bankcard_str">为了保障账户安全，请添加一张您的银行卡，用于收入发放和提现收款使用，仅支持储蓄卡</string>
 </resources>

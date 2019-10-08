@@ -2,12 +2,12 @@ package com.everday.useapp.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -15,9 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.everday.useapp.R;
+import com.everday.useapp.activity.login.ElectronicActivity;
+import com.everday.useapp.activity.login.LdentityActivity;
+import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.utils.ActivityUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +34,10 @@ public class CertificationDialog extends DialogFragment implements DialogInterfa
     @BindView(R.id.rl_exit)
     RelativeLayout rlExit;
     Unbinder unbinder;
+    @BindView(R.id.bt_auth)
+    Button btAuth;
+    @BindView(R.id.bt_sign)
+    Button btSign;
     private Context mContext;
     private boolean isAdd;
 
@@ -46,7 +56,24 @@ public class CertificationDialog extends DialogFragment implements DialogInterfa
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_home_require, container, false);
         getDialog().setOnKeyListener(this);
         unbinder = ButterKnife.bind(this, view);
+        initView();
         return view;
+    }
+
+    public void initView(){
+        String certification_name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME,"");
+        //判断是否电子签约
+        Integer sign = (Integer) PreferencesUtils.get(UserConfig.SIGN, 1);
+        if(!TextUtils.isEmpty(certification_name)) {
+            btAuth.setText("已实名");
+            btAuth.setTextColor(getResources().getColor(R.color.green));
+            btAuth.setBackgroundResource(R.drawable.btn_bg_sign);
+        }
+        if(sign == 2) {
+            btSign.setText("已签约");
+            btSign.setTextColor(getResources().getColor(R.color.green));
+            btSign.setBackgroundResource(R.drawable.btn_bg_sign);
+        }
     }
 
     @Override
@@ -94,11 +121,17 @@ public class CertificationDialog extends DialogFragment implements DialogInterfa
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rl_exit})
-    void OnClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.rl_exit,R.id.bt_auth,R.id.bt_sign})
+    void OnClick(View view) {
+        switch (view.getId()) {
             case R.id.rl_exit:
                 dismiss();
+                break;
+            case R.id.bt_auth:
+                ActivityUtils.startActivity(getActivity(), LdentityActivity.class);
+                break;
+            case R.id.bt_sign:
+                ActivityUtils.startActivity(getActivity(), ElectronicActivity.class);
                 break;
         }
     }

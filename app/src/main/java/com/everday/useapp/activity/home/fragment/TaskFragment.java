@@ -38,6 +38,7 @@ public class TaskFragment extends BaseFragment {
         super.initData();
         tvTitle.setText("任务");
         ivBack.setVisibility(View.GONE);
+        ivMessage.setVisibility(View.GONE);
         fragmentSparseArray = new SparseArray<>();
         ExecuteFragment executeFragment = new ExecuteFragment();
         CompleteFragment completeFragment = new CompleteFragment();

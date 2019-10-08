@@ -7,6 +7,7 @@ public class UserBean {
     private String nickName;
     private String idCard;
     private String bankType;
+    private String bankTypeText;
     private int sign;
     private String remark;
     private String avatar;
@@ -44,6 +45,10 @@ public class UserBean {
 
     public String getBankType() {
         return bankType == null ? "" : bankType;
+    }
+
+    public String getBankTypeText() {
+        return bankTypeText == null ? "" : bankTypeText;
     }
 
     public int getSign() {

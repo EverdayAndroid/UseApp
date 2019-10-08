@@ -59,7 +59,7 @@ public class MineFragment extends BaseFragment {
         super.initData();
         tvTitle.setText("我的");
         ivBack.setVisibility(View.GONE);
-        ivMessage.setVisibility(View.GONE);
+        ivMessage.setVisibility(View.VISIBLE);
         String gson = "{\"tele\":\"" + PreferencesUtils.get(UserConfig.TELE, "").toString() + "\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.USERDETAIL, this, requestBody);
@@ -117,7 +117,7 @@ public class MineFragment extends BaseFragment {
         PreferencesUtils.put(UserConfig.CERTIFICATION_CODE,userInfoBean.getData().getAppAccount().getIdCard(),false);
         //记录银行卡信息
         PreferencesUtils.put(UserConfig.BANKCARD,userInfoBean.getData().getAppAccount().getBankNumber(),false);
-        PreferencesUtils.put(UserConfig.BANKCARDTYPE,userInfoBean.getData().getAppAccount().getBankType(),false);
+        PreferencesUtils.put(UserConfig.BANKCARDTYPE,userInfoBean.getData().getAppAccount().getBankTypeText(),false);
         PreferencesUtils.put(UserConfig.BANKCARDPHONE,userInfoBean.getData().getAppAccount().getTele(),false);
         //1未签约，2已签约
         PreferencesUtils.put(UserConfig.SIGN,userInfoBean.getData().getAppAccount().getSign(),false);

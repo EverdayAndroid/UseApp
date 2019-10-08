@@ -28,7 +28,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-
+/**
+ * @author Everday
+ * @emil wangtaohandsome@gmail.com
+ * create at 2019/10/8
+ * description: 银行卡信息详情
+ */
 public class BankCardDetailsActivity extends BaseActivity {
     @BindView(R.id.text_nickName)
     TextView textNickName;
