@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,12 +17,15 @@ import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.dialog.CertificationDialog;
 import com.everday.useapp.dialog.OrderDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.entity.TaskBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.GsonUtils;
+import com.everday.useapp.utils.PreferencesUtils;
 
 import java.io.Serializable;
 
@@ -156,6 +160,8 @@ public class OrderDetailsActivity extends BaseActivity {
     private TaskBean taskBean;
     //1接单，2确认完成，3取消
     private int network ;
+    //认证
+    private CertificationDialog certificationDialog;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_order_details;
@@ -191,6 +197,7 @@ public class OrderDetailsActivity extends BaseActivity {
         }else{
             rlBottom.setVisibility(View.GONE);
         }
+        certificationDialog = new CertificationDialog();
     }
 
 
@@ -213,6 +220,18 @@ public class OrderDetailsActivity extends BaseActivity {
      * 接单
      */
     public void job(){
+        //判断是否实名认证
+        String certification_name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME,"");
+        if(TextUtils.isEmpty(certification_name)){
+            certificationDialog.show(getSupportFragmentManager(), "certificationDialog");
+            return;
+        }
+        //判断是否电子签约
+        Integer sign = (Integer) PreferencesUtils.get(UserConfig.SIGN, 1);
+        if(sign == 1){
+            certificationDialog.show(getSupportFragmentManager(), "certificationDialog");
+            return;
+        }
         network = 0;
         loadingView.show(getSupportFragmentManager(),"loading");
         String gson = "{ \"taskId\":\""+taskBean.getId()+"\"}";

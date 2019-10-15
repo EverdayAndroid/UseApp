@@ -74,6 +74,8 @@ public class BankCardActivity extends BaseActivity {
         String certification_code = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE, "");
         textNickName.setText(certification_name);
         etIdCard.setText(certification_code);
+        textNickName.setEnabled(false);
+        etIdCard.setEnabled(false);
         initListener();
     }
 

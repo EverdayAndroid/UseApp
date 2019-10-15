@@ -1,5 +1,6 @@
 package com.everday.useapp.activity.home.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.everday.useapp.R;
+import com.everday.useapp.activity.login.ClaimActivity;
 import com.everday.useapp.activity.login.ElectronicActivity;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.PersonalActivity;
@@ -81,7 +83,7 @@ public class MineFragment extends BaseFragment {
         }, RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson));
     }
 
-    @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting,R.id.ll_my_contrat})
+    @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting,R.id.ll_my_contrat,R.id.ll_require})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.ll_info:
@@ -100,6 +102,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.ll_my_contrat:
                 ActivityUtils.startActivity(getActivity(), ElectronicActivity.class);
+                break;
+            case R.id.ll_require:
+                ActivityUtils.startActivityForResult(getActivity(), ClaimActivity.class);
                 break;
         }
     }
@@ -151,15 +156,6 @@ public class MineFragment extends BaseFragment {
         super.onThrows(message, error);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
-//        CircleCrop circleCrop = new CircleCrop();
-//        RequestOptions requestOptions = RequestOptions.bitmapTransform(circleCrop);
-//        Glide.with(getActivity()).load(Constants.AVATAR+tele).into(ivPhoto);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onStart() {
@@ -168,24 +164,28 @@ public class MineFragment extends BaseFragment {
         String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
         String avatar = Constants.AVATAR + tele;
         EverdayLog.error(avatar);
-//        GlideApp.with(this)
-//                .load(avatar)
-//                .apply(requestOptions)
-//                .skipMemoryCache(false)
-//                .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                .into(ivPhoto);
         Glide.with(this)
                 .load(avatar)
+                .placeholder(R.mipmap.default_photo)
                 .transform(new GlideCircleTransform(getContext()))
-                .skipMemoryCache(false)
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.mipmap.default_photo)
                 .into(ivPhoto);
         tvName.setText(userName);
         if (tele.length() >= 11) {
-            String replaceStr = tele.substring(3, 7);
-            String phone = tele.replace(replaceStr, "****");
-            tvPhone.setText(phone);
+//            String replaceStr = tele.substring(3, 7);
+//            String phone = tele.replace(replaceStr, "****");
+            tvPhone.setText(tele);
         }
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String gson = "{\"tele\":\"" + PreferencesUtils.get(UserConfig.TELE, "").toString() + "\"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
+        HttpManager.getInstance().post(Constants.HOST + API.USERDETAIL, this, requestBody);
     }
 }

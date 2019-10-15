@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/head_include"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_auth"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_73dp"
+            android:layout_marginLeft="@dimen/dimen_15dp"
+            android:layout_marginRight="@dimen/dimen_18dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_auth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10dp"
+                android:background="@mipmap/icon_dialog_auth" />
+
+            <TextView
+                android:id="@id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_auth"
+                android:text="@string/auth"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <Button
+                android:id="@+id/bt_auth"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="@dimen/dimen_75dp"
+                android:layout_height="@dimen/dimen_31dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="@drawable/btn_bg_sign"
+                android:minWidth="@dimen/dimen_80dp"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:paddingRight="@dimen/dimen_10dp"
+                android:text="已认证"
+                android:textColor="@color/green"
+                android:textSize="15.0sp" />
+
+            <View
+                style="@style/hr_gray_line"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_73dp"
+            android:layout_marginLeft="@dimen/dimen_15dp"
+            android:layout_marginRight="@dimen/dimen_18dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10dp"
+                android:background="@mipmap/icon_dialog_sign" />
+
+            <TextView
+                android:id="@id/tv_contract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_sign"
+                android:text="电子签约"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <Button
+                android:id="@+id/bt_sign"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="@dimen/dimen_75dp"
+                android:layout_height="@dimen/dimen_31dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="@drawable/btn_bg_sign"
+                android:minWidth="@dimen/dimen_80dp"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:paddingRight="@dimen/dimen_10dp"
+                android:text="已签约"
+                android:textColor="@color/green"
+                android:textSize="15.0sp" />
+
+            <View
+                style="@style/hr_gray_line"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_73dp"
+            android:layout_marginLeft="@dimen/dimen_15dp"
+            android:layout_marginRight="@dimen/dimen_18dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10dp"
+                android:background="@mipmap/auto_get" />
+
+            <TextView
+                android:id="@id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_pay"
+                android:text="自动抢单"
+                android:textColor="#ff333333"
+                android:textSize="16.0sp" />
+
+            <Button
+                android:id="@+id/bt_auto"
+                style="?android:borderlessButtonStyle"
+                android:layout_width="@dimen/dimen_75dp"
+                android:layout_height="@dimen/dimen_31dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_20dp"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:background="@drawable/btn_bg_fillet_activation_selector"
+                android:minWidth="@dimen/dimen_80dp"
+                android:paddingLeft="@dimen/dimen_10dp"
+                android:paddingRight="@dimen/dimen_10dp"
+                android:text="去开启"
+                android:textColor="@color/white"
+                android:textSize="15.0sp" />
+
+            <View
+                style="@style/hr_gray_line"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

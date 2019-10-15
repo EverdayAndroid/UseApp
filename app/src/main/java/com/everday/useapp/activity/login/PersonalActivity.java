@@ -5,23 +5,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.everday.useapp.R;
+import com.everday.useapp.UseApplication;
 import com.everday.useapp.activity.login.view.ImageInterFace;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.ChooseImageDialog;
 import com.everday.useapp.dialog.UseDialog;
+import com.everday.useapp.entity.BaseModel;
+import com.everday.useapp.entity.UserBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.FileUtils;
 import com.everday.useapp.utils.GlideCircleTransform;
+import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
@@ -41,6 +49,7 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -54,7 +63,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     @BindView(R.id.image_photo)
     RoundedImageView imagePhoto;
     @BindView(R.id.text_nickName)
-    TextView textNickName;
+    EditText textNickName;
     @BindView(R.id.tv_auth_state)
     TextView tvAuthState;
     @BindView(R.id.tv_card_no)
@@ -64,7 +73,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     private File fileName;
     private String compressPath;
     private ChooseImageDialog chooseImageDialog;
-
+    private int netCode;
     public TakePhoto getTakePhoto() {
         if (takePhoto == null) {
             takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
@@ -109,12 +118,41 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         Glide.with(this)
                 .load(Constants.AVATAR + tele)
                 .bitmapTransform(new GlideCircleTransform(this))
-                .skipMemoryCache(false)
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(imagePhoto);
-
-
+        textNickName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId){
+                    case EditorInfo.IME_ACTION_DONE:
+//                        textNickName.clearFocus();
+                        updateName();
+                        break;
+                }
+                return true;
+            }
+        });
     }
+
+    /**
+     * 修改昵称
+     */
+    public void updateName(){
+        String name = textNickName.getText().toString().trim();
+        if(TextUtils.isEmpty(name)){
+            BamToast.show(UseApplication.getApplication(),textNickName.getHint());
+            return;
+        }
+        netCode = 2;
+        UserBean userBean = new UserBean();
+        userBean.setTele(PreferencesUtils.get(UserConfig.TELE,"").toString());
+        userBean.setNickName(name);
+        String gson = GsonUtils.getInstance().toObjectGson(userBean);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        HttpManager.getInstance().post(Constants.HOST+ API.UPDATENICKNAME,this,requestBody);
+    }
+
 
     @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login, R.id.layout_nickName, R.id.layout_auth, R.id.layout_card})
     void OnClick(View view) {
@@ -130,7 +168,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 UseDialog.getInstance("是否确定要退出当前账号?", "确定", "取消").show(getSupportFragmentManager(), "usedialog");
                 break;
             case R.id.layout_nickName:
-                ActivityUtils.startActivityForResult(this, UserNameActivity.class);
+//                ActivityUtils.startActivityForResult(this, UserNameActivity.class);
                 break;
             case R.id.layout_auth:
                 ActivityUtils.startActivity(this, LdentityActivity.class);
@@ -168,7 +206,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         compressPath = result.getImage().getCompressPath();
 //        GlideApp.with(this).load(compressPath).apply(requestOptions).into(imagePhoto);
         Glide.with(this).load(compressPath).transform(new GlideCircleTransform(this)).into(imagePhoto);
-
+        netCode = 1;
         loadingView.show(getSupportFragmentManager(), "loading");
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
@@ -258,6 +296,8 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         if (isFinishing()) {
             return;
         }
+        BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
+        BamToast.show(this,baseModel.getMessage());
     }
 
     @Override
@@ -266,6 +306,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         if (isFinishing()) {
             return;
         }
+        BamToast.show(this,message);
     }
 
     @Override

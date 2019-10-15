@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.everday.useapp.R;
@@ -54,6 +55,8 @@ public class CompleteFragment extends BaseFragment implements OnRefreshLoadMoreL
     LinearLayout mNoNetLayout;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_load)
+    TextView tvLoad;
     private HomeFragmentAdapter mAdapter;
     private List<TaskBean> mlist;
     //页码
@@ -172,12 +175,8 @@ public class CompleteFragment extends BaseFragment implements OnRefreshLoadMoreL
         loadData(false);
     }
 
-    @OnClick({R.id.mReload_btn})
+    @OnClick({R.id.mReload_btn,R.id.tv_load})
     void OnClick(View view){
-        switch (view.getId()){
-            case R.id.mReload_btn:
-                loadData(true);
-                break;
-        }
+        loadData(true);
     }
 }

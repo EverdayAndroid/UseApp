@@ -39,9 +39,9 @@ import okhttp3.RequestBody;
  */
 public class LdentityActivity extends BaseActivity {
     @BindView(R.id.etName)
-    TextView tvName;
+    EditText tvName;
     @BindView(R.id.etCode)
-    TextView tvCode;
+    EditText tvCode;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
     private String name,code;
@@ -115,8 +115,8 @@ public class LdentityActivity extends BaseActivity {
 
         certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
         if(certification){
-            tvName.setEnabled(true);
-            tvCode.setEnabled(true);
+            tvName.setEnabled(false);
+            tvCode.setEnabled(false);
             btnSubmit.setVisibility(View.GONE);
         }
     }
@@ -137,15 +137,15 @@ public class LdentityActivity extends BaseActivity {
                 break;
             case R.id.etName:
                 if(certification){return;}
-                Bundle bundle = new Bundle();
-                bundle.putString("name",tvName.getText().toString());
-                ActivityUtils.startActivityForResult(this,LdentityNameActivity.class,bundle,1);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("name",tvName.getText().toString());
+//                ActivityUtils.startActivityForResult(this,LdentityNameActivity.class,bundle,1);
                 break;
             case R.id.etCode:
                 if(certification){return;}
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("code",tvCode.getText().toString());
-                ActivityUtils.startActivityForResult(this,LdentityCodeActivity.class,bundle1,2);
+//                Bundle bundle1 = new Bundle();
+//                bundle1.putString("code",tvCode.getText().toString());
+//                ActivityUtils.startActivityForResult(this,LdentityCodeActivity.class,bundle1,2);
                 break;
         }
     }

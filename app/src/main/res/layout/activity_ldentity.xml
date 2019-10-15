@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".activity.login.LdentityActivity">
     <include layout="@layout/head_include"/>
     <LinearLayout
@@ -21,7 +23,7 @@
             android:textSize="@dimen/sp_14"
             android:layout_marginLeft="@dimen/dimen_15dp"
             android:text="姓名"/>
-        <TextView
+        <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/etName"
@@ -51,7 +53,7 @@
             android:layout_marginLeft="@dimen/dimen_15dp"
             android:gravity="center"
             android:text="身份证"/>
-        <TextView
+        <EditText
             android:layout_width="0dp"
             android:layout_weight="1"
             android:id="@+id/etCode"

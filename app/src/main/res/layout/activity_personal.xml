@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
     <include layout="@layout/head_include" />
     <android.support.v4.widget.NestedScrollView
@@ -57,19 +59,22 @@
                     style="@style/item_text_style"
                     android:text="@string/nick_name" />
 
-                <TextView
+                <EditText
                     android:id="@+id/text_nickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_10dp"
                     android:maxLines="20"
+                    android:background="@null"
+                    android:hint="@string/wright_nickname"
                     android:singleLine="true"
                     android:text=""
                     android:textColor="@color/dark_black"
-                    android:textSize="14.0sp" />
+                    android:textSize="14.0sp"
+                    android:imeOptions="actionDone"/>
 
-                <ImageView style="@style/item_arrow_style" />
+                <ImageView style="@style/item_arrow_style" android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/hr_gray_line_margin" />
