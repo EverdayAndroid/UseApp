@@ -46,7 +46,8 @@ public class API {
     //退出
     public static String OUTLOGIN = "app/logout";
     //实名
-    public static String CERTIFICATION = "app/setting/certification";
+//    public static String CERTIFICATION = "app/setting/certification";
+    public static String CERTIFICATION = "app/setting/certificationThree";
     //抢单
     public static String AUTOMATIC = "app/setting/grab";
     //查询银行卡类型

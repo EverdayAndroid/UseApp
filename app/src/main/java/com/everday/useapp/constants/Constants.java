@@ -18,8 +18,8 @@ public class Constants {
     public static String CONTENTYPE= "application/json";
     public static String FORM_DATA= "multipart/form-data";
 
-    public static String HOST = "http://www.yongrenbao.co/";//http://lhyg.natapp1.cc/
-//    public static String HOST = "http://lhyg.natapp1.cc";
+//    public static String HOST = "http://www.yongrenbao.co/";//http://lhyg.natapp1.cc/
+    public static String HOST = "http://lhyg.natapp1.cc";
     public static String AVATAR = "http://www.yongrenbao.co/app/setting/getAvatar/";
     //行测地址
     public static String HOSTONE = "https://www.932edu.com/xc_test/";

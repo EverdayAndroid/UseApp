@@ -21,6 +21,7 @@ import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.google.gson.Gson;
+import com.jph.takephoto.model.CropOptions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -211,5 +212,16 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
             loadingView.dismiss();
 
         }
+    }
+
+    public CropOptions getCropOptions() {
+        CropOptions cropOptions = new CropOptions.Builder()
+                .setAspectX(1)
+                .setAspectY(1)
+                .setOutputX(500)
+                .setOutputY(500)
+                .setWithOwnCrop(true)
+                .create();
+        return cropOptions;
     }
 }
