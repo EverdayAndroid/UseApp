@@ -133,7 +133,7 @@ public class MineFragment extends BaseFragment {
         tvAuthor.setText(userInfoBean.getData().getAppAccount().getIdCard().isEmpty() ? "去认证" : "已认证");
         tvAuthor.setBackground(userInfoBean.getData().getAppAccount().getIdCard().isEmpty()  ? getResources().getDrawable(R.drawable.shape_vetify_name)
                 : getResources().getDrawable(R.drawable.shape_vetify_greenname));
-        String avatar = Constants.AVATAR+userInfoBean.getData().getAppAccount().getAvatar();
+        String avatar = Constants.AVATAR+userInfoBean.getData().getAppAccount().getTele();
         Glide.with(this)
                 .load(avatar)
                 .placeholder(R.mipmap.default_photo)
