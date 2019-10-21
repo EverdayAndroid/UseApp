@@ -133,11 +133,7 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
             @Override
             public void onSuccess(String t) throws Exception {
                 BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
-                PreferencesUtils.put(UserConfig.USERNAME,"",false);
-                PreferencesUtils.put(UserConfig.PASSWORD,"",false);
-                PreferencesUtils.put(UserConfig.TOKEN,"",false);
-                PreferencesUtils.put(UserConfig.AVATAR,"",false);
-                PreferencesUtils.put(UserConfig.TELE,"",false);
+                PreferencesUtils.clearPreferences();
                 BamToast.show(getActivity(),baseModel.getMessage());
                 ActivityManagement.getInstance().finishAll();
                 ActivityUtils.startActivity(getActivity(), LoginActivity.class);

@@ -129,9 +129,17 @@ public class CertificationDialog extends DialogFragment implements DialogInterfa
                 break;
             case R.id.bt_auth:
                 ActivityUtils.startActivity(getActivity(), LdentityActivity.class);
+                dismiss();
                 break;
             case R.id.bt_sign:
+                //判断是否实名认证
+                String certification_name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME,"");
+                if(TextUtils.isEmpty(certification_name)){
+                    BamToast.show(getContext(),"请先实名认证");
+                    return;
+                }
                 ActivityUtils.startActivity(getActivity(), ElectronicActivity.class);
+                dismiss();
                 break;
         }
     }

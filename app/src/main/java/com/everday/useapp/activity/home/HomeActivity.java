@@ -212,7 +212,7 @@ public class HomeActivity extends BaseActivity  {
         super.onSuccess(t);
         VersionInfoBean versionInfoBean = GsonUtils.getInstance().parseJsonToBean(t, VersionInfoBean.class);
         if (versionInfoBean.getData().getIsUpdate() == 1) {
-            showNewVersion(versionInfoBean.getData().getNote(), versionInfoBean.getData().getAndroid(), versionInfoBean.getData().getForce());
+            showNewVersion(versionInfoBean.getData().getNote(), versionInfoBean.getData().getAndroid(), versionInfoBean.getData().getForce(),versionInfoBean.getData().getTitle());
         }
     }
 
@@ -223,8 +223,9 @@ public class HomeActivity extends BaseActivity  {
      * @param fileaddress
      * @param isForbbiden
      */
-    private void showNewVersion(String versionno, final String fileaddress, int isForbbiden) {
+    private void showNewVersion(String versionno, final String fileaddress, int isForbbiden,String versionName) {
         Bundle bundle = new Bundle();
+        bundle.putString("versionName",versionName);
         bundle.putString("versionno", versionno);
         bundle.putInt("isForbbiden", isForbbiden);
         if (appUpdate == null) {

@@ -296,7 +296,9 @@ public class BankCardActivity extends BaseActivity {
                 RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),
                         GsonUtils.getInstance().toObjectGson(bean));
                 HttpManager.getInstance().post(Constants.HOST + API.SENDCODE, this, requestBody);
+                break;
             case R.id.btn_register:
+                netCode = 3;
                 loadingView.show(getSupportFragmentManager(), "loading");
                 bindBankCard();
                 break;
@@ -359,6 +361,7 @@ public class BankCardActivity extends BaseActivity {
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
             BamToast.show(this, baseModel.getMessage());
             finish();
+            setResult(1);
         }
     }
 
@@ -373,5 +376,11 @@ public class BankCardActivity extends BaseActivity {
         super.onThrows(message, error);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(downTimer!=null){
+            downTimer.cancel();
+        }
+    }
 }

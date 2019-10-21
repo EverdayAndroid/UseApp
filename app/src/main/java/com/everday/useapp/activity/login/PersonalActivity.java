@@ -177,7 +177,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD, "");
                 //判断是否绑定过银行卡
                 if (TextUtils.isEmpty(bankcard)) {
-                    ActivityUtils.startActivity(this, BankCardActivity.class);
+                    ActivityUtils.startActivityForResult(this, BankCardActivity.class,2);
                 } else {
                     ActivityUtils.startActivity(this, BankCardDetailsActivity.class);
                 }
@@ -197,6 +197,14 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 }
                 String name = data.getStringExtra("name");
                 textNickName.setText(name);
+                break;
+            case 2:
+                String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD,"");
+                if(TextUtils.isEmpty(bankcard)) {
+                    tvCardNo.setText("未绑卡");
+                }else{
+                    tvCardNo.setText("已绑卡");
+                }
                 break;
         }
     }

@@ -15,7 +15,7 @@ public class VersionBean {
     private int isUpdate;
     // 0不强制更新，1为强制更新
     private int force;
-    private String title;
+    private String versionName;
     public String getNote() {
         return note;
     }
@@ -61,6 +61,6 @@ public class VersionBean {
     }
 
     public String getTitle() {
-        return title == null ? "" : title;
+        return versionName == null ? "" : versionName;
     }
 }

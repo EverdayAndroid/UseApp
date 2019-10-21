@@ -12,4 +12,17 @@
         <!--间距-->
         <attr name="distance" format="integer"></attr>
     </declare-styleable>
+    
+    <declare-styleable name="LoadingView">
+        <!-- 球的颜色-->
+        <attr name="ball_color" format="color"/>
+        <!-- 线条颜色 -->
+        <attr name="line_color" format="color"/>
+        <!-- -->
+        <attr name="line_width" format="dimension"/>
+        <attr name="stroke_width" format="dimension"/>
+        <attr name="ball_radius" format="dimension"/>
+        <attr name="max_down" format="dimension"/>
+        <attr name="max_up" format="dimension"/>
+    </declare-styleable>
 </resources>

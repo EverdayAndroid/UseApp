@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_10dp"
-                    android:textColor="@color/dark_black"
+                    android:textColor="@color/dark_gray"
                     android:textSize="14.0sp" />
 
                 <ImageView

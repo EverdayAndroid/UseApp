@@ -11,12 +11,15 @@ import com.everday.useapp.R;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
+import com.everday.useapp.constants.EventConfig;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.PublicBean;
 import com.everday.useapp.entity.PublicInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,4 +99,10 @@ public class ElectronicActivity extends BaseActivity {
         super.onThrows(message, error);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().post(EventConfig.HOMEFRAGMENT_USER);
+    }
 }

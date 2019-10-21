@@ -4,13 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.OkhttpEnginen;
 import com.everday.useapp.utils.CrashHandler;
 import com.everday.useapp.utils.NetWorkUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.lzy.okgo.OkGo;
+import com.squareup.leakcanary.LeakCanary;
 
 public class UseApplication extends Application {
     private static Application application;
@@ -30,13 +30,27 @@ public class UseApplication extends Application {
         HttpManager.getInstance().init(new OkhttpEnginen());
         OkGo.getInstance().init(this);
         CrashHandler.getInstance().init(this);
+        initLeakCanary();
+    }
+
+    /**
+     * 初始化内存泄漏
+     */
+    public void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(application)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(application);
     }
 
     /**
      * 全局Application
+     *
      * @return
      */
-    public static Application getApplication(){
+    public static Application getApplication() {
         return application;
     }
 }

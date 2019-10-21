@@ -31,6 +31,6 @@
         android:id="@+id/tv_load"
         android:background="@drawable/load_data"
         android:text="重新加载"
-        android:textColor="#999999"
+        android:textColor="@color/bar_grey"
         android:textSize="@dimen/sp_16sp"/>
 </LinearLayout>

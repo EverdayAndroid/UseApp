@@ -12,7 +12,8 @@ public class API {
     //注册
     public static String REGISTER = "app/register";
     //获取验证码
-    public static String SENDCODE = "app/sendCode";
+//    public static String SENDCODE = "app/sendCode";
+    public static String SENDCODE = "app/sendupdatePwdCode";
     //忘记密码
     public static String FORGETPWD = "app/forgetPwd";
     //修改密码
@@ -54,4 +55,6 @@ public class API {
     public static String BINDBANKCARD = "app/setting/bindCard";
     //电子签约
     public static String ELECTRONIC = "app/sign/createAccount";
+    //上传身份证
+    public static String UPLOADIDENTITY = "app/setting/uploadidentity";
 }

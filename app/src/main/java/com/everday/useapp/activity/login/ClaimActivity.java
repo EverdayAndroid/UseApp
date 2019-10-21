@@ -26,4 +26,10 @@ public class ClaimActivity extends BaseActivity {
         tvTitle.setText("接单要求");
         ivMessage.setVisibility(View.GONE);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setResult(1);
+    }
 }

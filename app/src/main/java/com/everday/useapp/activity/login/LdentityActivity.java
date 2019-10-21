@@ -154,6 +154,8 @@ public class LdentityActivity extends BaseActivity {
     public void onSuccess(String t) {
         super.onSuccess(t);
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
+        PreferencesUtils.put(UserConfig.CERTIFICATION_NAME,name,false);
+        PreferencesUtils.put(UserConfig.CERTIFICATION_CODE,code,false);
         PreferencesUtils.put(UserConfig.CERTIFICATION,true,false);
         BamToast.show(this,baseModel.getMessage());
         finish();

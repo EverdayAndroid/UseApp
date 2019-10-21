@@ -8,4 +8,5 @@ package com.everday.useapp.constants;
 public class EventConfig {
     //发送到HomeFragment
     public static String HOMEFRAGMENT = "HomeFragment";
+    public static String HOMEFRAGMENT_USER = "user";
 }

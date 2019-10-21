@@ -32,7 +32,7 @@ public class UpDateDialogFragment extends DialogFragment {
         ArrayList<String> updateInfo;
         if (bundle != null) {
             versionno = bundle.getString("versionno");
-            title = bundle.getString("title");
+            title = bundle.getString("versionName");
             isForbbiden = bundle.getInt("isForbbiden");//默认0
             updateInfo = (ArrayList<String>) bundle.getSerializable("updateinfo");
             TextView tvTitle = view.findViewById(R.id.tv_title);

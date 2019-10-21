@@ -24,6 +24,7 @@ import com.everday.useapp.dialog.OrderDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.entity.TaskBean;
 import com.everday.useapp.entity.TaskInfoBean;
+import com.everday.useapp.entity.UserInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
@@ -143,10 +144,17 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
         return true;
     }
 
+
+    /**
+     * 监听接单删除当前信息 or 电子签约刷新接单条件
+     * @param tag
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void removed(String tag){
         if(tag == EventConfig.HOMEFRAGMENT){
             mAdapter.notifyItemRemoved(index);
+        }else if(tag == EventConfig.HOMEFRAGMENT_USER){
+            getUser();
         }
     }
 
@@ -221,6 +229,16 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
             //接单提示
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
             BamToast.show(getContext(), baseModel.getMessage());
+        }else if(netCode == 3){
+            //刷新用户信息
+            UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
+            PreferencesUtils.put(UserConfig.USERNAME, userInfoBean.getData().getAppAccount().getNickName(), false);
+            //身份证名字
+            PreferencesUtils.put(UserConfig.CERTIFICATION_NAME,userInfoBean.getData().getAppAccount().getName(),false);
+            //身份证号码
+            PreferencesUtils.put(UserConfig.CERTIFICATION_CODE,userInfoBean.getData().getAppAccount().getIdCard(),false);
+            //1未签约，2已签约
+            PreferencesUtils.put(UserConfig.SIGN,userInfoBean.getData().getAppAccount().getSign(),false);
         }
     }
 
@@ -283,5 +301,14 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 loadData(true);
                 break;
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getUser(){
+        netCode = 3;
+        loadingView.show(getChildFragmentManager(),"loading");
+        String gson = "{\"tele\":\"" + PreferencesUtils.get(UserConfig.TELE, "").toString() + "\"}";
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
+        HttpManager.getInstance().post(Constants.HOST + API.USERDETAIL, this, requestBody);
     }
 }

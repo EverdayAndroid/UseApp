@@ -72,4 +72,7 @@ dependencies {
         exclude group: 'com.github.bumptech.glide'
     }
     implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation  'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 }

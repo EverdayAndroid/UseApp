@@ -18,6 +18,7 @@ import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.entity.CheckPasswrodInfoBean;
 import com.everday.useapp.entity.Code;
 import com.everday.useapp.entity.CodeInfoBean;
 import com.everday.useapp.entity.ForgetPasswordBean;
@@ -218,8 +219,8 @@ public class ForgetPasswordActivity extends BaseActivity {
             CodeInfoBean codeInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CodeInfoBean.class);
             bizId = codeInfoBean.getData().getBizId();
         }else if(netCode == 2){
-            ForgetPasswordInfoBean forgetPasswordInfoBean = GsonUtils.getInstance().parseJsonToBean(t, ForgetPasswordInfoBean.class);
-            BamToast.show(this,forgetPasswordInfoBean.getData().getMsg());
+            CheckPasswrodInfoBean forgetPasswordInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CheckPasswrodInfoBean.class);
+            BamToast.show(this,forgetPasswordInfoBean.getMsg());
             finish();
         }
     }

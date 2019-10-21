@@ -62,25 +62,14 @@ public class MineFragment extends BaseFragment {
         tvTitle.setText("我的");
         ivBack.setVisibility(View.GONE);
         ivMessage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         String gson = "{\"tele\":\"" + PreferencesUtils.get(UserConfig.TELE, "").toString() + "\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.USERDETAIL, this, requestBody);
-        HttpManager.getInstance().post(Constants.HOST + API.GETAVATAR, new CallBack() {
-            @Override
-            public void onSuccess(String t) throws Exception {
-                EverdayLog.error(t);
-            }
-
-            @Override
-            public void onFailure(String message, int error) throws Exception {
-
-            }
-
-            @Override
-            public void onThrows(String message, int error) {
-
-            }
-        }, RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson));
     }
 
     @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting,R.id.ll_my_contrat,R.id.ll_require})
@@ -137,13 +126,22 @@ public class MineFragment extends BaseFragment {
         if (isVisible()) {
             String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
             tvName.setText(userName);
-            String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3, 7);
-            String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr, "****");
-            tvPhone.setText(phone);
+//            String replaceStr = userInfoBean.getData().getAppAccount().getTele().substring(3, 7);
+//            String phone = userInfoBean.getData().getAppAccount().getTele().replace(replaceStr, "****");
+            tvPhone.setText(userInfoBean.getData().getAppAccount().getTele());
         }
-        tvAuthor.setText(userInfoBean.getData().getAppAccount().getIdCard().isEmpty() ? "未认证" : "已认证");
+        tvAuthor.setText(userInfoBean.getData().getAppAccount().getIdCard().isEmpty() ? "去认证" : "已认证");
         tvAuthor.setBackground(userInfoBean.getData().getAppAccount().getIdCard().isEmpty()  ? getResources().getDrawable(R.drawable.shape_vetify_name)
                 : getResources().getDrawable(R.drawable.shape_vetify_greenname));
+        String avatar = Constants.AVATAR+userInfoBean.getData().getAppAccount().getAvatar();
+        Glide.with(this)
+                .load(avatar)
+                .placeholder(R.mipmap.default_photo)
+                .transform(new GlideCircleTransform(getContext()))
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.mipmap.default_photo)
+                .into(ivPhoto);
     }
 
     @Override
@@ -155,30 +153,34 @@ public class MineFragment extends BaseFragment {
     public void onThrows(String message, int error) {
         super.onThrows(message, error);
     }
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public void onStart() {
-        super.onStart();
-        String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
-        String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
-        String avatar = Constants.AVATAR + tele;
-        EverdayLog.error(avatar);
-        Glide.with(this)
-                .load(avatar)
-                .placeholder(R.mipmap.default_photo)
-                .transform(new GlideCircleTransform(getContext()))
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .error(R.mipmap.default_photo)
-                .into(ivPhoto);
-        tvName.setText(userName);
-        if (tele.length() >= 11) {
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            String userName = (String) PreferencesUtils.get(UserConfig.USERNAME, "");
+            String tele = (String) PreferencesUtils.get(UserConfig.TELE, "");
+            String author = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE,"");
+            String avatar = Constants.AVATAR + tele;
+            Glide.with(this)
+                    .load(avatar)
+                    .placeholder(R.mipmap.default_photo)
+                    .transform(new GlideCircleTransform(getContext()))
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .error(R.mipmap.default_photo)
+                    .into(ivPhoto);
+            tvName.setText(userName);
+
+            tvAuthor.setText(author.isEmpty() ? "去认证" : "已认证");
+            tvAuthor.setBackground(author.isEmpty()  ? getResources().getDrawable(R.drawable.shape_vetify_name)
+                    : getResources().getDrawable(R.drawable.shape_vetify_greenname));
+            if (tele.length() >= 11) {
 //            String replaceStr = tele.substring(3, 7);
 //            String phone = tele.replace(replaceStr, "****");
-            tvPhone.setText(tele);
+                tvPhone.setText(tele);
+            }
         }
-
     }
 
     @Override
