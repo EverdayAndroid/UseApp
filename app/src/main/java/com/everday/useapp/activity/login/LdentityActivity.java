@@ -23,6 +23,7 @@ import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.ChooseImageDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.FileUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
@@ -178,13 +179,22 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
         });
         String name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME, "");
         String code = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE, "");
+        String backcard = (String) PreferencesUtils.get(UserConfig.BANKCARD, "");
         tvName.setText(name);
         tvCode.setText(code);
+        etBankCard.setText(backcard);
 
         certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
         if (certification) {
             tvName.setEnabled(false);
             tvCode.setEnabled(false);
+            etBankCard.setEnabled(false);
+            ivPhotoOne.setEnabled(false);
+            String positive = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_POSITIVE, false);
+            String back = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_BACK, false);
+            Glide.with(this).load(positive).into(ivPhotoOne);
+            ivPhotoTwo.setEnabled(false);
+            Glide.with(this).load(back).into(ivPhotoTwo);
             btnSubmit.setVisibility(View.GONE);
         }
     }
@@ -199,7 +209,7 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
                 String gson = "{\n" +
                         "    \"idNo\":\"" + code + "\",\n" +
                         "    \"name\":\"" + name + "\",\n" +
-                        "    \"id\":\"" + id + "\"\n" +
+                        "    \"id\":\"" + id + "\",\n" +
                         "    \"cardNo\":\"" + cardNo + "\"\n" +
                         "}";
                 RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
@@ -238,11 +248,17 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
     public void onSuccess(String t) {
         super.onSuccess(t);
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
+        EverdayLog.error(netCode+"");
         if (netCode == 1 || netCode == 2) {
+            PreferencesUtils.put(UserConfig.CERTIFICATION_POSITIVE, Constants.HOST+baseModel.getData().toString(), false);
+            BamToast.show(this, baseModel.getMessage());
+        }else if(netCode == 2){
+            PreferencesUtils.put(UserConfig.CERTIFICATION_BACK, Constants.HOST+baseModel.getData().toString(), false);
             BamToast.show(this, baseModel.getMessage());
         } else if (netCode == 3) {
             PreferencesUtils.put(UserConfig.CERTIFICATION_NAME, name, false);
             PreferencesUtils.put(UserConfig.CERTIFICATION_CODE, code, false);
+            PreferencesUtils.put(UserConfig.BANKCARD, cardNo, false);
             PreferencesUtils.put(UserConfig.CERTIFICATION, true, false);
             BamToast.show(this, baseModel.getMessage());
             finish();

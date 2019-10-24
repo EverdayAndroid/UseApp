@@ -286,3 +286,16 @@
 #takephoto混淆配置
 -keep class com.jph.takephoto.** { *; }
 -dontwarn com.jph.takephoto.**
+
+#极光推送
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
+
+-dontwarn cn.jiguang.**
+-keep class cn.jiguang.** { *; }
+
+
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+-keep class com.google.protobuf.** {*;}

@@ -153,7 +153,15 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         HttpManager.getInstance().post(Constants.HOST+ API.UPDATENICKNAME,this,requestBody);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //是否认证
+        Boolean certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
+        tvAuthState.setText(certification == true ? "已认证" : "未认证");
+        String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD,"");
+        tvCardNo.setText(TextUtils.isEmpty(bankcard) == true ? "未绑卡":"已绑卡");
+    }
     @OnClick({R.id.layout_photo, R.id.layout_change_password, R.id.tv_out_login, R.id.layout_nickName, R.id.layout_auth, R.id.layout_card})
     void OnClick(View view) {
         switch (view.getId()) {

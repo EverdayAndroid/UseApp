@@ -12,6 +12,8 @@ import com.everday.useapp.utils.PreferencesUtils;
 import com.lzy.okgo.OkGo;
 import com.squareup.leakcanary.LeakCanary;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class UseApplication extends Application {
     private static Application application;
 
@@ -31,6 +33,9 @@ public class UseApplication extends Application {
         OkGo.getInstance().init(this);
         CrashHandler.getInstance().init(this);
         initLeakCanary();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
     }
 
     /**

@@ -20,6 +20,12 @@ android {
         ndk {
             abiFilters 'armeabi-v7a', 'armeabi'//, 'x86' //x86虚拟机测试用，发版可去掉
         }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "你的 Appkey ", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -75,4 +81,8 @@ dependencies {
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation  'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+
+
+    implementation 'cn.jiguang.sdk:jpush:3.3.8'  // 此处以JPush 3.3.6 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'  // 此处以JCore 2.1.6 版本为例。
 }

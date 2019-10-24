@@ -134,22 +134,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_marginLeft="@dimen/dimen_15dp"
+        android:layout_marginRight="@dimen/dimen_15dp"
         android:layout_marginTop="@dimen/dimen_30dp"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_150dp"
+            android:layout_height="@dimen/dimen_100dp"
             android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:layout_marginRight="@dimen/dimen_10dp"
             android:id="@+id/ivPhotoOne"
-            android:layout_marginRight="@dimen/dimen_30dp"
-            android:src="@mipmap/idcard1"/>
+            android:src="@mipmap/a"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_150dp"
+            android:layout_height="@dimen/dimen_100dp"
             android:layout_gravity="center"
+            android:scaleType="fitXY"
             android:id="@+id/ivPhotoTwo"
-            android:src="@mipmap/idcard1"/>
+            android:src="@mipmap/b"/>
     </LinearLayout>
 
 

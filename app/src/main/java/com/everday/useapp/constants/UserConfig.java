@@ -40,4 +40,9 @@ public class UserConfig {
     public static String BANKCARDPHONE = "bankcardphone";
     //1未签约，2已签约
     public static String SIGN = "sign";
+
+    //身份证正面图片路径
+    public static String CERTIFICATION_POSITIVE = "certification_positive";
+    //身份证背面图片路径
+    public static String CERTIFICATION_BACK = "certification_back";
 }
