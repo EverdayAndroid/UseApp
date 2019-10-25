@@ -20,7 +20,8 @@ public class Constants {
 
 //    public static String HOST = "http://www.yongrenbao.co/";//http://lhyg.natapp1.cc/
     public static String HOST = "http://lhyg.natapp1.cc/";
-    public static String AVATAR = "http://www.yongrenbao.co/app/setting/getAvatar/";
+//    public static String AVATAR = "http://www.yongrenbao.co/app/setting/getAvatar/";
+    public static String AVATAR = "http://lhyg.natapp1.cc/app/setting/getAvatar/";
     //行测地址
     public static String HOSTONE = "https://www.932edu.com/xc_test/";
     //申论地址

@@ -190,8 +190,8 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
             tvCode.setEnabled(false);
             etBankCard.setEnabled(false);
             ivPhotoOne.setEnabled(false);
-            String positive = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_POSITIVE, false);
-            String back = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_BACK, false);
+            String positive = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_POSITIVE, "");
+            String back = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_BACK, "");
             Glide.with(this).load(positive).into(ivPhotoOne);
             ivPhotoTwo.setEnabled(false);
             Glide.with(this).load(back).into(ivPhotoTwo);
