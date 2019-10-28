@@ -216,10 +216,10 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
 
     public CropOptions getCropOptions() {
         CropOptions cropOptions = new CropOptions.Builder()
-                .setAspectX(2)
-                .setAspectY(1)
-                .setOutputX(500)
-                .setOutputY(500)
+                .setAspectX(3)
+                .setAspectY(2)
+                .setOutputX(1000)
+                .setOutputY(1000)
                 .setWithOwnCrop(true)
                 .create();
         return cropOptions;

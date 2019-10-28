@@ -23,6 +23,8 @@ public class UserBean {
     private String password;
     //名字
     private String name;
+    private String positive; //身份证正面
+    private String back; //身份证反面
     public String getBankNumber() {
         return bankNumber == null ? "" : bankNumber;
     }
@@ -113,5 +115,13 @@ public class UserBean {
 
     public String getName() {
         return name == null ? "" : name;
+    }
+
+    public String getPositive() {
+        return positive == null ? "" : positive;
+    }
+
+    public String getBack() {
+        return back == null ? "" : back;
     }
 }

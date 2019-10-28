@@ -115,7 +115,10 @@ public class MineFragment extends BaseFragment {
         PreferencesUtils.put(UserConfig.BANKCARDPHONE,userInfoBean.getData().getAppAccount().getTele(),false);
         //1未签约，2已签约
         PreferencesUtils.put(UserConfig.SIGN,userInfoBean.getData().getAppAccount().getSign(),false);
-
+        //身份证正面
+        PreferencesUtils.put(UserConfig.CERTIFICATION_POSITIVE,userInfoBean.getData().getAppAccount().getPositive(),false);
+        //身份证反面
+        PreferencesUtils.put(UserConfig.CERTIFICATION_BACK,userInfoBean.getData().getAppAccount().getBack(),false);
         if(userInfoBean.getData().getAppAccount().getIdCard().isEmpty()){
             PreferencesUtils.put(UserConfig.CERTIFICATION,false,false);
         }else{

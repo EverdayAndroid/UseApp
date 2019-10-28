@@ -33,6 +33,7 @@ import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.UpDateDialogFragment;
 import com.everday.useapp.dialog.UseDialog;
 import com.everday.useapp.entity.BaseModel;
@@ -150,6 +151,8 @@ public class SettingActivity extends BaseActivity {
             VersionInfoBean versionInfoBean = GsonUtils.getInstance().parseJsonToBean(t, VersionInfoBean.class);
             if (versionInfoBean.getData().getIsUpdate() == 1) {
                 showNewVersion(versionInfoBean.getData().getNote(), versionInfoBean.getData().getAndroid(), versionInfoBean.getData().getForce(),versionInfoBean.getData().getTitle());
+            }else {
+                BamToast.show(this,"已经是最新版本了");
             }
         }
     }

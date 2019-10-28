@@ -31,6 +31,7 @@ import com.everday.useapp.utils.PreferencesUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -234,6 +235,7 @@ public class LoginActivity extends BaseActivity {
         }else if(userInfoBean.getData().getAppAccount().getStatus() == 5){
 
         }
+        JPushInterface.setAlias(this , 0,userInfoBean.getData().getAppAccount().getTele());
     }
 
     @Override

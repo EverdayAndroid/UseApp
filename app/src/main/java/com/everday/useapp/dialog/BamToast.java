@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.everday.useapp.R;
+import com.everday.useapp.UseApplication;
 
 
 /**
@@ -143,7 +144,7 @@ public class BamToast extends Toast {
         try {
             cancelToast();
 
-            toast = new BamToast(context);
+            toast = new BamToast(UseApplication.getApplication());
             // 获取LayoutInflater对象
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             // 由layout文件创建一个View对象

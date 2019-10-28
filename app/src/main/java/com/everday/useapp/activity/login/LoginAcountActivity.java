@@ -180,6 +180,7 @@ public class LoginAcountActivity extends BaseActivity {
         }else if(userInfoBean.getData().getAppAccount().getStatus() == 5){
 
         }
+
         BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
         finish();
     }

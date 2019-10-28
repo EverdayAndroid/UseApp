@@ -195,7 +195,7 @@ public class RegisteredActivity extends BaseActivity {
                 bean.setTele(phone);
                 RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),
                         GsonUtils.getInstance().toObjectGson(bean));
-                HttpManager.getInstance().post(Constants.HOST + API.SENDCODE, this, requestBody);
+                HttpManager.getInstance().post(Constants.HOST + API.REGISTER_SENDCODE, this, requestBody);
                 break;
             case R.id.btn_register:
                 if(shmc == null){

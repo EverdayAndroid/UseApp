@@ -11,8 +11,9 @@ public class API {
     public static String LOGIN = "app/doLogin";
     //注册
     public static String REGISTER = "app/register";
-    //获取验证码
-//    public static String SENDCODE = "app/sendCode";
+    //注册获取验证码
+    public static String REGISTER_SENDCODE = "app/sendCode";
+    //忘记密码获取验证
     public static String SENDCODE = "app/sendupdatePwdCode";
     //忘记密码
     public static String FORGETPWD = "app/forgetPwd";
