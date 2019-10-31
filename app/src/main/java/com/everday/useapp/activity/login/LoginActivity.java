@@ -169,7 +169,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.text_register, R.id.layout_login_pwd, R.id.btn_get_code, R.id.btn_login,R.id.img_close,R.id.text_forget,R.id.box_password})
+    @OnClick({R.id.text_register, R.id.layout_login_pwd, R.id.btn_get_code, R.id.btn_login,R.id.img_close,R.id.text_forget,R.id.box_password,R.id.text_agreement})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.text_register:
@@ -193,6 +193,9 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.text_forget:
                 ActivityUtils.startActivity(this,ForgetPasswordActivity.class);
+                break;
+            case R.id.text_agreement:
+                ActivityUtils.startActivity(this,UseActivity.class);
                 break;
         }
     }

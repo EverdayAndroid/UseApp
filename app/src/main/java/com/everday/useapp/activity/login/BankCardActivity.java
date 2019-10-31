@@ -72,10 +72,13 @@ public class BankCardActivity extends BaseActivity {
         ivMessage.setVisibility(View.GONE);
         String certification_name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME, "");
         String certification_code = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_CODE, "");
+        String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD, "");
         textNickName.setText(certification_name);
         etIdCard.setText(certification_code);
         textNickName.setEnabled(false);
         etIdCard.setEnabled(false);
+        etBankType.setText("");
+        etPhone.setText(phone);
         initListener();
     }
 
@@ -295,7 +298,7 @@ public class BankCardActivity extends BaseActivity {
                 bean.setTele(phone);
                 RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),
                         GsonUtils.getInstance().toObjectGson(bean));
-                HttpManager.getInstance().post(Constants.HOST + API.SENDCODE, this, requestBody);
+                HttpManager.getInstance().post(Constants.HOST + API.BANKCARD_SENDCODE, this, requestBody);
                 break;
             case R.id.btn_register:
                 netCode = 3;
@@ -329,9 +332,17 @@ public class BankCardActivity extends BaseActivity {
      * 绑定银行卡
      */
     public void bindBankCard() {
+//        String gson = "{\n" +
+//                " \"tele\":\"" + phone + "\",\n" +
+//                " \"cardNum\":\"" + bankCard + "\",\n" +
+//                " \"cardType\":\"" + bankCardType + "\",\n" +
+//                " \"checkCode\":\"" + code + "\",\n" +
+//                " \"bizId\":\"" + bizId + "\"\n" +
+//                "}";
         String gson = "{\n" +
                 " \"tele\":\"" + phone + "\",\n" +
                 " \"cardNum\":\"" + bankCard + "\",\n" +
+                " \"id\":\"" + userId + "\",\n" +
                 " \"cardType\":\"" + bankCardType + "\",\n" +
                 " \"checkCode\":\"" + code + "\",\n" +
                 " \"bizId\":\"" + bizId + "\"\n" +

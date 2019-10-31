@@ -182,12 +182,15 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 ActivityUtils.startActivity(this, LdentityActivity.class);
                 break;
             case R.id.layout_card:
-                String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD, "");
+//                String bankcard = (String) PreferencesUtils.get(UserConfig.BANKCARD, "");
+                String certification_positive = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_POSITIVE, "");
                 //判断是否绑定过银行卡
-                if (TextUtils.isEmpty(bankcard)) {
-                    ActivityUtils.startActivityForResult(this, BankCardActivity.class,2);
+                if (TextUtils.isEmpty(certification_positive)) {
+                    BamToast.show(this,"请先实名认证");
+//                    ActivityUtils.startActivityForResult(this, BankCardActivity.class,2);
                 } else {
-                    ActivityUtils.startActivity(this, BankCardDetailsActivity.class);
+                    ActivityUtils.startActivityForResult(this, BankCardActivity.class,2);
+//                    ActivityUtils.startActivity(this, BankCardDetailsActivity.class);
                 }
                 break;
         }

@@ -99,12 +99,25 @@ public class HomeActivity extends BaseActivity  {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int from = getIntent().getIntExtra("from", -1);
+        if(from == 1){
+            current = 1;
+            radioHome.setChecked(false);
+            radioMission.setChecked(true);
+            radioMine.setChecked(false);
+            showFragment();
+        }
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         fragmentManager = getSupportFragmentManager();
         //记录下次启动不走启动广告页
         PreferencesUtils.put(UserConfig.FIRST_START,false,true);
-        showFragment();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if(checkCallingPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},WRITE_EXTERNAL_STORAGE);
@@ -112,6 +125,15 @@ public class HomeActivity extends BaseActivity  {
         } else {
             chekcVersion();
         }
+        //消息通知
+        int from = getIntent().getIntExtra("from", -1);
+        if(from == 1){
+            current = 1;
+            radioHome.setChecked(false);
+            radioMission.setChecked(true);
+            radioMine.setChecked(false);
+        }
+        showFragment();
     }
 
     /**

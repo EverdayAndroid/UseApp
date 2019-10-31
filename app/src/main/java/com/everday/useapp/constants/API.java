@@ -15,6 +15,8 @@ public class API {
     public static String REGISTER_SENDCODE = "app/sendCode";
     //忘记密码获取验证
     public static String SENDCODE = "app/sendupdatePwdCode";
+    //修改银行卡短信
+    public static String BANKCARD_SENDCODE = "app/sendupdateCardCode";
     //忘记密码
     public static String FORGETPWD = "app/forgetPwd";
     //修改密码
@@ -54,9 +56,15 @@ public class API {
     //查询银行卡类型
     public static String BANKCARDTYPE = "app/setting/serachBankName";
     //绑定银行卡
-    public static String BINDBANKCARD = "app/setting/bindCard";
+//    public static String BINDBANKCARD = "app/setting/bindCard";
+    //修改银行卡
+    public static String BINDBANKCARD = "app/setting/replaceBankNumber";
     //电子签约
     public static String ELECTRONIC = "app/sign/createAccount";
     //上传身份证
     public static String UPLOADIDENTITY = "app/setting/uploadidentity";
+
+    //获取小红点
+    public static String GETMSGCOUNT = "app/noticeApi/getMsgCount";
+
 }

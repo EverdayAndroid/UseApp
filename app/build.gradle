@@ -22,9 +22,9 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "d109eb3146fbdcaf3b1cf622", //JPush 上注册的包名对应的 Appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "d109eb3146fbdcaf3b1cf622", //JPush 上注册的包名对应的 Appkey.  d109eb3146fbdcaf3b1cf622 ca2e9c0be16e51bec465b1fc
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }
     buildTypes {
@@ -80,7 +80,7 @@ dependencies {
     implementation 'com.jzxiang.pickerview:TimePickerDialog:1.0.1'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
-    releaseImplementation  'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
 
     implementation 'cn.jiguang.sdk:jpush:3.3.8'  // 此处以JPush 3.3.6 版本为例。

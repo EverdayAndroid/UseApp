@@ -21,6 +21,7 @@ import com.everday.useapp.base.BaseFragment;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.entity.MessageCount;
 import com.everday.useapp.entity.UserInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.CallBack;
@@ -32,6 +33,7 @@ import com.everday.useapp.utils.PreferencesUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -70,6 +72,28 @@ public class MineFragment extends BaseFragment {
         String gson = "{\"tele\":\"" + PreferencesUtils.get(UserConfig.TELE, "").toString() + "\"}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.USERDETAIL, this, requestBody);
+        FormBody formBody = new FormBody.Builder().build();
+        HttpManager.getInstance().post(Constants.HOST + API.GETMSGCOUNT, new CallBack() {
+            @Override
+            public void onSuccess(String t) throws Exception {
+                MessageCount messageCount = GsonUtils.getInstance().parseJsonToBean(t, MessageCount.class);
+                if(messageCount.getData().getMsgCount()>0){
+                    ivMessage.setImageResource(R.mipmap.icon_message1);
+                }else{
+                    ivMessage.setImageResource(R.mipmap.icon_message);
+                }
+            }
+
+            @Override
+            public void onFailure(String message, int error) throws Exception {
+
+            }
+
+            @Override
+            public void onThrows(String message, int error) {
+
+            }
+        }, formBody);
     }
 
     @OnClick({R.id.ll_info, R.id.ll_money,R.id.ll_setting,R.id.ll_my_contrat,R.id.ll_require})

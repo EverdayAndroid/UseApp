@@ -43,6 +43,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected TextView tvTitle,tvRight;
     protected Gson gson;
     protected String telePhone;
+    protected Integer userId;
 //    protected RequestOptions requestOptions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
             gson = new Gson();
         }
         telePhone = (String) PreferencesUtils.get(UserConfig.TELE,"");
+        userId = (Integer) PreferencesUtils.get(UserConfig.ID,0);
     }
 
 

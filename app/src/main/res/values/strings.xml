@@ -17,7 +17,7 @@
     <string name="mission_no">任务编号</string>
     <string name="user_auth">实名认证</string>
     <string name="user_bind_phone">绑定手机号</string>
-    <string name="user_card">我的银行卡</string>
+    <string name="user_card">修改银行卡</string>
     <string name="user_password_change">登录密码修改</string>
     <string name="user_photo">头像</string>
     <string name="user_set_paypassword">支付密码设置</string>

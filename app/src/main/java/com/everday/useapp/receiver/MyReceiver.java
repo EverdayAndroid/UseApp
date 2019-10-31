@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import com.everday.useapp.activity.MainActivity;
 import com.everday.useapp.activity.home.HomeActivity;
 import com.everday.useapp.utils.EverdayLog;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,14 +46,17 @@ public class MyReceiver extends BroadcastReceiver {
 			} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 				EverdayLog.error("[MyReceiver] 接收到推送下来的通知");
 				int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
+
 				EverdayLog.error("[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
 
 			} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
 				EverdayLog.error("[MyReceiver] 用户点击打开了通知");
-
+				String string = bundle.getString(JPushInterface.EXTRA_EXTRA);
+				JSONObject jsonObject = new JSONObject(string);
+				int form = jsonObject.getInt("from");
 				//打开自定义的Activity
 				Intent i = new Intent(context, HomeActivity.class);
-				i.putExtras(bundle);
+				i.putExtra("from",form);
 				//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
 				context.startActivity(i);

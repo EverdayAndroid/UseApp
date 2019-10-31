@@ -192,9 +192,9 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
             ivPhotoOne.setEnabled(false);
             String positive = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_POSITIVE, "");
             String back = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_BACK, "");
-            Glide.with(this).load(positive).into(ivPhotoOne);
+            Glide.with(this).load(Constants.HOST+positive).into(ivPhotoOne);
             ivPhotoTwo.setEnabled(false);
-            Glide.with(this).load(back).into(ivPhotoTwo);
+            Glide.with(this).load(Constants.HOST+back).into(ivPhotoTwo);
             btnSubmit.setVisibility(View.GONE);
         }
     }
