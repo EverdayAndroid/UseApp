@@ -289,7 +289,7 @@ public class BankCardActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_get_code:
                 if (TextUtils.isEmpty(phone)) {
-                    BamToast.show(this, "请输入手机号");
+                    BamToast.show( "请输入手机号");
                     return;
                 }
                 time();
@@ -370,7 +370,7 @@ public class BankCardActivity extends BaseActivity {
             //记录银行卡手机号
             PreferencesUtils.put(UserConfig.BANKCARDPHONE, phone, true);
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
-            BamToast.show(this, baseModel.getMessage());
+            BamToast.show(baseModel.getMessage());
             finish();
             setResult(1);
         }
@@ -379,7 +379,7 @@ public class BankCardActivity extends BaseActivity {
     @Override
     public void onFailure(String message, int error) {
         super.onFailure(message, error);
-        BamToast.show(this, message);
+        BamToast.show( message);
     }
 
     @Override

@@ -112,7 +112,7 @@ public class MessageActivity extends BaseActivity implements OnRefreshLoadMoreLi
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class MessageActivity extends BaseActivity implements OnRefreshLoadMoreLi
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override

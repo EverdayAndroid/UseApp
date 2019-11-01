@@ -135,7 +135,7 @@ public class CertificationDialog extends DialogFragment implements DialogInterfa
                 //判断是否实名认证
                 String certification_name = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_NAME,"");
                 if(TextUtils.isEmpty(certification_name)){
-                    BamToast.show(getContext(),"请先实名认证");
+                    BamToast.show("请先实名认证");
                     return;
                 }
                 ActivityUtils.startActivity(getActivity(), ElectronicActivity.class);

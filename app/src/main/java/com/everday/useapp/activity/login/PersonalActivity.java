@@ -141,7 +141,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
     public void updateName(){
         String name = textNickName.getText().toString().trim();
         if(TextUtils.isEmpty(name)){
-            BamToast.show(UseApplication.getApplication(),textNickName.getHint());
+            BamToast.show(textNickName.getHint());
             return;
         }
         netCode = 2;
@@ -186,7 +186,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
                 String certification_positive = (String) PreferencesUtils.get(UserConfig.CERTIFICATION_POSITIVE, "");
                 //判断是否绑定过银行卡
                 if (TextUtils.isEmpty(certification_positive)) {
-                    BamToast.show(this,"请先实名认证");
+                    BamToast.show("请先实名认证");
 //                    ActivityUtils.startActivityForResult(this, BankCardActivity.class,2);
                 } else {
                     ActivityUtils.startActivityForResult(this, BankCardActivity.class,2);
@@ -316,7 +316,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
             return;
         }
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
-        BamToast.show(this,baseModel.getMessage());
+        BamToast.show(baseModel.getMessage());
     }
 
     @Override
@@ -325,7 +325,7 @@ public class PersonalActivity extends BaseActivity implements TakePhoto.TakeResu
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override

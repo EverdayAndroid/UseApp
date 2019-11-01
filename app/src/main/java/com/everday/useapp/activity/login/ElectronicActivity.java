@@ -1,5 +1,6 @@
 package com.everday.useapp.activity.login;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -48,10 +49,18 @@ public class ElectronicActivity extends BaseActivity {
         super.initData(savedInstanceState);
         tvTitle.setText("电子签约");
         ivMessage.setVisibility(View.GONE);
+//        loadingView.show(getSupportFragmentManager(),"loading");
         webview.setWebViewClient(new WebViewClient(){
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                loadingView.show(getSupportFragmentManager(),"loading");
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                loadingView.show(getSupportFragmentManager(),"loading");
+
                 webview.loadUrl(url);
                 return false;
             }

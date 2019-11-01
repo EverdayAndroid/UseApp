@@ -251,16 +251,16 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
         EverdayLog.error(netCode+"");
         if (netCode == 1 || netCode == 2) {
             PreferencesUtils.put(UserConfig.CERTIFICATION_POSITIVE, Constants.HOST+baseModel.getData().toString(), false);
-            BamToast.show(this, baseModel.getMessage());
+            BamToast.show(baseModel.getMessage());
         }else if(netCode == 2){
             PreferencesUtils.put(UserConfig.CERTIFICATION_BACK, Constants.HOST+baseModel.getData().toString(), false);
-            BamToast.show(this, baseModel.getMessage());
+            BamToast.show(baseModel.getMessage());
         } else if (netCode == 3) {
             PreferencesUtils.put(UserConfig.CERTIFICATION_NAME, name, false);
             PreferencesUtils.put(UserConfig.CERTIFICATION_CODE, code, false);
             PreferencesUtils.put(UserConfig.BANKCARD, cardNo, false);
             PreferencesUtils.put(UserConfig.CERTIFICATION, true, false);
-            BamToast.show(this, baseModel.getMessage());
+            BamToast.show(baseModel.getMessage());
             finish();
         }
     }
@@ -268,13 +268,13 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
     @Override
     public void onFailure(String message, int error) {
         super.onFailure(message, error);
-        BamToast.show(this, message);
+        BamToast.show(message);
     }
 
     @Override
     public void onThrows(String message, int error) {
         super.onThrows(message, error);
-        BamToast.show(this, message);
+        BamToast.show(message);
     }
 
     @Override

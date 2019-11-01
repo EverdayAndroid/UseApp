@@ -56,7 +56,7 @@ public class UserNameActivity extends BaseActivity{
         if(isFinishing()){return;}
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t,BaseModel.class);
         setResult(1,new Intent().putExtra("name",name));
-        BamToast.show(this,baseModel.getMessage());
+        BamToast.show(baseModel.getMessage());
         finish();
     }
 
@@ -66,7 +66,7 @@ public class UserNameActivity extends BaseActivity{
             case R.id.tv_right:
                 name = textNickName.getText().toString().trim();
                 if(TextUtils.isEmpty(name)){
-                    BamToast.show(UseApplication.getApplication(),textNickName.getHint());
+                    BamToast.show(textNickName.getHint());
                     return;
                 }
 

@@ -186,7 +186,7 @@ public class RegisteredActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_get_code:
                 if (TextUtils.isEmpty(phone)) {
-                    BamToast.show(this, "请输入手机号");
+                    BamToast.show("请输入手机号");
                     return;
                 }
                 time();
@@ -199,7 +199,7 @@ public class RegisteredActivity extends BaseActivity {
                 break;
             case R.id.btn_register:
                 if(shmc == null){
-                    BamToast.show(this,tvMerchant.getHint());
+                    BamToast.show(tvMerchant.getHint());
                     return;
                 }
                 register();
@@ -266,7 +266,7 @@ public class RegisteredActivity extends BaseActivity {
 //            code = codeInfoBean.getData().getCode();
         } else if (netCode == 2) {
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
-            BamToast.show(this,baseModel.getMessage());
+            BamToast.show(baseModel.getMessage());
             finish();
         }
     }
@@ -277,7 +277,7 @@ public class RegisteredActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override
@@ -286,7 +286,7 @@ public class RegisteredActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
 }

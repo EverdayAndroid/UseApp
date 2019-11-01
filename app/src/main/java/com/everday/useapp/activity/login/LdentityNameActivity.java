@@ -61,7 +61,7 @@ public class LdentityNameActivity extends BaseActivity {
             case R.id.tv_right:
                 name = textNickName.getText().toString().trim();
                 if(TextUtils.isEmpty(name)){
-                    BamToast.show(UseApplication.getApplication(),textNickName.getHint());
+                    BamToast.show(textNickName.getHint());
                     return;
                 }
                 setResult(1,new Intent().putExtra("name",name));

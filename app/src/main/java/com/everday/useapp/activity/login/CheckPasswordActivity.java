@@ -193,7 +193,7 @@ public class CheckPasswordActivity extends BaseActivity {
             return;
         }
         CheckPasswrodInfoBean checkPasswrodInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CheckPasswrodInfoBean.class);
-        BamToast.show(this, checkPasswrodInfoBean.getMsg());
+        BamToast.show(checkPasswrodInfoBean.getMsg());
         finish();
     }
 
@@ -203,7 +203,7 @@ public class CheckPasswordActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this, message);
+        BamToast.show(message);
     }
 
     @Override
@@ -212,13 +212,7 @@ public class CheckPasswordActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this, message);
+        BamToast.show( message);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

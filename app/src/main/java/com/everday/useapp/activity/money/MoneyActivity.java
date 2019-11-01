@@ -120,7 +120,7 @@ public class MoneyActivity extends BaseActivity implements OnDateSetListener {
             //TODO  提现
             HttpManager.getInstance().post("", this, null);
         } else {
-            BamToast.show(UseApplication.getApplication(), "余额必须大于0");
+            BamToast.show("余额必须大于0");
         }
     }
 

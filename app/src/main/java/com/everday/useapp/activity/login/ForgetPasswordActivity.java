@@ -172,7 +172,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 break;
             case R.id.btn_get_code:
                 if(TextUtils.isEmpty(phone)){
-                    BamToast.show(this,editPhone.getHint());
+                    BamToast.show(editPhone.getHint());
                     return;
                 }
                 time();
@@ -220,7 +220,7 @@ public class ForgetPasswordActivity extends BaseActivity {
             bizId = codeInfoBean.getData().getBizId();
         }else if(netCode == 2){
             CheckPasswrodInfoBean forgetPasswordInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CheckPasswrodInfoBean.class);
-            BamToast.show(this,forgetPasswordInfoBean.getMsg());
+            BamToast.show(forgetPasswordInfoBean.getMsg());
             finish();
         }
     }
@@ -231,7 +231,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override
@@ -240,7 +240,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override

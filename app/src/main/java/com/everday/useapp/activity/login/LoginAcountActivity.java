@@ -71,11 +71,11 @@ public class LoginAcountActivity extends BaseActivity {
         phone = editPhone.getText().toString().trim();
         password = editPassword.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            BamToast.show(UseApplication.getApplication(), editPhone.getHint());
+            BamToast.show(editPhone.getHint());
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            BamToast.show(UseApplication.getApplication(), "请输入密码");
+            BamToast.show("请输入密码");
             return;
         }
         if (TextUtils.isEmpty(phone) && !TextUtils.isEmpty(password)) {
@@ -181,7 +181,7 @@ public class LoginAcountActivity extends BaseActivity {
 
         }
 
-        BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
+        BamToast.show(userInfoBean.getMsg());
         finish();
     }
 
@@ -191,7 +191,7 @@ public class LoginAcountActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(UseApplication.getApplication(),message);
+        BamToast.show(message);
     }
 
     @Override
@@ -200,6 +200,6 @@ public class LoginAcountActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(UseApplication.getApplication(),message);
+        BamToast.show(message);
     }
 }

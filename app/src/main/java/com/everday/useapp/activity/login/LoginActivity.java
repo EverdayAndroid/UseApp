@@ -225,7 +225,7 @@ public class LoginActivity extends BaseActivity {
 
         //1未签约，2已签约
         PreferencesUtils.put(UserConfig.SIGN,userInfoBean.getData().getAppAccount().getSign(),false);
-        BamToast.show(UseApplication.getApplication(),userInfoBean.getMsg());
+        BamToast.show(userInfoBean.getMsg());
         if(userInfoBean.getData().getAppAccount().getStatus() == 1){
 
         }else if(userInfoBean.getData().getAppAccount().getStatus() == 2){
@@ -247,7 +247,7 @@ public class LoginActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override
@@ -256,7 +256,7 @@ public class LoginActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        BamToast.show(this,message);
+        BamToast.show(message);
     }
 
     @Override

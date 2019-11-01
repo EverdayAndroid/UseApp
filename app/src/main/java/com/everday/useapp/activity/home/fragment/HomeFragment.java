@@ -228,7 +228,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
             mAdapter.notifyItemRemoved(index);
             //接单提示
             BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
-            BamToast.show(getContext(), baseModel.getMessage());
+            BamToast.show(baseModel.getMessage());
         }else if(netCode == 3){
             //刷新用户信息
             UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
@@ -272,7 +272,7 @@ public class HomeFragment extends BaseFragment implements OnRefreshLoadMoreListe
                 refreshLayout.finishRefresh();
             } else if (netCode == 1) {
                 //接单提示
-                BamToast.show(getContext(), message);
+                BamToast.show(message);
             }
         }
     }

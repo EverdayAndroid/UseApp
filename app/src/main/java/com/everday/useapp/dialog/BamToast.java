@@ -1,5 +1,7 @@
 package com.everday.useapp.dialog;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
@@ -68,7 +70,7 @@ public class BamToast extends Toast {
      * Toast颜色_紫色
      */
     public static final int COLOR_PURPLE = 12;
-
+    public static Context mContext;
     /**
      * Toast单例
      */
@@ -88,14 +90,16 @@ public class BamToast extends Toast {
         super(context);
     }
 
+
+    public static void initContext(Context context){
+        mContext = context;
+    }
     /**
      * 显示Toast
-     *
-     * @param context 上下文
      * @param text    显示的文本
      */
-    public static void show(Context context, CharSequence text) {
-        show(context, text, COLOR_BLACK);
+    public static void show(CharSequence text) {
+        show(mContext, text, COLOR_BLACK);
     }
 
     public static void show(Context context, @StringRes int string){

@@ -134,7 +134,7 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
             public void onSuccess(String t) throws Exception {
                 BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
                 PreferencesUtils.clearPreferences();
-                BamToast.show(getActivity(),baseModel.getMessage());
+                BamToast.show(baseModel.getMessage());
                 ActivityManagement.getInstance().finishAll();
                 ActivityUtils.startActivity(getActivity(), LoginActivity.class);
                 dismiss();
@@ -142,12 +142,12 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
 
             @Override
             public void onFailure(String message, int error) throws Exception {
-                BamToast.show(getContext(),message);
+                BamToast.show(message);
             }
 
             @Override
             public void onThrows(String message, int error) {
-                BamToast.show(getContext(),message);
+                BamToast.show(message);
             }
         });
     }

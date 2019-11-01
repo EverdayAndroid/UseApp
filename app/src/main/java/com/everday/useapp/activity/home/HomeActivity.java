@@ -213,7 +213,7 @@ public class HomeActivity extends BaseActivity  {
     public void onBackPressed() {
         super.onBackPressed();
         if (System.currentTimeMillis() - mPreTime > 2000) {// 两次点击间隔大于2秒
-            BamToast.show(this, "再按一次退出应用");
+            BamToast.show("再按一次退出应用");
             mPreTime = System.currentTimeMillis();
         } else {
             super.onBackPressed();

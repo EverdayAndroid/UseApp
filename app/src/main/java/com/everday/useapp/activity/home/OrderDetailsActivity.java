@@ -266,7 +266,7 @@ public class OrderDetailsActivity extends BaseActivity {
         super.onSuccess(t);
         if(isFinishing()){return;}
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
-        BamToast.show(this,baseModel.getMessage());
+        BamToast.show(baseModel.getMessage());
         finish();
     }
 

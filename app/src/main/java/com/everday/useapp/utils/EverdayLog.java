@@ -9,7 +9,7 @@ import android.util.Log;
 * description: 日志打印
 */
 public class EverdayLog {
-    private static boolean openLog = true;
+    private static boolean openLog = false;
     private static String TAG = "EverdayLog";
     public static void initOpenLog(boolean isOpen){
         openLog = isOpen;

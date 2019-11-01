@@ -152,7 +152,7 @@ public class SettingActivity extends BaseActivity {
             if (versionInfoBean.getData().getIsUpdate() == 1) {
                 showNewVersion(versionInfoBean.getData().getNote(), versionInfoBean.getData().getAndroid(), versionInfoBean.getData().getForce(),versionInfoBean.getData().getTitle());
             }else {
-                BamToast.show(this,"已经是最新版本了");
+                BamToast.show("已经是最新版本了");
             }
         }
     }
