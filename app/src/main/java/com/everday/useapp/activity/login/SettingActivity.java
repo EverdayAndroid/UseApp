@@ -22,13 +22,11 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.everday.useapp.R;
 import com.everday.useapp.UseApplication;
-import com.everday.useapp.activity.home.HomeActivity;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
@@ -36,9 +34,9 @@ import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.UpDateDialogFragment;
 import com.everday.useapp.dialog.UseDialog;
-import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.entity.VersionInfoBean;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.AppSetting;
 import com.everday.useapp.utils.AppUtils;
 import com.everday.useapp.utils.GsonUtils;
@@ -56,7 +54,6 @@ import java.io.File;
 import java.util.Random;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -100,7 +97,7 @@ public class SettingActivity extends BaseActivity {
         imageView.setImageResource(show == true ?R.mipmap.icon_bt:R.mipmap.icon_uncheck);
     }
 
-    @OnClick({R.id.tv_out_login,R.id.iv_msg_setting,R.id.tv_update})
+    @OnClick({R.id.tv_out_login,R.id.iv_msg_setting,R.id.tv_update,R.id.tv2})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.tv_out_login:
@@ -113,6 +110,9 @@ public class SettingActivity extends BaseActivity {
             case R.id.tv_update:
                 network = 2;
                 chekcVersion();
+                break;
+            case R.id.tv2:
+                ActivityUtils.startActivity(this,AboutActivity.class);
                 break;
         }
     }

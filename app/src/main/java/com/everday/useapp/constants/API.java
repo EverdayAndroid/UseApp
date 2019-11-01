@@ -65,6 +65,6 @@ public class API {
     public static String UPLOADIDENTITY = "app/setting/uploadidentity";
 
     //获取小红点
-    public static String GETMSGCOUNT = "app/noticeApi/getMsgCount";
+    public static String GETMSGCOUNT = "noticeApi/getMsgCount";
 
 }

@@ -180,19 +180,19 @@ public class BankCardActivity extends BaseActivity {
 
             }
         });
-        etBankCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == false && bankCard.length() == 16 || bankCard.length() == 17 || bankCard.length() == 19) {
-                    netCode = 1;
-                    String gson = "{\n" +
-                            " \"cardNum\":\"" + bankCard + "\"\n" +
-                            "}";
-                    RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
-                    HttpManager.getInstance().post(Constants.HOST + API.BANKCARDTYPE, BankCardActivity.this, requestBody);
-                }
-            }
-        });
+//        etBankCard.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus == false && bankCard.length() == 16 || bankCard.length() == 17 || bankCard.length() == 19) {
+//                    netCode = 1;
+//                    String gson = "{\n" +
+//                            " \"cardNum\":\"" + bankCard + "\"\n" +
+//                            "}";
+//                    RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
+//                    HttpManager.getInstance().post(Constants.HOST + API.BANKCARDTYPE, BankCardActivity.this, requestBody);
+//                }
+//            }
+//        });
         etBankType.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -341,9 +341,9 @@ public class BankCardActivity extends BaseActivity {
 //                "}";
         String gson = "{\n" +
                 " \"tele\":\"" + phone + "\",\n" +
-                " \"cardNum\":\"" + bankCard + "\",\n" +
+                " \"cardNo\":\"" + bankCard + "\",\n" +
                 " \"id\":\"" + userId + "\",\n" +
-                " \"cardType\":\"" + bankCardType + "\",\n" +
+//                " \"cardType\":\"" + bankCardType + "\",\n" +
                 " \"checkCode\":\"" + code + "\",\n" +
                 " \"bizId\":\"" + bizId + "\"\n" +
                 "}";

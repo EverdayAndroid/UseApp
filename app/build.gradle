@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'useapp'
             keyPassword '123456'
-            storeFile file('E:/company/UseApp/app/useapp.jks')
+            storeFile file('D:/company/UseApp/app/useapp.jks')
             storePassword '123456'
         }
     }
@@ -23,7 +23,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "d109eb3146fbdcaf3b1cf622", //JPush 上注册的包名对应的 Appkey.  d109eb3146fbdcaf3b1cf622 ca2e9c0be16e51bec465b1fc
+                JPUSH_APPKEY : "a00b52911efecef550543307", //JPush 上注册的包名对应的 Appkey.  d109eb3146fbdcaf3b1cf622 ca2e9c0be16e51bec465b1fc
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
     }

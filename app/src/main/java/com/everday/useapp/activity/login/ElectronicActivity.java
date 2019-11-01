@@ -51,6 +51,7 @@ public class ElectronicActivity extends BaseActivity {
         webview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                loadingView.show(getSupportFragmentManager(),"loading");
                 webview.loadUrl(url);
                 return false;
             }
@@ -58,6 +59,7 @@ public class ElectronicActivity extends BaseActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                loadingView.dismiss();
             }
 
             @Override
