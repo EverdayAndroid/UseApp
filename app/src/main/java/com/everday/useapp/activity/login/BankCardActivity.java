@@ -77,7 +77,7 @@ public class BankCardActivity extends BaseActivity {
         etIdCard.setText(certification_code);
         textNickName.setEnabled(false);
         etIdCard.setEnabled(false);
-        etBankType.setText("");
+//        etBankType.setText("");
         etPhone.setText(phone);
         initListener();
     }
@@ -87,7 +87,7 @@ public class BankCardActivity extends BaseActivity {
         name = textNickName.getText().toString();
         idCard = etIdCard.getText().toString();
         bankCard = etBankCard.getText().toString();
-        bankCardType = etBankType.getText().toString();
+//        bankCardType = etBankType.getText().toString();
         phone = etPhone.getText().toString().trim();
         code = etCode.getText().toString().trim();
         textNickName.addTextChangedListener(new TextWatcher() {
@@ -102,7 +102,7 @@ public class BankCardActivity extends BaseActivity {
                 if (TextUtils.isEmpty(name)
                         || TextUtils.isEmpty(idCard)
                         || TextUtils.isEmpty(bankCard)
-                        || TextUtils.isEmpty(bankCardType)
+//                        || TextUtils.isEmpty(bankCardType)
                         || TextUtils.isEmpty(phone)
                         || TextUtils.isEmpty(code)) {
                     btnRegister.setEnabled(false);
@@ -132,7 +132,7 @@ public class BankCardActivity extends BaseActivity {
                 if (TextUtils.isEmpty(name)
                         || TextUtils.isEmpty(idCard)
                         || TextUtils.isEmpty(bankCard)
-                        || TextUtils.isEmpty(bankCardType)
+//                        || TextUtils.isEmpty(bankCardType)
                         || TextUtils.isEmpty(phone)
                         || TextUtils.isEmpty(code)) {
                     btnRegister.setEnabled(false);
@@ -162,7 +162,7 @@ public class BankCardActivity extends BaseActivity {
                 if (TextUtils.isEmpty(name)
                         || TextUtils.isEmpty(idCard)
                         || TextUtils.isEmpty(bankCard)
-                        || TextUtils.isEmpty(bankCardType)
+//                        || TextUtils.isEmpty(bankCardType)
                         || TextUtils.isEmpty(phone)
                         || TextUtils.isEmpty(code)) {
                     btnRegister.setEnabled(false);
@@ -193,36 +193,36 @@ public class BankCardActivity extends BaseActivity {
 //                }
 //            }
 //        });
-        etBankType.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                bankCardType = s.toString();
-                if (TextUtils.isEmpty(name)
-                        || TextUtils.isEmpty(idCard)
-                        || TextUtils.isEmpty(bankCard)
-                        || TextUtils.isEmpty(bankCardType)
-                        || TextUtils.isEmpty(phone)
-                        || TextUtils.isEmpty(code)) {
-                    btnRegister.setEnabled(false);
-                    btnRegister.setClickable(false);
-                    btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
-                } else {
-                    btnRegister.setEnabled(true);
-                    btnRegister.setClickable(true);
-                    btnRegister.setBackgroundResource(R.mipmap.login_check_bg);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+//        etBankType.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                bankCardType = s.toString();
+//                if (TextUtils.isEmpty(name)
+//                        || TextUtils.isEmpty(idCard)
+//                        || TextUtils.isEmpty(bankCard)
+//                        || TextUtils.isEmpty(bankCardType)
+//                        || TextUtils.isEmpty(phone)
+//                        || TextUtils.isEmpty(code)) {
+//                    btnRegister.setEnabled(false);
+//                    btnRegister.setClickable(false);
+//                    btnRegister.setBackgroundResource(R.mipmap.login_uncheck_bg);
+//                } else {
+//                    btnRegister.setEnabled(true);
+//                    btnRegister.setClickable(true);
+//                    btnRegister.setBackgroundResource(R.mipmap.login_check_bg);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -235,7 +235,7 @@ public class BankCardActivity extends BaseActivity {
                 if (TextUtils.isEmpty(name)
                         || TextUtils.isEmpty(idCard)
                         || TextUtils.isEmpty(bankCard)
-                        || TextUtils.isEmpty(bankCardType)
+//                        || TextUtils.isEmpty(bankCardType)
                         || TextUtils.isEmpty(phone)
                         || TextUtils.isEmpty(code)) {
                     btnRegister.setEnabled(false);
@@ -265,7 +265,7 @@ public class BankCardActivity extends BaseActivity {
                 if (TextUtils.isEmpty(name)
                         || TextUtils.isEmpty(idCard)
                         || TextUtils.isEmpty(bankCard)
-                        || TextUtils.isEmpty(bankCardType)
+//                        || TextUtils.isEmpty(bankCardType)
                         || TextUtils.isEmpty(phone)
                         || TextUtils.isEmpty(code)) {
                     btnRegister.setEnabled(false);
