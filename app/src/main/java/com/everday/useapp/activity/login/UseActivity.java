@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * @author Everday
  * @emil wangtaohandsome@gmail.com
  * create at 2019/10/30
- * description: 用户协议
+ * description: 用户协议,or 隐私政策
  */
 public class UseActivity extends BaseActivity {
 
@@ -30,8 +30,14 @@ public class UseActivity extends BaseActivity {
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        tvTitle.setText("用户协议");
         ivMessage.setVisibility(View.GONE);
-        webview.loadUrl("http://www.yongrenbao.co/yhxy.html");
+        int type = getIntent().getIntExtra("type", 0);
+        if(type == 0) {
+            tvTitle.setText("用户协议");
+            webview.loadUrl("http://www.yongrenbao.co/yhxy.html");
+        }else{
+            tvTitle.setText("隐私政策");
+            webview.loadUrl(" http://www.yongrenbao.co/yszc.html");
+        }
     }
 }

@@ -181,7 +181,7 @@ public class RegisteredActivity extends BaseActivity {
         downTimer.start();
     }
 
-    @OnClick({R.id.btn_get_code, R.id.btn_register, R.id.box_password, R.id.tv_merchant,R.id.text_agreement})
+    @OnClick({R.id.btn_get_code, R.id.btn_register, R.id.box_password, R.id.tv_merchant,R.id.text_agreement,R.id.text_privacy})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_get_code:
@@ -211,7 +211,10 @@ public class RegisteredActivity extends BaseActivity {
                 ActivityUtils.startActivityForResult(this, MerchantActivity.class);
                 break;
             case R.id.text_agreement:
-                ActivityUtils.startActivity(this,UseActivity.class);
+                startActivity(new Intent(this,UseActivity.class).putExtra("type",0));
+                break;
+            case R.id.text_privacy:
+                startActivity(new Intent(this,UseActivity.class).putExtra("type",1));
                 break;
         }
     }

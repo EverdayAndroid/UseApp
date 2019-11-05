@@ -1,5 +1,6 @@
 package com.everday.useapp.activity.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -57,7 +58,7 @@ public class LoginActivity extends BaseActivity {
     EditText editPassword;
     private int countTime = 60;
     private CountDownTimer downTimer;
-    private String phone, code,password;
+    private String phone, code, password;
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
@@ -169,7 +170,7 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.text_register, R.id.layout_login_pwd, R.id.btn_get_code, R.id.btn_login,R.id.img_close,R.id.text_forget,R.id.box_password,R.id.text_agreement})
+    @OnClick({R.id.text_register, R.id.layout_login_pwd, R.id.btn_get_code, R.id.btn_login, R.id.img_close, R.id.text_forget, R.id.box_password, R.id.text_agreement,R.id.text_privacy})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.text_register:
@@ -192,10 +193,15 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.text_forget:
-                ActivityUtils.startActivity(this,ForgetPasswordActivity.class);
+                ActivityUtils.startActivity(this, ForgetPasswordActivity.class);
                 break;
             case R.id.text_agreement:
-                ActivityUtils.startActivity(this,UseActivity.class);
+                startActivity(new Intent(this,UseActivity.class).putExtra("type",0));
+                break;
+            case R.id.text_privacy:
+                startActivity(new Intent(this,UseActivity.class).putExtra("type",1));
+                break;
+            default:
                 break;
         }
     }
@@ -217,28 +223,28 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         UserInfoBean userInfoBean = GsonUtils.getInstance().parseJsonToBean(t, UserInfoBean.class);
-        PreferencesUtils.put(UserConfig.USERNAME,userInfoBean.getData().getAppAccount().getNickName(),false);
-        PreferencesUtils.put(UserConfig.PASSWORD,password,false);
-        PreferencesUtils.put(UserConfig.TOKEN,userInfoBean.getData().getAccessToken(),false);
-        PreferencesUtils.put(UserConfig.ID,userInfoBean.getData().getAppAccount().getId(),false);
-        PreferencesUtils.put(UserConfig.TELE,phone,false);
+        PreferencesUtils.put(UserConfig.USERNAME, userInfoBean.getData().getAppAccount().getNickName(), false);
+        PreferencesUtils.put(UserConfig.PASSWORD, password, false);
+        PreferencesUtils.put(UserConfig.TOKEN, userInfoBean.getData().getAccessToken(), false);
+        PreferencesUtils.put(UserConfig.ID, userInfoBean.getData().getAppAccount().getId(), false);
+        PreferencesUtils.put(UserConfig.TELE, phone, false);
 
         //1未签约，2已签约
-        PreferencesUtils.put(UserConfig.SIGN,userInfoBean.getData().getAppAccount().getSign(),false);
+        PreferencesUtils.put(UserConfig.SIGN, userInfoBean.getData().getAppAccount().getSign(), false);
         BamToast.show(userInfoBean.getMsg());
-        if(userInfoBean.getData().getAppAccount().getStatus() == 1){
+        if (userInfoBean.getData().getAppAccount().getStatus() == 1) {
 
-        }else if(userInfoBean.getData().getAppAccount().getStatus() == 2){
-            ActivityUtils.startActivity(this,HomeActivity.class);
+        } else if (userInfoBean.getData().getAppAccount().getStatus() == 2) {
+            ActivityUtils.startActivity(this, HomeActivity.class);
             finish();
-        }else if(userInfoBean.getData().getAppAccount().getStatus() == 3){
+        } else if (userInfoBean.getData().getAppAccount().getStatus() == 3) {
 
-        }else if(userInfoBean.getData().getAppAccount().getStatus() == 4){
+        } else if (userInfoBean.getData().getAppAccount().getStatus() == 4) {
 
-        }else if(userInfoBean.getData().getAppAccount().getStatus() == 5){
+        } else if (userInfoBean.getData().getAppAccount().getStatus() == 5) {
 
         }
-        JPushInterface.setAlias(this , 0,userInfoBean.getData().getAppAccount().getTele());
+        JPushInterface.setAlias(this, 0, userInfoBean.getData().getAppAccount().getTele());
     }
 
     @Override
