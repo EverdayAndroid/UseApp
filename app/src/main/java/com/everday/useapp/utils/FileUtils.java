@@ -56,7 +56,7 @@ public class FileUtils {
         String externalStorageState = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(externalStorageState))
         {
-            mBaseDir = new File(Environment.getExternalStorageDirectory(), "Assistant"); //自带存储卡
+            mBaseDir = new File(Environment.getExternalStorageDirectory(), "UseApp"); //自带存储卡
         }
         else
         {

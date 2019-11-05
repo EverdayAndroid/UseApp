@@ -1,9 +1,12 @@
 package com.everday.useapp.activity.login;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -23,6 +26,7 @@ import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.ChooseImageDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.CompressUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.FileUtils;
 import com.everday.useapp.utils.GsonUtils;
@@ -37,12 +41,12 @@ import com.jph.takephoto.model.TakePhotoOptions;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.wildma.idcardcamera.camera.IDCardCamera;
 
 import java.io.File;
 import java.util.UUID;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -54,7 +58,7 @@ import okhttp3.RequestBody;
  * create at 2019/9/18
  * description: 实名认证
  */
-public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResultListener, InvokeListener, ImageInterFace {
+public class LdentityActivity extends BaseActivity {
     @BindView(R.id.etName)
     EditText tvName;
     @BindView(R.id.etCode)
@@ -75,21 +79,10 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
     private InvokeParam invokeParam;
     private TakePhoto takePhoto;
     private File fileName;
-    private String compressPath;
+    private File compressPath;
     private int netCode;
-
-    public TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getTakePhoto().onCreate(savedInstanceState);
-    }
+    public int REQUEST_CODE = 100;
+    private String ldentity;
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
@@ -102,6 +95,7 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
         super.initData(savedInstanceState);
         tvTitle.setText("实名认证");
         ivMessage.setVisibility(View.GONE);
+        ldentity = getIntent().getStringExtra("ldentity");
         tvName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -183,7 +177,6 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
         tvName.setText(name);
         tvCode.setText(code);
         etBankCard.setText(backcard);
-
         certification = (Boolean) PreferencesUtils.get(UserConfig.CERTIFICATION, false);
         if (certification) {
             tvName.setEnabled(false);
@@ -197,6 +190,7 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
             Glide.with(this).load(Constants.HOST+back).into(ivPhotoTwo);
             btnSubmit.setVisibility(View.GONE);
         }
+        getListPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
     @OnClick({R.id.btn_submit, R.id.etName, R.id.etCode, R.id.ivPhotoOne, R.id.ivPhotoTwo})
@@ -233,13 +227,11 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
                 break;
             case R.id.ivPhotoOne:
                 netCode = 1;
-                chooseImageDialog = new ChooseImageDialog(this, R.style.MyDialogStyle, this);
-                chooseImageDialog.show();
+                IDCardCamera.create(this).openCamera(IDCardCamera.TYPE_IDCARD_FRONT);
                 break;
             case R.id.ivPhotoTwo:
                 netCode = 2;
-                chooseImageDialog = new ChooseImageDialog(this, R.style.MyDialogStyle, this);
-                chooseImageDialog.show();
+                IDCardCamera.create(this).openCamera(IDCardCamera.TYPE_IDCARD_BACK);
                 break;
         }
     }
@@ -249,6 +241,7 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
         super.onSuccess(t);
         BaseModel baseModel = GsonUtils.getInstance().parseJsonToBean(t, BaseModel.class);
         EverdayLog.error(netCode+"");
+        if(isFinishing()){return;}
         if (netCode == 1 || netCode == 2) {
             PreferencesUtils.put(UserConfig.CERTIFICATION_POSITIVE, Constants.HOST+baseModel.getData().toString(), false);
             BamToast.show(baseModel.getMessage());
@@ -262,6 +255,9 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
             PreferencesUtils.put(UserConfig.CERTIFICATION, true, false);
             BamToast.show(baseModel.getMessage());
             finish();
+            if(getIntent().getStringExtra("ldentity")!=null){
+
+            }
         }
     }
 
@@ -280,102 +276,28 @@ public class LdentityActivity extends BaseActivity implements TakePhoto.TakeResu
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (data == null) {
-                    return;
+        if (resultCode == IDCardCamera.RESULT_CODE) {
+            //获取图片路径，显示图片
+            final String path = IDCardCamera.getImagePath(data);
+            if (!TextUtils.isEmpty(path)) {
+                if (requestCode == IDCardCamera.TYPE_IDCARD_FRONT) { //身份证正面
+                    Glide.with(this).load(path).into(ivPhotoOne);
+                } else if (requestCode == IDCardCamera.TYPE_IDCARD_BACK) {  //身份证反面
+                    Glide.with(this).load(path).into(ivPhotoTwo);
                 }
-                String name = data.getStringExtra("name");
-                tvName.setText(name);
-                break;
-            case 2:
-                if (data == null) {
-                    return;
-                }
-                String code = data.getStringExtra("code");
-                tvCode.setText(code);
-                break;
+                compressPath = FileUtils.getInstance().createFile(FileUtils.getInstance().getImageDir(),
+                        String.valueOf(UUID.randomUUID().toString() + ".png")); //图片压缩地址
+                CompressUtils.compressSample(path,compressPath); //进行压缩
+                loadingView.show(getSupportFragmentManager(), "loading");
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart(netCode == 1 ? "positive" : "back",
+                                "avatar.png",
+                                RequestBody.create(MultipartBody.FORM, compressPath))
+                        .build();
+                HttpManager.getInstance().post(Constants.HOST + API.UPLOADIDENTITY, this, requestBody);
+            }
         }
     }
-
-
-    @Override
-    public void albumChoose() {
-        //压缩
-        CompressConfig compressConfig = new CompressConfig.Builder()
-                .enableReserveRaw(false)
-                .setMaxPixel(1200)
-                .create();
-        takePhoto.onEnableCompress(compressConfig, false);
-        fileName = FileUtils.getInstance().createFile(FileUtils.getInstance().getImageDir(),
-                String.valueOf(UUID.randomUUID().toString() + ".png"));
-        TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder()
-                .setWithOwnGallery(true);
-        takePhoto.setTakePhotoOptions(builder.create());
-        takePhoto.onPickFromGalleryWithCrop(Uri.fromFile(fileName), getCropOptions());
-    }
-
-    @Override
-    public void photoChoose() {
-        //压缩
-        CompressConfig compressConfig = new CompressConfig.Builder()
-                .enableReserveRaw(true)
-                .setMaxPixel(1200)
-                .create();
-        takePhoto.onEnableCompress(compressConfig, true);
-        fileName = FileUtils.getInstance().createFile(FileUtils.getInstance().getImageDir(),
-                String.valueOf(UUID.randomUUID().toString() + ".png"));
-        TakePhotoOptions.Builder builder = new TakePhotoOptions.Builder()
-                .setWithOwnGallery(true);
-        takePhoto.setTakePhotoOptions(builder.create());
-        takePhoto.onPickFromCaptureWithCrop(Uri.fromFile(fileName), getCropOptions());
-    }
-
-    @Override
-    public void takeSuccess(TResult result) {
-        compressPath = result.getImage().getCompressPath();
-        if (netCode == 1) {
-            Glide.with(this).load(compressPath).into(ivPhotoOne);
-        } else if (netCode == 2) {
-            Glide.with(this).load(compressPath).into(ivPhotoTwo);
-        }
-        loadingView.show(getSupportFragmentManager(), "loading");
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart(netCode == 1 ? "positive" : "back",
-                        "avatar.png",
-                        RequestBody.create(MultipartBody.FORM, new File(compressPath)))
-                .build();
-        HttpManager.getInstance().post(Constants.HOST + API.UPLOADIDENTITY, this, requestBody);
-    }
-
-    @Override
-    public void takeFail(TResult result, String msg) {
-
-    }
-
-    @Override
-    public void takeCancel() {
-
-    }
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //以下代码为处理Android6.0、7.0动态权限所需
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(this, type, invokeParam, this);
-    }
-
 
 }

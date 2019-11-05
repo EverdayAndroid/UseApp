@@ -1,11 +1,18 @@
 package com.everday.useapp.base;
 
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +30,9 @@ import com.everday.useapp.utils.PreferencesUtils;
 import com.google.gson.Gson;
 import com.jph.takephoto.model.CropOptions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -44,6 +54,8 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
     protected Gson gson;
     protected String telePhone;
     protected Integer userId;
+    protected List<String> mPermissionList;
+    protected int      MY_PERMISIONLIST     = 101;
 //    protected RequestOptions requestOptions;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -225,5 +237,43 @@ public class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity i
                 .setWithOwnCrop(true)
                 .create();
         return cropOptions;
+    }
+
+
+    public void getListPermissions(String... permissions){
+        //判断手机版本是否大于等于6.0系统
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            mPermissionList = new ArrayList<>();
+            for (int i = 0; i < permissions.length; i++){
+                if(checkSelfPermission(permissions[i]) != PackageManager.PERMISSION_GRANTED){
+                    mPermissionList.add(permissions[i]);
+                }
+            }
+            if(mPermissionList.size()>0){
+                //申请全信啊
+                requestPermissions(mPermissionList.toArray(new String[mPermissionList.size()]),MY_PERMISIONLIST);
+            }
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == MY_PERMISIONLIST){
+            for (int i = 0; i < grantResults.length;i++){
+                if(grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    //判断是否勾选禁止不在询问
+                    boolean rationale = ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i]);
+                    if (rationale) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        startActivity(intent);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

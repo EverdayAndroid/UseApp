@@ -59,7 +59,7 @@ public class LoginActivity extends BaseActivity {
     private int countTime = 60;
     private CountDownTimer downTimer;
     private String phone, code, password;
-
+    private UserBean userBean;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_login;
@@ -235,8 +235,8 @@ public class LoginActivity extends BaseActivity {
         if (userInfoBean.getData().getAppAccount().getStatus() == 1) {
 
         } else if (userInfoBean.getData().getAppAccount().getStatus() == 2) {
-            ActivityUtils.startActivity(this, HomeActivity.class);
-            finish();
+            userBean = userInfoBean.getData().getAppAccount();
+            newUser(userBean);
         } else if (userInfoBean.getData().getAppAccount().getStatus() == 3) {
 
         } else if (userInfoBean.getData().getAppAccount().getStatus() == 4) {
@@ -245,6 +245,27 @@ public class LoginActivity extends BaseActivity {
 
         }
         JPushInterface.setAlias(this, 0, userInfoBean.getData().getAppAccount().getTele());
+    }
+
+    private void newUser(UserBean userBean){
+        if(userBean.getCertification() == 1){ //未实名认证
+            Bundle bundle = new Bundle();
+            bundle.putString("ldentity","ldentity");
+            ActivityUtils.startActivity(this, LdentityActivity.class,bundle);
+        }else{
+            if(userBean.getSign() == 1){ //电子签约
+                ActivityUtils.startActivity(this, ElectronicActivity.class);
+            }else{
+                ActivityUtils.startActivity(this, HomeActivity.class);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override

@@ -84,5 +84,6 @@ dependencies {
 
 
     implementation 'cn.jiguang.sdk:jpush:3.3.8'  // 此处以JPush 3.3.6 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:2.1.6'  // 此处以JCore 2.1.6 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.1.6'
+    implementation project(path: ':idcardcamera')  // 此处以JCore 2.1.6 版本为例。
 }
