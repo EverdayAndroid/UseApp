@@ -59,6 +59,7 @@ public class ActivityManagement {
         for (Activity activity:activityStack) {
             if(activity.getClass().equals(clzz)){
                 finishActivity(activity);
+                break;
             }
         }
     }

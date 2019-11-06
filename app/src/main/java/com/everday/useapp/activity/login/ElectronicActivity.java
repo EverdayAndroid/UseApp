@@ -91,6 +91,18 @@ public class ElectronicActivity extends BaseActivity {
                 "}";
         RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.ELECTRONIC, this, requestBody);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ldentity!=null){
+                    ActivityUtils.startActivity(ElectronicActivity.this, HomeActivity.class);
+                    ActivityManagement.getInstance().finishActivity(LoginActivity.class);
+                    finish();
+                }else {
+                    finish();
+                }
+            }
+        });
     }
 
     @Override
@@ -111,6 +123,7 @@ public class ElectronicActivity extends BaseActivity {
         if(ldentity!=null){
             ActivityUtils.startActivity(this, HomeActivity.class);
             ActivityManagement.getInstance().finishActivity(LoginActivity.class);
+            finish();
         }else {
             finish();
         }

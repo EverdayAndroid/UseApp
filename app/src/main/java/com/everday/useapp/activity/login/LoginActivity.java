@@ -227,7 +227,8 @@ public class LoginActivity extends BaseActivity {
         PreferencesUtils.put(UserConfig.PASSWORD, password, false);
         PreferencesUtils.put(UserConfig.TOKEN, userInfoBean.getData().getAccessToken(), false);
         PreferencesUtils.put(UserConfig.ID, userInfoBean.getData().getAppAccount().getId(), false);
-        PreferencesUtils.put(UserConfig.TELE, phone, false);
+        PreferencesUtils.put(UserConfig.CERTIFICATION_NAME, userInfoBean.getData().getAppAccount().getNickName(), false);
+        PreferencesUtils.put(UserConfig.CERTIFICATION_CODE, userInfoBean.getData().getAppAccount().getIdCard(), false);
 
         //1未签约，2已签约
         PreferencesUtils.put(UserConfig.SIGN, userInfoBean.getData().getAppAccount().getSign(), false);
