@@ -18,6 +18,7 @@ import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.PublicBean;
 import com.everday.useapp.entity.PublicInfoBean;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
@@ -26,6 +27,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -108,10 +110,24 @@ public class ElectronicActivity extends BaseActivity {
         super.onBackPressed();
         if(ldentity!=null){
             ActivityUtils.startActivity(this, HomeActivity.class);
+            ActivityManagement.getInstance().finishActivity(LoginActivity.class);
+        }else {
+            finish();
         }
-        finish();
     }
-
+    @OnClick({R.id.iv_back})
+    void OnClick(View view){
+        switch (view.getId()){
+            case R.id.iv_back:
+                if(ldentity!=null){
+                    ActivityUtils.startActivity(this, HomeActivity.class);
+                    ActivityManagement.getInstance().finishActivity(LoginActivity.class);
+                }else {
+                    finish();
+                }
+                break;
+        }
+    }
     @Override
     public void onFailure(String message, int error) {
         super.onFailure(message, error);

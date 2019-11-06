@@ -1,6 +1,7 @@
 package com.everday.useapp.activity.login;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.everday.useapp.R;
+import com.everday.useapp.activity.home.HomeActivity;
 import com.everday.useapp.activity.login.view.ImageInterFace;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
@@ -26,6 +28,7 @@ import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.ChooseImageDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityManagement;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.CompressUtils;
 import com.everday.useapp.utils.EverdayLog;
@@ -264,7 +267,10 @@ public class LdentityActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("ldentity",ldentity);
                 ActivityUtils.startActivity(this, ElectronicActivity.class,bundle); //跳转电子签约
-            }else {
+            }else if(ldentity!=null&& sign == 2){
+                ActivityUtils.startActivity(this, HomeActivity.class);
+                ActivityManagement.getInstance().finishActivity(LoginActivity.class);
+            }else{
                 finish();
             }
         }
