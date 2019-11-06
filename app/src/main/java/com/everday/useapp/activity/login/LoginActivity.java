@@ -251,10 +251,13 @@ public class LoginActivity extends BaseActivity {
         if(userBean.getCertification() == 1){ //未实名认证
             Bundle bundle = new Bundle();
             bundle.putString("ldentity","ldentity");
+            bundle.putInt("sign",userBean.getSign());
             ActivityUtils.startActivity(this, LdentityActivity.class,bundle);
         }else{
             if(userBean.getSign() == 1){ //电子签约
-                ActivityUtils.startActivity(this, ElectronicActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("ldentity","ldentity");
+                ActivityUtils.startActivity(this, ElectronicActivity.class,bundle);
             }else{
                 ActivityUtils.startActivity(this, HomeActivity.class);
                 finish();

@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.everday.useapp.R;
+import com.everday.useapp.activity.home.HomeActivity;
 import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
@@ -17,6 +18,7 @@ import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.PublicBean;
 import com.everday.useapp.entity.PublicInfoBean;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
 
@@ -38,7 +40,7 @@ public class ElectronicActivity extends BaseActivity {
     @BindView(R.id.webview)
     WebView webview;
     private Integer thirdPartyUserId;
-
+    private String ldentity;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_electronic;
@@ -49,6 +51,7 @@ public class ElectronicActivity extends BaseActivity {
         super.initData(savedInstanceState);
         tvTitle.setText("电子签约");
         ivMessage.setVisibility(View.GONE);
+        ldentity = getIntent().getStringExtra("ldentity");
 //        loadingView.show(getSupportFragmentManager(),"loading");
         webview.setWebViewClient(new WebViewClient(){
 
@@ -98,6 +101,15 @@ public class ElectronicActivity extends BaseActivity {
             webview.getSettings().setJavaScriptEnabled(true);
             webview.getSettings().setDomStorageEnabled(true);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(ldentity!=null){
+            ActivityUtils.startActivity(this, HomeActivity.class);
+        }
+        finish();
     }
 
     @Override

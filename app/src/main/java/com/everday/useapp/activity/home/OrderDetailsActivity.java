@@ -182,8 +182,7 @@ public class OrderDetailsActivity extends BaseActivity {
         tvTime.setText(taskBean.getDuration()+"小时");
         tvPickAddress.setText(taskBean.getAddress());
         tvStartDistance.setText("里程");
-        Spanned spanned = Html.fromHtml(taskBean.getDes());
-        tvJobScrip.setText(spanned.toString());
+        tvJobScrip.setText(taskBean.getDes());
         tvCompanyName.setText(taskBean.getShmc());
         tvNo.setText(taskBean.getTaskBh());
         int type = extras.getInt("type");

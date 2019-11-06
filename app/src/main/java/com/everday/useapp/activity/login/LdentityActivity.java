@@ -26,6 +26,7 @@ import com.everday.useapp.dialog.BamToast;
 import com.everday.useapp.dialog.ChooseImageDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.network.HttpManager;
+import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.CompressUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.FileUtils;
@@ -80,7 +81,7 @@ public class LdentityActivity extends BaseActivity {
     private TakePhoto takePhoto;
     private File fileName;
     private File compressPath;
-    private int netCode;
+    private int netCode,sign;
     public int REQUEST_CODE = 100;
     private String ldentity;
 
@@ -96,6 +97,7 @@ public class LdentityActivity extends BaseActivity {
         tvTitle.setText("实名认证");
         ivMessage.setVisibility(View.GONE);
         ldentity = getIntent().getStringExtra("ldentity");
+        sign = getIntent().getIntExtra("sign",1);
         tvName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -191,6 +193,10 @@ public class LdentityActivity extends BaseActivity {
             btnSubmit.setVisibility(View.GONE);
         }
         getListPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if(ldentity!=null&&sign == 1) {
+            btnSubmit.setText("下一步");
+        }
     }
 
     @OnClick({R.id.btn_submit, R.id.etName, R.id.etCode, R.id.ivPhotoOne, R.id.ivPhotoTwo})
@@ -254,9 +260,12 @@ public class LdentityActivity extends BaseActivity {
             PreferencesUtils.put(UserConfig.BANKCARD, cardNo, false);
             PreferencesUtils.put(UserConfig.CERTIFICATION, true, false);
             BamToast.show(baseModel.getMessage());
-            finish();
-            if(getIntent().getStringExtra("ldentity")!=null){
-
+            if(ldentity!=null && sign == 1){
+                Bundle bundle = new Bundle();
+                bundle.putString("ldentity",ldentity);
+                ActivityUtils.startActivity(this, ElectronicActivity.class,bundle); //跳转电子签约
+            }else {
+                finish();
             }
         }
     }

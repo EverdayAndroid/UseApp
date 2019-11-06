@@ -32,7 +32,7 @@ public class CompressUtils {
         int options = 100;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
-        while (baos.size() / 1024 > 1024 * 2) {
+        while (baos.size() / 1024 > 1024 ) {
             baos.reset();
             bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
             options -= 10;
@@ -70,7 +70,7 @@ public class CompressUtils {
         int inSampleSize = 1;
         int widht = options.outWidth;
         int height = options.outHeight;
-        while (widht / inSampleSize > 1200) {
+        while (widht / inSampleSize > 1000) {
             inSampleSize *= 2;
         }
         options.inJustDecodeBounds = false;
