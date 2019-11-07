@@ -35,6 +35,7 @@ import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.FileUtils;
 import com.everday.useapp.utils.GsonUtils;
 import com.everday.useapp.utils.PreferencesUtils;
+import com.everday.useapp.utils.RotateTransformation;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
@@ -294,11 +295,12 @@ public class LdentityActivity extends BaseActivity {
         if (resultCode == IDCardCamera.RESULT_CODE) {
             //获取图片路径，显示图片
             final String path = IDCardCamera.getImagePath(data);
+
             if (!TextUtils.isEmpty(path)) {
                 if (requestCode == IDCardCamera.TYPE_IDCARD_FRONT) { //身份证正面
-                    Glide.with(this).load(path).into(ivPhotoOne);
+                    Glide.with(this).load(path).bitmapTransform(new RotateTransformation(this,CompressUtils.degree(path))).into(ivPhotoOne);
                 } else if (requestCode == IDCardCamera.TYPE_IDCARD_BACK) {  //身份证反面
-                    Glide.with(this).load(path).into(ivPhotoTwo);
+                    Glide.with(this).load(path).bitmapTransform(new RotateTransformation(this,CompressUtils.degree(path))).into(ivPhotoTwo);
                 }
                 compressPath = FileUtils.getInstance().createFile(FileUtils.getInstance().getImageDir(),
                         String.valueOf(UUID.randomUUID().toString() + ".png")); //图片压缩地址
