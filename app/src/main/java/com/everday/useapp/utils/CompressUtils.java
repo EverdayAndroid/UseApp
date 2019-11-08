@@ -34,7 +34,7 @@ public class CompressUtils {
         int options = 100;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
-        while (baos.size() / 1024 > 1024 ) {
+        while (baos.size() / 1024 > 300 ) {
             baos.reset();
             bitmap.compress(Bitmap.CompressFormat.JPEG, options, baos);
             options -= 10;

@@ -1,6 +1,8 @@
 package com.everday.useapp.network.interceptor;
 
 import com.everday.useapp.constants.UserConfig;
+import com.everday.useapp.utils.DateUtils;
+import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.PreferencesUtils;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ import okhttp3.Response;
  * desc Token拦截器配置信息
  **/
 public class TokenInterceptor implements Interceptor {
+    private long millis = 0L;
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
@@ -26,6 +29,8 @@ public class TokenInterceptor implements Interceptor {
                     .addHeader("User-Agent", "Android")
                     .build();
         }
+        millis = System.currentTimeMillis();
+        EverdayLog.error("TokenInterceptor："+ DateUtils.getLongToString("yyyy-MM-dd HH:mm:ss",millis));
         return chain.proceed(request);
     }
 

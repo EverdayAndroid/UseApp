@@ -44,13 +44,11 @@ public class HttpManager implements IHttpEngien {
 
     @Override
     public void get(String url, Map<String, Object> params, CallBack callBack) {
-        EverdayLog.error( url);
         engien.get(url, params, callBack);
     }
 
     @Override
     public void post(String url, CallBack callBack, RequestBody body) {
-        EverdayLog.error(url);
         engien.post(url, callBack, body);
     }
 

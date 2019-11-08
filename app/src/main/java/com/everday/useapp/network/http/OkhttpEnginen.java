@@ -9,6 +9,8 @@ import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.BaseModel;
+import com.everday.useapp.network.OkHttpManager;
+import com.everday.useapp.utils.DateUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.NetWorkUtils;
 import com.everday.useapp.utils.PreferencesUtils;
@@ -31,11 +33,11 @@ import okhttp3.Response;
  * description: 数据报文
  */
 public class OkhttpEnginen implements IHttpEngien {
-    private OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client = OkHttpManager.getInstance().getOkHttpClient();
     private Call call;
     private Gson gson = new Gson();
     private static final Handler mHandler = new Handler(Looper.myLooper());
-
+    long millis = 0L;
     @Override
     public void get(String url, Map<String, Object> params, final CallBack callBack) {
         Request request = new Request.Builder()
@@ -47,6 +49,8 @@ public class OkhttpEnginen implements IHttpEngien {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
+                millis = System.currentTimeMillis();
+                EverdayLog.error("onFailure："+ DateUtils.getLongToString("yyyy-MM-dd HH:mm:ss",millis));
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -63,6 +67,8 @@ public class OkhttpEnginen implements IHttpEngien {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
                 final String result = response.body().string();
+                millis = System.currentTimeMillis();
+                EverdayLog.error("onResponse："+ DateUtils.getLongToString("yyyy-MM-dd HH:mm:ss",millis));
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -89,6 +95,8 @@ public class OkhttpEnginen implements IHttpEngien {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
+                millis = System.currentTimeMillis();
+                EverdayLog.error("onFailure："+ DateUtils.getLongToString("yyyy-MM-dd HH:mm:ss",millis));
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -109,6 +117,8 @@ public class OkhttpEnginen implements IHttpEngien {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String result = response.body() != null ? response.body().string() : null;
+                millis = System.currentTimeMillis();
+                EverdayLog.error("onResponse："+ DateUtils.getLongToString("yyyy-MM-dd HH:mm:ss",millis));
                 if (result != null) {
                     mHandler.post(new Runnable() {
                         @Override
