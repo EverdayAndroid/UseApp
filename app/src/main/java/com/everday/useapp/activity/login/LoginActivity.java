@@ -22,6 +22,7 @@ import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.dialog.UseDialog;
 import com.everday.useapp.entity.UserBean;
 import com.everday.useapp.entity.UserInfoBean;
 import com.everday.useapp.network.HttpManager;
@@ -174,6 +175,14 @@ public class LoginActivity extends BaseActivity {
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.text_register:
+                UseDialog useDialog = new UseDialog.Builder()
+                        .setTitle(getString(R.string.user_dialog_title))
+                        .setDesc("")
+                        .setLeftStr(getString(R.string.user_dialog_left_str))
+                        .setRightStr(getString(R.string.user_dialog_right_str))
+                        .setLeftColor(R.color.red)
+                        .setRightColor(R.color.white)
+                        .builder();
                 ActivityUtils.startActivity(this, RegisteredActivity.class);
                 break;
             case R.id.btn_login:

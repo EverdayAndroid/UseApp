@@ -41,7 +41,6 @@ public class OkhttpEnginen implements IHttpEngien {
     @Override
     public void get(String url, Map<String, Object> params, final CallBack callBack) {
         Request request = new Request.Builder()
-                .addHeader("token", PreferencesUtils.get(UserConfig.TOKEN,"").toString())
                 .url(url)
                 .get()
                 .build();
@@ -87,7 +86,6 @@ public class OkhttpEnginen implements IHttpEngien {
     @Override
     public void post(final String url, final CallBack callBack, RequestBody body) {
         final Request request = new Request.Builder()
-                .addHeader("token", PreferencesUtils.get(UserConfig.TOKEN,"").toString())
                 .url(url)
                 .post(body)
                 .build();
@@ -136,6 +134,9 @@ public class OkhttpEnginen implements IHttpEngien {
                                     UseApplication.getApplication().startActivity(intent);
                                 }else if(baseModel.getResultCode() == Constants.BUSINESS_ERROR){
                                     //业务失败状态码
+                                    callBack.onFailure(baseModel.getMessage(),baseModel.getResultCode());
+                                }else if(baseModel.getResultCode() == Constants.IDENTITY_ERROR){
+                                    //身份证验证失效状态码
                                     callBack.onFailure(baseModel.getMessage(),baseModel.getResultCode());
                                 }else {
                                     callBack.onFailure(baseModel.getMessage(),baseModel.getResultCode());

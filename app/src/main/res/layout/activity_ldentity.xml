@@ -145,7 +145,7 @@
             android:scaleType="fitXY"
             android:layout_marginRight="@dimen/dimen_10dp"
             android:id="@+id/ivPhotoOne"
-            android:src="@mipmap/a"/>
+            android:src="@mipmap/b"/>
 
         <ImageView
             android:layout_width="@dimen/dimen_150dp"
@@ -153,7 +153,7 @@
             android:layout_gravity="center"
             android:scaleType="fitXY"
             android:id="@+id/ivPhotoTwo"
-            android:src="@mipmap/b"/>
+            android:src="@mipmap/a"/>
     </LinearLayout>
 
 

@@ -34,6 +34,7 @@ import com.everday.useapp.utils.CompressUtils;
 import com.everday.useapp.utils.EverdayLog;
 import com.everday.useapp.utils.FileUtils;
 import com.everday.useapp.utils.GsonUtils;
+import com.everday.useapp.utils.PhotoFromPhotoAlbum;
 import com.everday.useapp.utils.PreferencesUtils;
 import com.everday.useapp.utils.RotateTransformation;
 import com.jph.takephoto.app.TakePhoto;
@@ -63,7 +64,7 @@ import okhttp3.RequestBody;
  * create at 2019/9/18
  * description: 实名认证
  */
-public class LdentityActivity extends BaseActivity {
+public class LdentityActivity extends BaseActivity implements ImageInterFace {
     @BindView(R.id.etName)
     EditText tvName;
     @BindView(R.id.etCode)
@@ -220,28 +221,18 @@ public class LdentityActivity extends BaseActivity {
                 HttpManager.getInstance().post(Constants.HOST + API.CERTIFICATION, this, requestBody);
                 break;
             case R.id.etName:
-                if (certification) {
-                    return;
-                }
-//                Bundle bundle = new Bundle();
-//                bundle.putString("name",tvName.getText().toString());
-//                ActivityUtils.startActivityForResult(this,LdentityNameActivity.class,bundle,1);
                 break;
             case R.id.etCode:
-                if (certification) {
-                    return;
-                }
-//                Bundle bundle1 = new Bundle();
-//                bundle1.putString("code",tvCode.getText().toString());
-//                ActivityUtils.startActivityForResult(this,LdentityCodeActivity.class,bundle1,2);
                 break;
             case R.id.ivPhotoOne:
                 netCode = 1;
-                IDCardCamera.create(this).openCamera(IDCardCamera.TYPE_IDCARD_FRONT);
+                chooseImageDialog = new ChooseImageDialog(this, R.style.MyDialogStyle, this);
+                chooseImageDialog.show();
                 break;
             case R.id.ivPhotoTwo:
                 netCode = 2;
-                IDCardCamera.create(this).openCamera(IDCardCamera.TYPE_IDCARD_BACK);
+                chooseImageDialog = new ChooseImageDialog(this, R.style.MyDialogStyle, this);
+                chooseImageDialog.show();
                 break;
         }
     }
@@ -280,7 +271,21 @@ public class LdentityActivity extends BaseActivity {
     @Override
     public void onFailure(String message, int error) {
         super.onFailure(message, error);
-        BamToast.show(message);
+        if(error == Constants.IDENTITY_ERROR){
+            if(isFinishing()){return;}
+            if(ldentity!=null && sign == 1){
+                Bundle bundle = new Bundle();
+                bundle.putString("ldentity",ldentity);
+                ActivityUtils.startActivity(this, ElectronicActivity.class,bundle); //跳转电子签约
+            }else if(ldentity!=null&& sign == 2){
+                ActivityUtils.startActivity(this, HomeActivity.class);
+                ActivityManagement.getInstance().finishActivity(LoginActivity.class);
+            }else{
+                finish();
+            }
+        }else {
+            BamToast.show(message);
+        }
     }
 
     @Override
@@ -295,7 +300,6 @@ public class LdentityActivity extends BaseActivity {
         if (resultCode == IDCardCamera.RESULT_CODE) {
             //获取图片路径，显示图片
             final String path = IDCardCamera.getImagePath(data);
-
             if (!TextUtils.isEmpty(path)) {
                 if (requestCode == IDCardCamera.TYPE_IDCARD_FRONT) { //身份证正面
                     Glide.with(this).load(path).bitmapTransform(new RotateTransformation(this,CompressUtils.degree(path))).into(ivPhotoOne);
@@ -315,6 +319,34 @@ public class LdentityActivity extends BaseActivity {
                 HttpManager.getInstance().post(Constants.HOST + API.UPLOADIDENTITY, this, requestBody);
             }
         }
+        //相册
+        if(requestCode == IDCardCamera.RESULT_ALBUM_CODE){
+            Uri uri = data.getData();
+            String path = PhotoFromPhotoAlbum.getRealPathFromUri(this, uri);
+            if (!TextUtils.isEmpty(path)) {
+                Glide.with(this).load(path).bitmapTransform(new RotateTransformation(this,CompressUtils.degree(path))).into(netCode == 1?ivPhotoOne:ivPhotoTwo);
+                compressPath = FileUtils.getInstance().createFile(FileUtils.getInstance().getImageDir(),
+                        String.valueOf(UUID.randomUUID().toString() + ".png")); //图片压缩地址
+                CompressUtils.compressSample(path,compressPath); //进行压缩
+                loadingView.show(getSupportFragmentManager(), "loading");
+                RequestBody requestBody = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart(netCode == 1 ? "positive" : "back",
+                                "avatar.png",
+                                RequestBody.create(MultipartBody.FORM, compressPath))
+                        .build();
+                HttpManager.getInstance().post(Constants.HOST + API.UPLOADIDENTITY, this, requestBody);
+            }
+        }
     }
 
+    @Override
+    public void albumChoose() {
+        IDCardCamera.create(this).openAlbum();
+    }
+
+    @Override
+    public void photoChoose() {
+        IDCardCamera.create(this).openCamera(netCode == 1 ?IDCardCamera.TYPE_IDCARD_FRONT:IDCardCamera.TYPE_IDCARD_BACK);
+    }
 }

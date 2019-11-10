@@ -31,8 +31,8 @@ public class OkHttpManager {
                 .writeTimeout(Constants.WRITETIMEOUT,TimeUnit.SECONDS)
                 .readTimeout(Constants.READTIMEOUT,TimeUnit.SECONDS)
                 .addInterceptor(new TokenInterceptor())
-                .addInterceptor(new CacheInterceptor())
-                .addInterceptor(new DeviceInterceptor())
+//                .addInterceptor(new CacheInterceptor())
+//                .addInterceptor(new DeviceInterceptor())
                 .cache(cache)
                 .build();
         okHttpClient.dispatcher().cancelAll();
