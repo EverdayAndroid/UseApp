@@ -1,14 +1,13 @@
 package com.everday.useapp.dialog;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
@@ -22,9 +21,9 @@ import android.widget.TextView;
 import com.everday.useapp.R;
 import com.everday.useapp.activity.login.LoginActivity;
 import com.everday.useapp.activity.login.RegisteredActivity;
+import com.everday.useapp.activity.login.UseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
-import com.everday.useapp.constants.UserConfig;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.network.http.CallBack;
@@ -58,18 +57,23 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
     @BindView(R.id.dialog_affirm_btn)
     Button dialogAffirmBtn;
     Unbinder unbinder;
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv2)
+    TextView tv2;
     private Context mContext;
     private boolean isAdd;
-    private String leftStr,rightStr,des;
+    private String leftStr, rightStr, des, title;
     private int leftColor;
     private int rightColor;
     private int type;
+
     public static UseDialog getInstance(String des, String leftStr, String rightStr) {
         UseDialog useDialog = new UseDialog();
         Bundle bundle = new Bundle();
-        bundle.putString("des",des);
-        bundle.putString("leftStr",leftStr);
-        bundle.putString("rightStr",rightStr);
+        bundle.putString("des", des);
+        bundle.putString("leftStr", leftStr);
+        bundle.putString("rightStr", rightStr);
         useDialog.setArguments(bundle);
         return useDialog;
     }
@@ -80,51 +84,60 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
         private String leftStr;
         private String rightStr;
         private String title;
+        @ColorRes
         private int leftColor;
+        @ColorRes
         private int rightColor;
         private int type;
-        public  Builder()
-        {
+
+        public Builder() {
             useDialog = new UseDialog();
-            Bundle bundle = new Bundle();
-            bundle.putString("des",des);
-            bundle.putString("leftStr",leftStr);
-            bundle.putString("title",title);
-            bundle.putString("rightStr",rightStr);
-            bundle.putInt("leftColor",leftColor);
-            bundle.putInt("rightColor",rightColor);
-            bundle.putInt("type",type);
-            useDialog.setArguments(bundle);
         }
 
-        public UseDialog builder(){
+        public UseDialog builder() {
+            Bundle bundle = new Bundle();
+            bundle.putString("des", des);
+            bundle.putString("leftStr", leftStr);
+            bundle.putString("title", title);
+            bundle.putString("rightStr", rightStr);
+            bundle.putInt("leftColor", leftColor);
+            bundle.putInt("rightColor", rightColor);
+            bundle.putInt("type", type);
+            useDialog.setArguments(bundle);
             return useDialog;
         }
-        public Builder setTitle(String title){
+
+        public Builder setTitle(String title) {
             this.title = title;
             return this;
         }
-        public Builder setLeftStr(String leftStr){
+
+        public Builder setLeftStr(String leftStr) {
             this.leftStr = leftStr;
             return this;
         }
-        public Builder setDesc(String des){
-            this.des =des;
+
+        public Builder setDesc(String des) {
+            this.des = des;
             return this;
         }
-        public Builder setRightStr(String rightStr){
+
+        public Builder setRightStr(String rightStr) {
             this.rightStr = rightStr;
             return this;
         }
-        public Builder setLeftColor(@ColorRes int leftColor){
+
+        public Builder setLeftColor(@ColorRes int leftColor) {
             this.leftColor = leftColor;
             return this;
         }
-        public Builder setRightColor(@ColorRes int rightColor){
+
+        public Builder setRightColor(@ColorRes int rightColor) {
             this.rightColor = rightColor;
             return this;
         }
-        public Builder setType(int type){
+
+        public Builder setType(int type) {
             this.type = type;
             return this;
         }
@@ -150,18 +163,25 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
         des = arguments.getString("des");
         leftStr = arguments.getString("leftStr");
         rightStr = arguments.getString("rightStr");
-        leftColor = arguments.getInt("leftColor",-1);
-        rightColor = arguments.getInt("rightColor",-1);
-        type = arguments.getInt("type",0);
+        title = arguments.getString("title");
+        leftColor = arguments.getInt("leftColor", -1);
+        rightColor = arguments.getInt("rightColor", -1);
+        type = arguments.getInt("type", 0);
 
 
         dialogMessageTv.setText(des);
         dialogLeftbtn.setText(leftStr);
         dialogRightbtn.setText(rightStr);
-        if(leftColor!= -1){
+        if (leftColor != -1) {
+            dialogTitle.setText(title);
             dialogLeftbtn.setTextColor(leftColor);
+            dialogMessageTv.setTextColor(Color.parseColor("#909090"));
+            tv1.setText("<<用户许可协议>>");
+            tv2.setText("<<隐私政策>>");
+            tv1.setVisibility(View.VISIBLE);
+            tv2.setVisibility(View.VISIBLE);
         }
-        if(rightColor!= -1){
+        if (rightColor != -1) {
             dialogRightbtn.setTextColor(rightColor);
         }
         return view;
@@ -186,23 +206,30 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
         }
     }
 
-    @OnClick({R.id.dialog_leftbtn,R.id.dialog_rightbtn})
-    void OnClick(View view){
-        switch (view.getId()){
+    @OnClick({R.id.dialog_leftbtn, R.id.dialog_rightbtn,R.id.tv1,R.id.tv2})
+    void OnClick(View view) {
+        switch (view.getId()) {
             case R.id.dialog_leftbtn:
-                if(type == 0){  //退出登陆
+                if (type == 0) {  //退出登陆
                     logout();
-                }else {
+                } else {
                     dismiss();
+                    //关闭当前界面
+                    ActivityManagement.getInstance().finishActivity(RegisteredActivity.class);
                 }
                 break;
             case R.id.dialog_rightbtn:
-                if(type == 0) {
+                if (type == 0) {
                     dismiss();
-                }else{
-                    //跳转注册界面
-                    ActivityUtils.startActivity(getActivity(), RegisteredActivity.class);
+                } else {
+                    dismiss();
                 }
+                break;
+            case R.id.tv1:
+                ActivityUtils.startActivity(getActivity(),UseActivity.class);
+                break;
+            case R.id.tv2:
+                startActivity(new Intent(getActivity(),UseActivity.class).putExtra("type",1));
                 break;
         }
     }
@@ -210,7 +237,7 @@ public class UseDialog extends DialogFragment implements DialogInterface.OnKeyLi
     /**
      * 退出
      */
-    public void logout(){
+    public void logout() {
         HttpManager.getInstance().get(Constants.HOST + API.OUTLOGIN, null, new CallBack() {
             @Override
             public void onSuccess(String t) throws Exception {

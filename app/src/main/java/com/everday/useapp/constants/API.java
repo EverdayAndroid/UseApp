@@ -66,5 +66,7 @@ public class API {
 
     //获取小红点
     public static String GETMSGCOUNT = "noticeApi/getMsgCount";
+    //获取用户协议内容
+    public static String GETAGREEMENT = "app/setting/getAgreement";
 
 }

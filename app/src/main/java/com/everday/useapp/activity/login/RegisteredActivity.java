@@ -20,11 +20,13 @@ import com.everday.useapp.base.BaseActivity;
 import com.everday.useapp.constants.API;
 import com.everday.useapp.constants.Constants;
 import com.everday.useapp.dialog.BamToast;
+import com.everday.useapp.dialog.UseDialog;
 import com.everday.useapp.entity.BaseModel;
 import com.everday.useapp.entity.Code;
 import com.everday.useapp.entity.CodeInfoBean;
 import com.everday.useapp.entity.ForgetPasswordBean;
 import com.everday.useapp.entity.ForgetPasswordInfoBean;
+import com.everday.useapp.entity.ProtocolInfoBean;
 import com.everday.useapp.network.HttpManager;
 import com.everday.useapp.utils.ActivityUtils;
 import com.everday.useapp.utils.GsonUtils;
@@ -71,6 +73,7 @@ public class RegisteredActivity extends BaseActivity {
     private String shmc;
     //验证码业务标识
     private String bizId;
+    private  UseDialog useDialog;
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_registered;
@@ -82,6 +85,16 @@ public class RegisteredActivity extends BaseActivity {
         tvTitle.setText("注册");
         ivMessage.setVisibility(View.GONE);
         initListener();
+        protocol();
+    }
+
+    /**
+     * 获取用户协议内容
+     */
+    private void protocol() {
+        loadingView.show(getSupportFragmentManager(),"loading");
+        netCode = 0;
+        HttpManager.getInstance().post(Constants.HOST + API.GETAGREEMENT, this, new FormBody.Builder().build());
     }
 
     public void initListener() {
@@ -181,7 +194,7 @@ public class RegisteredActivity extends BaseActivity {
         downTimer.start();
     }
 
-    @OnClick({R.id.btn_get_code, R.id.btn_register, R.id.box_password, R.id.tv_merchant,R.id.text_agreement,R.id.text_privacy})
+    @OnClick({R.id.btn_get_code, R.id.btn_register, R.id.box_password, R.id.tv_merchant, R.id.text_agreement, R.id.text_privacy})
     void OnClick(View view) {
         switch (view.getId()) {
             case R.id.btn_get_code:
@@ -198,7 +211,7 @@ public class RegisteredActivity extends BaseActivity {
                 HttpManager.getInstance().post(Constants.HOST + API.REGISTER_SENDCODE, this, requestBody);
                 break;
             case R.id.btn_register:
-                if(shmc == null){
+                if (shmc == null) {
                     BamToast.show(tvMerchant.getHint());
                     return;
                 }
@@ -211,10 +224,10 @@ public class RegisteredActivity extends BaseActivity {
                 ActivityUtils.startActivityForResult(this, MerchantActivity.class);
                 break;
             case R.id.text_agreement:
-                startActivity(new Intent(this,UseActivity.class).putExtra("type",0));
+                startActivity(new Intent(this, UseActivity.class).putExtra("type", 0));
                 break;
             case R.id.text_privacy:
-                startActivity(new Intent(this,UseActivity.class).putExtra("type",1));
+                startActivity(new Intent(this, UseActivity.class).putExtra("type", 1));
                 break;
         }
     }
@@ -223,7 +236,7 @@ public class RegisteredActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if(data !=null) {
+            if (data != null) {
                 shId = data.getIntExtra("shId", 0);
                 shmc = data.getStringExtra("shmc");
                 tvMerchant.setText(shmc);
@@ -244,7 +257,7 @@ public class RegisteredActivity extends BaseActivity {
         forgetPasswordBean.setShId(shId);
         forgetPasswordBean.setShmc(shmc);
         String gson = GsonUtils.getInstance().toObjectGson(forgetPasswordBean);
-        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE),gson);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(Constants.CONTENTYPE), gson);
         HttpManager.getInstance().post(Constants.HOST + API.REGISTER, this, requestBody);
     }
 
@@ -263,7 +276,19 @@ public class RegisteredActivity extends BaseActivity {
         if (isFinishing()) {
             return;
         }
-        if (netCode == 1) {
+        if (netCode == 0) {
+            ProtocolInfoBean protocolInfoBean = GsonUtils.getInstance().parseJsonToBean(t, ProtocolInfoBean.class);
+            useDialog = new UseDialog.Builder()
+                    .setTitle(getString(R.string.user_dialog_title))
+                    .setDesc(protocolInfoBean.getData().getAgreement())
+                    .setLeftStr(getString(R.string.user_dialog_left_str))
+                    .setRightStr(getString(R.string.user_dialog_right_str))
+                    .setLeftColor(R.color.red)
+                    .setRightColor(R.color.exit_bg_active)
+                    .setType(1)
+                    .builder();
+            useDialog.show(getSupportFragmentManager(), "protocol");
+        } else if (netCode == 1) {
             CodeInfoBean codeInfoBean = GsonUtils.getInstance().parseJsonToBean(t, CodeInfoBean.class);
             bizId = codeInfoBean.getData().getBizId();
 //            code = codeInfoBean.getData().getCode();
@@ -292,4 +317,9 @@ public class RegisteredActivity extends BaseActivity {
         BamToast.show(message);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

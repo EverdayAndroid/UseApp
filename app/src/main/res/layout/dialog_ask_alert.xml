@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bar_grey"
+    android:background="@color/transparent"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -35,6 +35,27 @@
                 android:layout_margin="@dimen/dimen_20dp"
                 android:gravity="center|left"
                 android:textColor="@color/dialogmessage_color"
+                android:textSize="14.0sp" />
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginLeft="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_10dp"
+                android:gravity="center|left"
+                android:visibility="gone"
+                android:textColor="@color/exit_bg_active"
+                android:textSize="14.0sp" />
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_20dp"
+                android:layout_marginBottom="@dimen/dimen_20dp"
+                android:gravity="center|left"
+                android:visibility="gone"
+                android:textColor="@color/exit_bg_active"
                 android:textSize="14.0sp" />
         </LinearLayout>
 
